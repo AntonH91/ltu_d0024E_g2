@@ -29,3 +29,6 @@ hs_err_pid*
 .gradle/
 gradlew.bat
 gradlew
+
+# Visual Paradigm files
+*.vpp.bak*
