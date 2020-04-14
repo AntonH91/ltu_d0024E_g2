@@ -12,4 +12,10 @@ CHECK
 	git log		=	Check commit log
 
 UPLOAD
+	git add 	=	stage changes 
 	
+	git commit	=	add changes to index 
+
+	git push	= 	publish changes - push changes to remote repository
+
+	git diff 
