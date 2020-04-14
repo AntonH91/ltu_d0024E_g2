@@ -1,0 +1,15 @@
+DOWNLOAD
+	git pull	=	Downloads remote repository and merges with local changes
+	
+	git fetch	=	Downloads remote repository
+	
+	git merge	=	Merges branches together
+	
+	git rebase	=	Rebases branches together
+
+CHECK
+	git status	=	Check status of local repository
+	git log		=	Check commit log
+
+UPLOAD
+	
