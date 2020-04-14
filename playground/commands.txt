@@ -12,6 +12,10 @@ CHECK
 	git log		=	Check commit log
 	git diff	=	Check changes
 UPLOAD
-	1. git add		=	Stage changes
-	2. git commit	=	Commit changes to the local repository
-	3. git push		=	Publish changes to remote repository
+
+	git add 	=	stage changes 
+	
+	git commit	=	add changes to index 
+
+	git push	= 	publish changes - push changes to remote repository
+
