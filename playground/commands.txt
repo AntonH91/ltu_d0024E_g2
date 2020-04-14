@@ -10,6 +10,8 @@ DOWNLOAD
 CHECK
 	git status	=	Check status of local repository
 	git log		=	Check commit log
-
+	git diff	=	Check changes
 UPLOAD
-	
+	1. git add		=	Stage changes
+	2. git commit	=	Commit changes to the local repository
+	3. git push		=	Publish changes to remote repository
