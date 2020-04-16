@@ -1,2 +1,3 @@
 rootProject.name = 'ltu_d0024E_g2'
+include 'src'
 
