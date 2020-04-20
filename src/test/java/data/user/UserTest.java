@@ -17,11 +17,14 @@ public abstract class UserTest {
     }
 
     @Test public void userFirstNameIsChangeable() {
+        final String NAME = "Test";
         User a = getDefaultUser();
 
-        a.setFirstName("Test");
+        a.setFirstName(NAME);
 
-        Assert.assertEquals("Test", a.getFirstName());
+        Assert.assertEquals(NAME, a.getFirstName());
     }
+
+
 
 }
