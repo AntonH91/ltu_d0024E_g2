@@ -1,18 +1,28 @@
 package dbbg2.data.inventory;
 
-import dbbg2.data.inventory.InventoryCopy;
-import dbbg2.data.inventory.ItemCategory;
+import dbbg2.data.inventory.itemCategory.ItemCategory;
 
 import java.util.ArrayList;
 
 public abstract class InventoryItem {
 
-    protected int inventoryId;
-    protected String title;
-    protected ArrayList<String> keyword = new ArrayList<String>();
-    protected ArrayList<InventoryCopy> copies = new ArrayList<>();
-    protected ItemCategory category;
-    protected boolean isAvailable;
+    private int inventoryId;
+    private String title;
+    private ArrayList<String> keyword = new ArrayList<String>();
+    private ArrayList<InventoryCopy> copies = new ArrayList<>();
+    private ItemCategory category;
+    private boolean isAvailable;
+
+    private static int inventoryId = 10001;
+
+    public InventoryItem(String title, ItemCategory category, boolean isAvailable) {
+        this.inventoryId = generateInventoryId();
+        this.title = title;
+        this.category = category;
+        this.isAvailable = isAvailable;
+    }
+
+
 
     public void setAvailable(boolean isAvailable) {
         this.isAvailable = isAvailable;
@@ -22,17 +32,10 @@ public abstract class InventoryItem {
         return inventoryId;
     }
 
-    // Setters
-    public void setInventoryId(int inventoryId) {
-        this.inventoryId = inventoryId;
-    }
 
     public String getTitle() {
         return title;
     }
-
-
-// Getters
 
     public void setTitle(String title) {
         this.title = title;
@@ -42,12 +45,28 @@ public abstract class InventoryItem {
         return category;
     }
 
+    public ArrayList<InventoryCopy> getCopies() {
+        return copies;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+
+
     public void setCategory(ItemCategory category) {
         this.category = category;
     }
 
     public ArrayList<String> getKeyword() {
         return keyword;
+    }
+
+    private void String generateInventoryId() {
+        String newInventoryId = "I" + Integer.toString(nextInventoryId);
+        nextInventoryId++;
+        return newInventoryId;
     }
 
 }

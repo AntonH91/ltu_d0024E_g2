@@ -1,21 +1,18 @@
 package dbbg2.data.inventory;
 
+import dbbg2.data.inventory.itemCategory.ItemCategory;
+
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Book extends InventoryItem {
 
     ArrayList<String> author = new ArrayList<String>();
     String isbn;
 
-    private Book(int inventoryId, String title, ArrayList<String> bookKeyword, ItemCategory category, String isbn,  ArrayList<String> bookAuthor) {
-
-        this.category = category;
-        this.inventoryId = inventoryId;
-        this.title = title;
+    public Book(String title, ItemCategory category, boolean isAvailable, String isbn, String author) {
+        super(title, category, isAvailable);
         this.isbn = isbn;
-        author = bookAuthor;
-        keyword = bookKeyword;
+        this.author.add(author);
     }
 
 
@@ -34,24 +31,6 @@ public class Book extends InventoryItem {
         return author;
     }
 
-    @Override
-    public ArrayList<String> getKeyword() {
-        return keyword;
-    }
 
-    @Override
-    public String getTitle() {
-        return title;
-    }
-
-    @Override
-    public int getInventoryId() {
-        return inventoryId;
-    }
-
-    @Override
-    public ItemCategory getCategory() {
-        return category;
-    }
 }
 
