@@ -1,6 +1,4 @@
-package data.inventory;
-
-import java.util.Date;
+package dbbg2.data.inventory;
 
 
 public class ItemCategory {

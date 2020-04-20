@@ -1,4 +1,4 @@
-package data.inventory;
+package dbbg2.data.inventory;
 
 import java.util.Scanner;
 
