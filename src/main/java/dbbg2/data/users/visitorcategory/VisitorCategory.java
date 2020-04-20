@@ -9,15 +9,16 @@ public abstract class VisitorCategory {
 
     /**
      * Creates a new VisitorCategory
-     * @param categoryTitle The title of the category to use
+     *
+     * @param categoryTitle   The title of the category to use
      * @param maxLoanedAmount The max amount of lendable items a user can have. Domain is [0 .. *]
-     * @throws IndexOutOfBoundsException Thrown if the maxLendableItems parameter is out of bounds
+     * @throws IllegalArgumentException Thrown if the maxLendableItems parameter is out of bounds
      */
 
-    public VisitorCategory(String categoryTitle, int maxLoanedAmount) throws IndexOutOfBoundsException {
+    public VisitorCategory(String categoryTitle, int maxLoanedAmount) throws IllegalArgumentException {
         this.categoryTitle = categoryTitle;
         if (maxLoanedAmount < 0) {
-            throw new IndexOutOfBoundsException("maxLoanedAmount cannot be less than zero");
+            throw new IllegalArgumentException("maxLoanedAmount cannot be less than zero");
         }
         this.maxLoanedAmount = maxLoanedAmount;
     }
