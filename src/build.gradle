@@ -12,3 +12,17 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
+
+sourceSets {
+    main {
+        java {
+            srcDir 'main/'
+        }
+    }
+
+    test {
+        java {
+            srcDir 'test/'
+        }
+    }
+}
