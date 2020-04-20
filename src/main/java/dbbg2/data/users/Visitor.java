@@ -1,6 +1,6 @@
 package dbbg2.data.users;
 
-import dbbg2.data.users.category.VisitorCategory;
+import dbbg2.data.users.visitorcategory.VisitorCategory;
 
 public class Visitor extends User {
     private VisitorCategory category;

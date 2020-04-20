@@ -1,4 +1,4 @@
-package dbbg2.data.users.category;
+package dbbg2.data.users.visitorcategory;
 
 public class Student extends VisitorCategory {
 

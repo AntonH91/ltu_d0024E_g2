@@ -1,4 +1,4 @@
-package dbbg2.data.users.category;
+package dbbg2.data.users.visitorcategory;
 
 /**
  * Data container for holding category information for a visitor.
