@@ -21,9 +21,12 @@ public abstract class User {
     private static int nextUserId = 10001;
 
     public User() {
-        this.userId = "U" + Integer.toString(nextUserId);
-        nextUserId++;
+        generateUserId();
     }
+
+    /* ---------------------------
+        GETTERS / SETTERS
+      --------------------------- */
 
     public String getPersonNr() {
         return personNr;
@@ -96,5 +99,17 @@ public abstract class User {
         this.email = email;
     }
 
+    /* ---------------------------
+            Private helpers
+        ---------------------------  */
 
+    /**
+     * Generates or gets the userId for a User class. This secures UID unicity.
+     * In the future this will be the responsibility of the database.
+     */
+    private void generateUserId() {
+        // TODO Change this to query database for User ID.
+        this.userId = "U" + Integer.toString(nextUserId);
+        nextUserId++;
+    }
 }
