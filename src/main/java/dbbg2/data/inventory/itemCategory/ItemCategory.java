@@ -1,4 +1,4 @@
-package dbbg2.data.inventory;
+package dbbg2.data.inventory.itemCategory;
 
 
 public abstract class ItemCategory {
