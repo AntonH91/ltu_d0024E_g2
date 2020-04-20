@@ -2,7 +2,6 @@ package dbbg2.data.users;
 
 public abstract class User {
 
-
     private String userId = "";
     private String personNr = "";
 
@@ -21,7 +20,7 @@ public abstract class User {
     private static int nextUserId = 10001;
 
     public User() {
-        generateUserId();
+        this.userId = generateUserId();
     }
 
     /* ---------------------------
@@ -107,9 +106,11 @@ public abstract class User {
      * Generates or gets the userId for a User class. This secures UID unicity.
      * In the future this will be the responsibility of the database.
      */
-    private void generateUserId() {
+    private String generateUserId() {
         // TODO Change this to query database for User ID.
-        this.userId = "U" + Integer.toString(nextUserId);
+        String newId = "U" + Integer.toString(nextUserId);
         nextUserId++;
+
+        return newId;
     }
 }
