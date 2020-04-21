@@ -18,7 +18,7 @@ public class Book extends InventoryItem {
 
 // Setters
 
-    public void setIbsn(){
+    public void setIsbn(){
         this.isbn = isbn;
 }
 // Getters
