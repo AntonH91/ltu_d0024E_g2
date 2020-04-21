@@ -30,6 +30,7 @@ public abstract class User {
     public String getPersonNr() {
         return personNr;
     }
+
     public void setPersonNr(String personNr) {
         this.personNr = personNr;
     }

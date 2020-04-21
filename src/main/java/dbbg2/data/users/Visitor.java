@@ -26,4 +26,8 @@ public class Visitor extends User {
     public void setLoanedItems(int loanedItems) {
         this.loanedItems = loanedItems;
     }
+    public void increaseLoanedItems(int count) {
+        this.loanedItems = this.loanedItems + count;
+    }
+
 }
