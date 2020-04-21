@@ -11,7 +11,7 @@ public class Loan {
     private Visitor client;
     private ArrayList<LoanCopies> loanedCopies = new ArrayList<>();
 
-    public void addCopy(InventoryCopy copy) {
+    public void addCopy(LoanCopies copy) {
         // This needs to be on the Loan Controller
         //client.increaseLoanedItems(1);
         loanedCopies.add(copy);
