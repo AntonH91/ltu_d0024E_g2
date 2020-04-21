@@ -7,6 +7,12 @@ DOWNLOAD
 	
 	git rebase	=	Rebases branches together
 
+BRANCHING
+	git branch	=	Create a new branch
+	git checkout =	Check out a different branch (or reset a file to the committed version, if given a file/folder name)
+	git stash	=	Stash uncommitted changes for migrating between branches
+	git stash apply = Put stashed changes in the checked out branch
+
 CHECK
 	git status	=	Check status of local repository
 	git log		=	Check commit log
