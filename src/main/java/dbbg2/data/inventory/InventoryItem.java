@@ -6,14 +6,14 @@ import java.util.ArrayList;
 
 public abstract class InventoryItem {
 
-    private int inventoryId;
+    private String inventoryId;
     private String title;
     private ArrayList<String> keyword = new ArrayList<String>();
     private ArrayList<InventoryCopy> copies = new ArrayList<>();
     private ItemCategory category;
     private boolean isAvailable;
 
-    private static int inventoryId = 10001;
+    private static int nextInventoryId = 10001;
 
     public InventoryItem(String title, ItemCategory category, boolean isAvailable) {
         this.inventoryId = generateInventoryId();
@@ -29,7 +29,7 @@ public abstract class InventoryItem {
     }
 
     public int getInventoryId() {
-        return inventoryId;
+        return nextInventoryId;
     }
 
 
@@ -63,7 +63,7 @@ public abstract class InventoryItem {
         return keyword;
     }
 
-    private void String generateInventoryId() {
+    private String generateInventoryId() {
         String newInventoryId = "I" + Integer.toString(nextInventoryId);
         nextInventoryId++;
         return newInventoryId;
