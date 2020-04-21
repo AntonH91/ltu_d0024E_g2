@@ -1,9 +1,6 @@
 package dbbg2.data.inventory;
 
 import dbbg2.data.inventory.itemCategory.OtherBooks;
-
-import javax.print.attribute.standard.MediaSize;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class InventoryManager {
