@@ -27,8 +27,6 @@ hs_err_pid*
 
 # Gradle files
 .gradle/
-gradlew.bat
-gradlew
 build/
 
 # Visual Paradigm files
