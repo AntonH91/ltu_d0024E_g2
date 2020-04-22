@@ -1,4 +1,4 @@
-package dbbg2.data.loans
+package dbbg2.data.loans;
 
 import dbbg2.data.inventory.InventoryCopy;
 import dbbg2.data.users.Visitor;
