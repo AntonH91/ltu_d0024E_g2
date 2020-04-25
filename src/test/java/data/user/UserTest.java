@@ -16,7 +16,8 @@ public abstract class UserTest {
         Assert.assertNotEquals(a.getUserId(), b.getUserId());
     }
 
-    @Test public void userFirstNameIsChangeable() {
+    @Test
+    public void userFirstNameIsChangeable() {
         final String NAME = "Test";
         User a = getDefaultUser();
 
@@ -25,6 +26,45 @@ public abstract class UserTest {
         Assert.assertEquals(NAME, a.getFirstName());
     }
 
+    @Test
+    public void userLastNameIsChangeable() {
+        final String NAME = "Test";
+        User a = getDefaultUser();
+
+        a.setLastName(NAME);
+
+        Assert.assertEquals(NAME, a.getLastName());
+    }
+
+    @Test
+    public void userStreetAddressIsChangeable() {
+        final String STREET = "Streetname";
+        User a = getDefaultUser();
+
+        a.setStreetAddress(STREET);
+
+        Assert.assertEquals(STREET, a.getStreetAddress());
+    }
+
+    @Test
+    public void userPostCodeIsChangeable() {
+        final String POST_CODE = "12345";
+        User a = getDefaultUser();
+
+        a.setPostCode(POST_CODE);
+
+        Assert.assertEquals(POST_CODE, a.getPostCode());
+    }
+
+    @Test
+    public void userPostAreaIsChangeable() {
+        final String POST_AREA = "Orten";
+        User a = getDefaultUser();
+
+        a.setPostArea(POST_AREA);
+
+        Assert.assertEquals(POST_AREA, a.getPostArea());
+    }
 
 
 }
