@@ -5,30 +5,32 @@ import dbbg2.data.inventory.itemCategory.ItemCategory;
 
 import java.sql.*;
 
-import static jdk.internal.net.http.common.Utils.close;
-
-
 public class InventoryController {
     private PreparedStatement insertNewBook;
     private PreparedStatement insertNewFilm;
     private PreparedStatement insertInventoryCopy;
+    private Connection connection;
 
 
 
     // ADD AN ENTRY TO THE DATABASE
 
-    public int addBook(String title, ItemCategory category, boolean isAvailable, String isbn, String author) {
+    public int addBook(
+            String title, ItemCategory category, boolean isAvailable, String isbn, String author)
+    {
 
             int result = 0;
 
-            try {
+            try
+            {
                 insertNewBook.setString(1, title);
                 insertNewBook.setObject(2, category);
                 insertNewBook.setBoolean(3, isAvailable);
                 insertNewBook.setString(4, isbn);
                 insertNewBook.setString(5, author);
             }
-            catch (SQLException sqlException) {
+            catch (SQLException sqlException)
+            {
                 sqlException.printStackTrace();
                 close();
             }
@@ -70,6 +72,16 @@ public class InventoryController {
             close();
         }
         return result;
+    }
+
+    public void close(){
+        try {
+            connection.close();
+        }
+        catch(SQLException sqlException)
+        { sqlException.printStackTrace();
+
+        }
     }
 
     // DISPLAY CONTENTS OF TABLES
