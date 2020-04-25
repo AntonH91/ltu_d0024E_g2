@@ -99,6 +99,30 @@ public abstract class User {
         this.email = email;
     }
 
+    /**
+     * Gets a string representation of which kind of user this is.
+     * @return A string describing the user type.
+     */
+    public abstract String getUserType();
+
+    /**
+     * Saves the user to the database.
+     */
+    public void saveUser() {
+        // TODO Make user saving happen
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        boolean equals = false;
+        if (obj instanceof User) {
+            User otherUser = (User) obj;
+            equals = this.getUserId().equals(otherUser.getUserId());
+        }
+        return equals;
+    }
+
+
     /* ---------------------------
             Private helpers
         ---------------------------  */

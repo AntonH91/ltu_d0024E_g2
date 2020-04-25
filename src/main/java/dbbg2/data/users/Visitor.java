@@ -2,6 +2,10 @@ package dbbg2.data.users;
 
 import dbbg2.data.users.visitorcategory.VisitorCategory;
 
+/**
+ * @Author Anton Högelin (anthge-7)
+ * This type of user has visitor-specific properties, which are necessary to support loan quotas and the borrowing process
+ */
 public class Visitor extends User {
     private VisitorCategory category;
     private int loanedItems = 0;
@@ -26,8 +30,13 @@ public class Visitor extends User {
     public void setLoanedItems(int loanedItems) {
         this.loanedItems = loanedItems;
     }
+
     public void increaseLoanedItems(int count) {
         this.loanedItems = this.loanedItems + count;
     }
 
+    @Override
+    public String getUserType() {
+        return "Visitor";
+    }
 }
