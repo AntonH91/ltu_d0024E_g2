@@ -9,7 +9,7 @@ public class Database {
 
     private Connection conn;
 
-    private static final String DATABASE_URL = "jdbc:mysql://localhost/library_dbb";
+    private static final String DATABASE_URL = "jdbc:mysql://localhost/library_dbb?serverTimezone=UTC";
     private static final String DATABASE_USER = "library_dbb_application";
     private static final String DATABASE_PWD = "ldbbapp";
 
