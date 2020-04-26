@@ -2,6 +2,8 @@ package dbbg2.persistence;
 
 import java.sql.*;
 
+
+
 /**
  * This class manages the innner workings of the database and encapsulates the global database connection used by the application.
  *
@@ -13,7 +15,6 @@ public class Database {
     private static final String DATABASE_PWD = "ldbbapp";
     private static Database defaultInstance;
     private final Connection conn;
-
 
     /**
      * Initializes a new database manager.
@@ -77,6 +78,26 @@ public class Database {
      */
     public PreparedStatement getPreparedStatement(String sql) throws SQLException {
         return conn.prepareStatement(sql);
+    }
+
+    /**
+     * Return the connection
+     */
+
+    public Connection getConnection() {
+        return conn;
+    }
+    /**
+     * Add params to a preparedstatement
+     */
+    public static void addParam(PreparedStatement pst, int i, Object o) throws SQLException {
+        if(o instanceof String) {
+            pst.setString(i, (String)o);
+        }else if(o instanceof Integer){
+            pst.setInt(i, (int)o);
+        }else if(o instanceof Boolean) {
+            pst.setBoolean(i, (boolean)o);
+        }
     }
 
     /**
