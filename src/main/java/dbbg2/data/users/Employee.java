@@ -1,6 +1,8 @@
 package dbbg2.data.users;
 
-import dbbg2.data.users.User;
+import dbbg2.persistence.Database;
+
+import java.sql.SQLException;
 
 /**
  * @author Anton Högelin (anthge-7)
@@ -19,6 +21,17 @@ public class Employee extends User {
         return "Employee";
     }
 
+    @Override
+    protected void saveSpecificDetails(String userId) throws SQLException {
+        Database.getDefaultInstance().getPreparedStatement("UPDATE users " +
+                "                                                   SET user_type='Employee', " +
+                "                                                       salary=?," +
+                "                                                               manager_access=? " +
+                "                                                       WHERE user_id=?;");
+
+
+    }
+
 
     public double getSalary() {
         return salary;
@@ -35,4 +48,6 @@ public class Employee extends User {
     public void setManagerAccess(boolean managerAccess) {
         this.managerAccess = managerAccess;
     }
+
+
 }

@@ -114,18 +114,36 @@ public abstract class User {
      * Saves the user to the database.
      */
     public void saveUser() throws SQLException {
+        PreparedStatement pst;
 
-        PreparedStatement pst = Database.getDefaultInstance().getPreparedStatement(
-                "INSERT INTO users(" +
-                        "first_name," +
-                        "last_name," +
-                        "street_address," +
-                        "post_code," +
-                        "post_area," +
-                        "person_nr," +
-                        "email," +
-                        "phone_nr) " +
-                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?);");
+        if (userId == null) {
+            pst = Database.getDefaultInstance().getPreparedStatement(
+                    "INSERT INTO users(" +
+                            "first_name," +
+                            "last_name," +
+                            "street_address," +
+                            "post_code," +
+                            "post_area," +
+                            "person_nr," +
+                            "email," +
+                            "phone_nr) " +
+                            "VALUES(?, ?, ?, ?, ?, ?, ?, ?);");
+        } else {
+            pst = Database.getDefaultInstance().getPreparedStatement(
+                    "UPDATE users " +
+                            "SET first_name=?," +
+                            "last_name=?," +
+                            "street_address=?," +
+                            "post_code=?," +
+                            "post_area = ?," +
+                            "person_nr = ?," +
+                            "email = ?," +
+                            "phone_nr = ?" +
+                        "WHERE user_id = ?"
+            );
+
+        }
+
 
         try {
             pst.setString(1,this.firstName);
@@ -137,14 +155,17 @@ public abstract class User {
             pst.setString(7,this.email);
             pst.setString(8,this.phoneNr);
             pst.execute();
+
+            // TODO Get userId from the database
+            saveSpecificDetails(userId);
+
         }
         finally {
           pst.close();
         }
-
-
-
     }
+
+    protected abstract void saveSpecificDetails(String userId) throws SQLException;
 
     @Override
     public boolean equals(Object obj) {
