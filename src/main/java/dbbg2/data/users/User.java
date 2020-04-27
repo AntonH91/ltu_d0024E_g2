@@ -1,5 +1,10 @@
 package dbbg2.data.users;
 
+import dbbg2.persistence.Database;
+
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public abstract class User {
 
     private String userId = "";
@@ -108,8 +113,37 @@ public abstract class User {
     /**
      * Saves the user to the database.
      */
-    public void saveUser() {
-        // TODO Make user saving happen
+    public void saveUser() throws SQLException {
+
+        PreparedStatement pst = Database.getDefaultInstance().getPreparedStatement(
+                "INSERT INTO users(" +
+                        "first_name," +
+                        "last_name," +
+                        "street_address," +
+                        "post_code," +
+                        "post_area," +
+                        "person_nr," +
+                        "email," +
+                        "phone_nr) " +
+                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?);");
+
+        try {
+            pst.setString(1,this.firstName);
+            pst.setString(2,this.lastName);
+            pst.setString(3,this.streetAddress);
+            pst.setString(4,this.postCode);
+            pst.setString(5,this.postArea);
+            pst.setString(6,this.personNr);
+            pst.setString(7,this.email);
+            pst.setString(8,this.phoneNr);
+            pst.execute();
+        }
+        finally {
+          pst.close();
+        }
+
+
+
     }
 
     @Override
