@@ -2,7 +2,9 @@ package dbbg2.controllers;
 
 import dbbg2.data.inventory.*;
 import dbbg2.data.inventory.itemCategory.ItemCategory;
+import sun.security.util.Password;
 
+import java.net.URL;
 import java.sql.*;
 
 public class InventoryController {
@@ -10,6 +12,9 @@ public class InventoryController {
     private PreparedStatement insertNewFilm;
     private PreparedStatement insertInventoryCopy;
     private Connection connection;
+    private static final String URL = "";
+    private static final String USERNAME = "";
+    private static final String Password = "";
 
 
 
@@ -23,11 +28,20 @@ public class InventoryController {
 
             try
             {
+                connection = DriverManager.getConnection(URL, USERNAME, Password);
+
+                insertNewBook = connection.prepareStatement(
+                        "INSERT INTO Book title, category, is_available, isbn, author" + "values (?, ?, ?, ?, ?"
+                );
+
                 insertNewBook.setString(1, title);
                 insertNewBook.setObject(2, category);
                 insertNewBook.setBoolean(3, isAvailable);
                 insertNewBook.setString(4, isbn);
                 insertNewBook.setString(5, author);
+
+                result = insertNewBook.executeUpdate();
+
             }
             catch (SQLException sqlException)
             {
@@ -43,12 +57,20 @@ public class InventoryController {
             int result = 0;
 
             try {
+
+                connection = DriverManager.getConnection(URL, USERNAME, Password);
+
+                insertNewFilm = connection.prepareStatement("INSERT INTO Film title, category, is_available, director, age_limit, origin_country"
+                        + "VALUES (?, ?, ?, ?, ?, ?)");
+
                 insertNewFilm.setString(1, title);
                 insertNewFilm.setObject(2, category);
                 insertNewFilm.setBoolean(3, isAvailable);
                 insertNewFilm.setString(4, director);
                 insertNewFilm.setInt(5, ageLimit);
                 insertNewFilm.setString(6, originCountry);
+
+                result = insertNewBook.executeUpdate();
 
             } catch (SQLException sqlException) {
                 sqlException.printStackTrace();
@@ -62,10 +84,18 @@ public class InventoryController {
         int result = 0;
 
         try {
+
+            connection = DriverManager.getConnection(URL, USERNAME, Password);
+
+            insertInventoryCopy = connection.prepareStatement("INSERT INTO InventoryCopy barcode, location, lendable, item"
+                    +"VALUES (?, ?, ?, ?)");
+
             insertInventoryCopy.setString(1, barcode);
             insertInventoryCopy.setString(2, location);
             insertInventoryCopy.setBoolean(3, lendable);
             insertInventoryCopy.setObject(4, item);
+
+            result = insertInventoryCopy.executeUpdate();
 
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
@@ -73,6 +103,8 @@ public class InventoryController {
         }
         return result;
     }
+
+    //Close method for ending connection with DB
 
     public void close(){
         try {
@@ -188,26 +220,33 @@ public class InventoryController {
     }
 
     //TODO fix how to update is available for books
-    public void sqlBookUpdate() {
-        final String UPDATE_ISAVAILABLE = "UPDATE Book" + "SET isAvailable = ?" + "WHERE isbn = ?";
-        // TODO add database URL
-        final String DATABASE_URL = "";
 
-        try(
-                Connection connection = DriverManager.getConnection(
-                        DATABASE_URL, "user", "Password"
-                );
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(UPDATE_ISAVAILABLE)
-        )
-        {
+    public void sqlBookUpdate(String inventoryId){
+        try{
+            final String DATABASE_URL = "";
+            Connection connection = DriverManager.getConnection(
+                    DATABASE_URL, "user", "Password");
 
-        }
-        catch (SQLException sqlException)
-        {
+            final String UPDATE_ISAVAILABLE = "SELECT on_loan FROM InventoryCopy WHERE inventory_id = ? AND on_loan = False";
+            PreparedStatement statement = connection.prepareStatement(UPDATE_ISAVAILABLE);
+            statement.setString(1, inventoryId);
+            ResultSet resultSet = statement.executeQuery(UPDATE_ISAVAILABLE);
+
+            if(resultSet.next()){
+                final String BOOK_AVAILABLE = "UPDATE InventoryItem SET is_available = true WHERE inventory_id = ?";
+                PreparedStatement statement2 = connection.prepareStatement(BOOK_AVAILABLE);
+                statement2.setString(1, inventoryId);
+                ResultSet resultSet2 = statement.executeQuery(BOOK_AVAILABLE);
+            }
+            else {
+                final String BOOK_UNAVAILABLE = "UPDATE InventoryItem SET is_available = false WHERE inventory_id = ?";
+                PreparedStatement statement3 = connection.prepareStatement(BOOK_UNAVAILABLE);
+                statement3.setString(1, inventoryId);
+                ResultSet resultSet3 = statement.executeQuery(BOOK_UNAVAILABLE);
+            }
+        } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
-
     }
 
 }
