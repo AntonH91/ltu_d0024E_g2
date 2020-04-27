@@ -2,6 +2,8 @@ package dbbg2.data.users;
 
 import dbbg2.data.users.visitorcategory.VisitorCategory;
 
+import java.sql.SQLException;
+
 /**
  * @Author Anton Högelin (anthge-7)
  * This type of user has visitor-specific properties, which are necessary to support loan quotas and the borrowing process
@@ -38,5 +40,10 @@ public class Visitor extends User {
     @Override
     public String getUserType() {
         return "Visitor";
+    }
+
+    @Override
+    protected void saveSpecificDetails(String userId) throws SQLException {
+
     }
 }
