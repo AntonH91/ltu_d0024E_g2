@@ -6,6 +6,8 @@ import dbbg2.data.users.UserManager;
 import dbbg2.data.users.Visitor;
 import dbbg2.data.users.visitorcategory.VisitorCategory;
 
+import java.sql.SQLException;
+
 /**
  * @author Anton Högelin (anthge-7)
  * <p>
@@ -64,7 +66,7 @@ public abstract class  UserController {
     /**
      * Saves the changes to the user object
      */
-    public void saveChanges() {
+    public void saveChanges() throws SQLException {
         subjectToChange.saveUser();
     }
 
