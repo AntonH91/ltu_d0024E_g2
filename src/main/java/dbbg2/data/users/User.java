@@ -1,6 +1,7 @@
 package dbbg2.data.users;
 
 import dbbg2.persistence.Database;
+import dbbg2.persistence.JpaPersistence;
 
 import javax.persistence.*;
 import java.sql.PreparedStatement;
@@ -259,10 +260,8 @@ public class User {
 
     // TODO remove this
     public static void main(String[] args) {
-        final String PERSISTENCE_UNIT_NAME = "lddb_jpa";
 
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-        EntityManager em = factory.createEntityManager();
+        EntityManager em = JpaPersistence.getEntityManager();
 
         // Read existing
         Query q = em.createQuery("SELECT u FROM User u");
