@@ -1,5 +1,8 @@
 package dbbg2.controllers;
 
+import dbbg2.data.inventory.Book;
+import dbbg2.data.inventory.InventoryItem;
+import dbbg2.data.inventory.itemCategory.OtherBooks;
 import dbbg2.data.users.Employee;
 import dbbg2.data.users.User;
 import dbbg2.data.users.Visitor;
@@ -16,6 +19,34 @@ import java.util.List;
 public class LibraryDbb {
     public static void main(String[] args) {
 
+        testUsers();
+        testInventory();
+
+    }
+
+    private static void testInventory(){
+        EntityManager em = JpaPersistence.getEntityManager();
+
+
+        Query q = em.createQuery("SELECT invItem FROM InventoryItem invItem");
+        List<InventoryItem> inventoryItemList = q.getResultList();
+
+        for (InventoryItem invItem: inventoryItemList) {
+            System.out.println(invItem.toString());
+        }
+        System.out.println("Size: " + inventoryItemList.size());
+
+        // New InventoryItem
+
+        em.getTransaction().begin();
+        Book b = new Book("Harry potter", new OtherBooks(), true, "15682", "JK Rowling");
+
+        em.merge(b);
+
+    }
+
+
+    private static void testUsers() {
         EntityManager em = JpaPersistence.getEntityManager();
 
         // Read existing

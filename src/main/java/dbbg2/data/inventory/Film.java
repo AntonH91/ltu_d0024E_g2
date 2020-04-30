@@ -2,15 +2,25 @@ package dbbg2.data.inventory;
 
 import dbbg2.data.inventory.itemCategory.ItemCategory;
 
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import java.util.ArrayList;
 
+@Entity
 public class Film extends InventoryItem {
 
     String director;
+    @Basic(optional = false)
     int ageLimit;
     String originCountry;
     ArrayList<String> actors = new ArrayList<String>();
 
+
+    public Film() {
+        super();
+    }
 
     public Film(String title, ItemCategory category, boolean isAvailable, String director, int ageLimit, String originCountry) {
         super (title, category, isAvailable);

@@ -1,19 +1,41 @@
 package dbbg2.data.inventory;
 
 import dbbg2.data.inventory.itemCategory.ItemCategory;
+import dbbg2.persistence.Database;
 
+import javax.persistence.*;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
+@Entity(name = "Inventory")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class InventoryItem {
 
-    private String inventoryId;
-    private String title;
+    private static int nextInventoryId = 10001;
+    @Id
+    @GeneratedValue
+    private int invId;
+
+    private String inventoryId = "";
+
+    @Basic(optional = false)
+    private String title = "";
+    @Basic(optional = false)
     private ArrayList<String> keyword = new ArrayList<String>();
+    @OneToMany(cascade = CascadeType.ALL)
     private ArrayList<InventoryCopy> copies = new ArrayList<>();
+    @Basic(optional = false)
     private ItemCategory category;
+    @Basic(optional = false)
     private boolean isAvailable;
 
-    private static int nextInventoryId = 10001;
+
+
+    public InventoryItem() {
+
+    }
 
     public InventoryItem(String title, ItemCategory category, boolean isAvailable) {
         this.inventoryId = generateInventoryId();
@@ -67,6 +89,14 @@ public abstract class InventoryItem {
         String newInventoryId = "I" + Integer.toString(nextInventoryId);
         nextInventoryId++;
         return newInventoryId;
+    }
+
+    public void addNewItem() throws SQLException {
+        PreparedStatement pst;
+        pst = Database.getDefaultInstance().getPreparedStatement("INSERT INTO inventory title, category, is_available" + "values (?, ?, ?, ?, ?");
+        pst.setString(1, this.title);
+        pst.setObject(2, this.category);
+        pst.setBoolean(3, this.isAvailable);
     }
 
 }

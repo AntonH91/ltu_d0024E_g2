@@ -1,13 +1,26 @@
 package dbbg2.data.inventory;
 
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class InventoryCopy {
 
-    private String barcode;
-    private String location;
+
+    @Basic(optional = false)
+    private String barcode = "";
+    private String location = "";
     private boolean onLoan = false;
-    private boolean lendable;
+    private boolean lendable = true;
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     private InventoryItem item;
 
+
+    private InventoryCopy(){
+
+    }
 
     private InventoryCopy(String barcode, String location, boolean lendable, InventoryItem item) {
 

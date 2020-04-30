@@ -16,4 +16,9 @@ public class InventoryManager {
         return output;
     }
 
+    public static ArrayList<InventoryCopy> getInventoryCopy() {
+        ArrayList<InventoryCopy> invCopy = new ArrayList<>();
+        return invCopy;
+    }
+
 }
