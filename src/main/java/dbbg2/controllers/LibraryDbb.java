@@ -30,10 +30,10 @@ public class LibraryDbb {
 
 
         Query q = em.createQuery("SELECT invItem FROM Inventory invItem");
-        List<InventoryItem> inventoryItemList = q.getResultList();
+        List inventoryItemList = q.getResultList();
 
-        for (InventoryItem invItem: inventoryItemList) {
-            System.out.println(invItem.toString());
+        for (Object o: inventoryItemList) {
+            System.out.println(o);
         }
         System.out.println("Size: " + inventoryItemList.size());
 
