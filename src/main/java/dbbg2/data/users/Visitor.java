@@ -1,20 +1,37 @@
 package dbbg2.data.users;
 
 import dbbg2.data.users.visitorcategory.VisitorCategory;
+import dbbg2.data.users.visitorcategory.VisitorCategoryType;
 
+import javax.persistence.*;
 import java.sql.SQLException;
 
 /**
  * @Author Anton Högelin (anthge-7)
  * This type of user has visitor-specific properties, which are necessary to support loan quotas and the borrowing process
  */
+@Entity
 public class Visitor extends User {
+
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
     private VisitorCategory category;
     private int loanedItems = 0;
+
+    public Visitor() {
+        super();
+    }
 
     public Visitor(VisitorCategory category) {
         super();
         this.category = category;
+    }
+
+    /**
+     * Creates a new user with a given category type constant
+     * @param category
+     */
+    public Visitor(VisitorCategoryType category) {
+        this(VisitorCategory.getDefaultCategory(category));
     }
 
     public VisitorCategory getCategory() {
@@ -43,7 +60,10 @@ public class Visitor extends User {
     }
 
     @Override
-    protected void saveSpecificDetails(String userId) throws SQLException {
-
+    public String toString() {
+        return "Visitor{" +
+                "category=" + category +
+                ", loanedItems=" + loanedItems +
+                "} " + super.toString();
     }
 }

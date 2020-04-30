@@ -1,6 +1,6 @@
 package dbbg2.data.users;
 
-import dbbg2.data.users.visitorcategory.GeneralPublic;
+import dbbg2.data.users.visitorcategory.VisitorCategoryType;
 
 public class UserManager {
 
@@ -24,7 +24,7 @@ public class UserManager {
     public static Visitor getVisitor(String userId) {
         // TODO Implement this
         // TODO Add exceptions
-        return new Visitor(new GeneralPublic());
+        return new Visitor(VisitorCategoryType.GENERAL_PUBLIC);
     }
 
 }

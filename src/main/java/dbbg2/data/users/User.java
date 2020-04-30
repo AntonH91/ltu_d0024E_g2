@@ -1,38 +1,40 @@
 package dbbg2.data.users;
 
 import dbbg2.persistence.Database;
-import dbbg2.persistence.JpaPersistence;
 
 import javax.persistence.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
 
-@Entity
+@Entity(name = "Users")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
 
+    private static int nextUserId = 10001;
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long uid;
 
     private String userId = "";
-    private String personNr = "";
 
+    @Basic(optional = false)
+    private String personNr = "";
+    @Basic(optional = false)
     private String firstName = "";
+    @Basic(optional = false)
     private String lastName = "";
 
     private String streetAddress = "";
     private String postCode = "";
     private String postArea = "";
-
     private String phoneNr = "";
+
+    @Basic(optional = false)
     private String email = "";
 
     private boolean authenticated = false;
-
-    private static int nextUserId = 10001;
 
     public User() {
         this.userId = generateUserId();
@@ -58,60 +60,60 @@ public class User {
         return firstName;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getStreetAddress() {
-        return streetAddress;
-    }
-
-    public String getPostCode() {
-        return postCode;
-    }
-
-    public String getPostArea() {
-        return postArea;
-    }
-
-    public String getPhoneNr() {
-        return phoneNr;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public boolean isAuthenticated() {
-        return authenticated;
-    }
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    public String getStreetAddress() {
+        return streetAddress;
+    }
+
     public void setStreetAddress(String streetAddress) {
         this.streetAddress = streetAddress;
+    }
+
+    public String getPostCode() {
+        return postCode;
     }
 
     public void setPostCode(String postCode) {
         this.postCode = postCode;
     }
 
+    public String getPostArea() {
+        return postArea;
+    }
+
     public void setPostArea(String postArea) {
         this.postArea = postArea;
+    }
+
+    public String getPhoneNr() {
+        return phoneNr;
     }
 
     public void setPhoneNr(String phoneNr) {
         this.phoneNr = phoneNr;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public boolean isAuthenticated() {
+        return authenticated;
     }
 
     /**
@@ -135,7 +137,6 @@ public class User {
         }
 
 
-
     }
 
     private void updateUser() throws SQLException {
@@ -153,21 +154,20 @@ public class User {
         );
 
         try {
-            pst.setString(1,this.firstName);
-            pst.setString(2,this.lastName);
-            pst.setString(3,this.streetAddress);
-            pst.setString(4,this.postCode);
-            pst.setString(5,this.postArea);
-            pst.setString(6,this.personNr);
-            pst.setString(7,this.email);
-            pst.setString(8,this.phoneNr);
+            pst.setString(1, this.firstName);
+            pst.setString(2, this.lastName);
+            pst.setString(3, this.streetAddress);
+            pst.setString(4, this.postCode);
+            pst.setString(5, this.postArea);
+            pst.setString(6, this.personNr);
+            pst.setString(7, this.email);
+            pst.setString(8, this.phoneNr);
             pst.execute();
 
             // TODO Get userId from the database
             saveSpecificDetails(userId);
 
-        }
-        finally {
+        } finally {
             pst.close();
         }
     }
@@ -185,26 +185,23 @@ public class User {
                         "phone_nr) " +
                         "VALUES(?, ?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
         try {
-            pst.setString(1,this.firstName);
-            pst.setString(2,this.lastName);
-            pst.setString(3,this.streetAddress);
-            pst.setString(4,this.postCode);
-            pst.setString(5,this.postArea);
-            pst.setString(6,this.personNr);
-            pst.setString(7,this.email);
-            pst.setString(8,this.phoneNr);
+            pst.setString(1, this.firstName);
+            pst.setString(2, this.lastName);
+            pst.setString(3, this.streetAddress);
+            pst.setString(4, this.postCode);
+            pst.setString(5, this.postArea);
+            pst.setString(6, this.personNr);
+            pst.setString(7, this.email);
+            pst.setString(8, this.phoneNr);
             pst.execute();
 
             ResultSet rsNewId = pst.getGeneratedKeys();
 
 
-
-
             // TODO Get userId from the database
             saveSpecificDetails(userId);
 
-        }
-        finally {
+        } finally {
             pst.close();
         }
 
@@ -256,37 +253,6 @@ public class User {
                 ", email='" + email + '\'' +
                 ", authenticated=" + authenticated +
                 '}';
-    }
-
-    // TODO remove this
-    public static void main(String[] args) {
-
-        EntityManager em = JpaPersistence.getEntityManager();
-
-        // Read existing
-        Query q = em.createQuery("SELECT u FROM User u");
-        List<User> userList = q.getResultList();
-
-        for (User u : userList) {
-            System.out.println(u.toString());
-        }
-        System.out.println("Size: " + userList.size());
-
-        // New user
-
-        em.getTransaction().begin();
-        User u = new User();
-
-        u.setFirstName("Anton");
-        u.setLastName("Högelin");
-
-        em.persist(u);
-
-        em.getTransaction().commit();
-
-        em.close();
-
-
     }
 
 }

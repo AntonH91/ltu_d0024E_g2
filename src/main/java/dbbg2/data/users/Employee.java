@@ -1,15 +1,19 @@
 package dbbg2.data.users;
 
-import dbbg2.persistence.Database;
-
-import java.sql.SQLException;
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 /**
  * @author Anton Högelin (anthge-7)
  * This class handles the responsibilities of the employee management, such as governing elevated access and similar features.
  */
+@Entity(name = "Employees")
 public class Employee extends User {
+    @Basic(optional = false)
     private double salary = 0.0;
+    @Basic(optional = false)
     private boolean managerAccess = false;
 
     public Employee() {
@@ -22,16 +26,12 @@ public class Employee extends User {
     }
 
     @Override
-    protected void saveSpecificDetails(String userId) throws SQLException {
-        Database.getDefaultInstance().getPreparedStatement("UPDATE users " +
-                "                                                   SET user_type='Employee', " +
-                "                                                       salary=?," +
-                "                                                               manager_access=? " +
-                "                                                       WHERE user_id=?;");
-
-
+    public String toString() {
+        return "Employee{" +
+                "salary=" + salary +
+                ", managerAccess=" + managerAccess +
+                "} " + super.toString();
     }
-
 
     public double getSalary() {
         return salary;

@@ -1,11 +1,25 @@
 package dbbg2.data.users.visitorcategory;
 
+import javax.persistence.*;
+
+import static dbbg2.data.users.visitorcategory.VisitorCategoryType.GENERAL_PUBLIC;
+
 /**
  * Data container for holding category information for a visitor.
  */
-public abstract class VisitorCategory {
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public class VisitorCategory {
+    @Id
+    @Basic(optional = false)
     private String categoryTitle = "";
+
+    @Basic(optional = false)
     private int maxLoanedAmount = 0;
+
+    public VisitorCategory() {
+
+    }
 
     /**
      * Creates a new VisitorCategory
@@ -23,6 +37,14 @@ public abstract class VisitorCategory {
         this.maxLoanedAmount = maxLoanedAmount;
     }
 
+    @Override
+    public String toString() {
+        return "VisitorCategory{" +
+                ", categoryTitle='" + categoryTitle + '\'' +
+                ", maxLoanedAmount=" + maxLoanedAmount +
+                '}';
+    }
+
     public String getCategoryTitle() {
         return categoryTitle;
     }
@@ -30,4 +52,30 @@ public abstract class VisitorCategory {
     public int getMaxLoanedAmount() {
         return maxLoanedAmount;
     }
+
+
+    public static VisitorCategory getDefaultCategory(VisitorCategoryType category) {
+        VisitorCategory vc;
+        switch (category) {
+            case GENERAL_PUBLIC:
+                vc = new VisitorCategory( "General Public", 3);
+                break;
+            case STUDENT:
+                vc = new VisitorCategory("Student",5);
+                break;
+            case UNIVERSITY_STAFF:
+                vc = new VisitorCategory("University Staff", 20);
+                break;
+            case RESEARCHER:
+                vc = new VisitorCategory("Researcher",10);
+                break;
+            default:
+                throw new IllegalArgumentException("This is not a valid category type");
+        }
+
+        return vc;
+    }
+
 }
+
+

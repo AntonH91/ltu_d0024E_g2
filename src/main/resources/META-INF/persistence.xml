@@ -6,7 +6,12 @@
 
     <persistence-unit name="lddb_jpa" transaction-type="RESOURCE_LOCAL">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+
         <class>dbbg2.data.users.User</class>
+        <class>dbbg2.data.users.Employee</class>
+        <class>dbbg2.data.users.Visitor</class>
+
+        <class>dbbg2.data.users.visitorcategory.VisitorCategory</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.url"
