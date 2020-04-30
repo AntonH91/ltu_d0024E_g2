@@ -1,6 +1,7 @@
 package dbbg2.data.inventory;
 
 import dbbg2.data.inventory.itemCategory.ItemCategory;
+import dbbg2.data.inventory.itemCategory.ItemCategoryType;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -20,6 +21,10 @@ public class Film extends InventoryItem {
 
     public Film() {
         super();
+    }
+
+    public Film(String title, ItemCategoryType category, boolean isAvailable, String director, int ageLimit, String originCountry){
+        this(title, ItemCategory.getDefaultItemCategory(category), isAvailable, director, ageLimit, originCountry);
     }
 
     public Film(String title, ItemCategory category, boolean isAvailable, String director, int ageLimit, String originCountry) {

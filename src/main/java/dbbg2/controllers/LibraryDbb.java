@@ -2,7 +2,7 @@ package dbbg2.controllers;
 
 import dbbg2.data.inventory.Book;
 import dbbg2.data.inventory.InventoryItem;
-import dbbg2.data.inventory.itemCategory.OtherBooks;
+import dbbg2.data.inventory.itemCategory.ItemCategoryType;
 import dbbg2.data.users.Employee;
 import dbbg2.data.users.User;
 import dbbg2.data.users.Visitor;
@@ -39,7 +39,7 @@ public class LibraryDbb {
         // New InventoryItem
 
         em.getTransaction().begin();
-        Book b = new Book("Harry potter", new OtherBooks(), true, "15682", "JK Rowling");
+        Book b = new Book("Harry potter", ItemCategoryType.OTHER_BOOKS, true, "15682", "JK Rowling");
 
         em.merge(b);
 
@@ -61,13 +61,13 @@ public class LibraryDbb {
         // New user
 
         em.getTransaction().begin();
-        User u = new User();
+        /*User u = new User();
 
         u.setFirstName("Anton");
         u.setLastName("Högelin");
         //u.setPersonNr("123");
         u.setEmail("b@c.d");
-        em.merge(u);
+        em.merge(u);*/
 
         Employee e = new Employee();
         e.setFirstName("Jeff");

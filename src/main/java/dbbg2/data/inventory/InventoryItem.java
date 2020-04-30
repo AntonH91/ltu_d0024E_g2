@@ -1,6 +1,7 @@
 package dbbg2.data.inventory;
 
 import dbbg2.data.inventory.itemCategory.ItemCategory;
+import dbbg2.data.inventory.itemCategory.ItemCategoryType;
 import dbbg2.persistence.Database;
 
 import javax.persistence.*;
@@ -37,6 +38,10 @@ public abstract class InventoryItem {
 
     public InventoryItem() {
 
+    }
+
+    public InventoryItem(String title, ItemCategoryType category, boolean isAvailable) {
+        this(title, ItemCategory.getDefaultItemCategory(category), isAvailable);
     }
 
     public InventoryItem(String title, ItemCategory category, boolean isAvailable) {

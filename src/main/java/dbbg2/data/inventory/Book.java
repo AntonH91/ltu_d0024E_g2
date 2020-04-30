@@ -1,6 +1,7 @@
 package dbbg2.data.inventory;
 
 import dbbg2.data.inventory.itemCategory.ItemCategory;
+import dbbg2.data.inventory.itemCategory.ItemCategoryType;
 import dbbg2.persistence.Database;
 
 import javax.persistence.Basic;
@@ -21,6 +22,10 @@ public class Book extends InventoryItem {
 
     public Book() {
         super();
+    }
+
+    public Book(String title, ItemCategoryType category, boolean isAvailable, String isbn, String author){
+        this(title, ItemCategory.getDefaultItemCategory(category), isAvailable, isbn, author);
     }
 
     public Book(String title, ItemCategory category, boolean isAvailable, String isbn, String author) {
