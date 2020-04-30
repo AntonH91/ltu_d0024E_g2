@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "Inventory")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -26,10 +27,13 @@ public abstract class InventoryItem {
 
     @Basic(optional = false)
     private String title = "";
+
+    // TODO Make this attribute a ManyToMany
+    @SuppressWarnings("JpaAttributeTypeInspection")
     @Basic(optional = false)
-    private ArrayList<String> keyword = new ArrayList<String>();
+    private List<String> keyword = new ArrayList<String>();
     @OneToMany(cascade = CascadeType.ALL)
-    private ArrayList<InventoryCopy> copies = new ArrayList<>();
+    private List<InventoryCopy> copies = new ArrayList<>();
     @OneToOne(optional = false, cascade = CascadeType.ALL)
     private ItemCategory category;
     @Basic(optional = false)
@@ -73,7 +77,7 @@ public abstract class InventoryItem {
         return category;
     }
 
-    public ArrayList<InventoryCopy> getCopies() {
+    public List<InventoryCopy> getCopies() {
         return copies;
     }
 
@@ -86,7 +90,7 @@ public abstract class InventoryItem {
         this.category = category;
     }
 
-    public ArrayList<String> getKeyword() {
+    public List<String> getKeyword() {
         return keyword;
     }
 
