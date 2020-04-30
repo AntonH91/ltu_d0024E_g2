@@ -1,16 +1,10 @@
 package dbbg2.data.users;
 
-import dbbg2.persistence.Database;
-
 import javax.persistence.*;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 @Entity(name = "Users")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class User {
+public abstract class User {
 
     private static int nextUserId = 10001;
     @Id
@@ -123,92 +117,6 @@ public class User {
      */
     public String getUserType() {
         return "User";
-    }
-
-    /**
-     * Saves the user to the database.
-     */
-    public void saveUser() throws SQLException {
-
-        if (userId == null) {
-            createNewUser();
-        } else {
-            updateUser();
-        }
-
-
-    }
-
-    private void updateUser() throws SQLException {
-        PreparedStatement pst = Database.getDefaultInstance().getPreparedStatement(
-                "UPDATE users " +
-                        "SET first_name=?," +
-                        "last_name=?," +
-                        "street_address=?," +
-                        "post_code=?," +
-                        "post_area = ?," +
-                        "person_nr = ?," +
-                        "email = ?," +
-                        "phone_nr = ?" +
-                        "WHERE user_id = ?"
-        );
-
-        try {
-            pst.setString(1, this.firstName);
-            pst.setString(2, this.lastName);
-            pst.setString(3, this.streetAddress);
-            pst.setString(4, this.postCode);
-            pst.setString(5, this.postArea);
-            pst.setString(6, this.personNr);
-            pst.setString(7, this.email);
-            pst.setString(8, this.phoneNr);
-            pst.execute();
-
-            // TODO Get userId from the database
-            saveSpecificDetails(userId);
-
-        } finally {
-            pst.close();
-        }
-    }
-
-    private void createNewUser() throws SQLException {
-        PreparedStatement pst = Database.getDefaultInstance().getPreparedStatement(
-                "INSERT INTO users(" +
-                        "first_name," +
-                        "last_name," +
-                        "street_address," +
-                        "post_code," +
-                        "post_area," +
-                        "person_nr," +
-                        "email," +
-                        "phone_nr) " +
-                        "VALUES(?, ?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
-        try {
-            pst.setString(1, this.firstName);
-            pst.setString(2, this.lastName);
-            pst.setString(3, this.streetAddress);
-            pst.setString(4, this.postCode);
-            pst.setString(5, this.postArea);
-            pst.setString(6, this.personNr);
-            pst.setString(7, this.email);
-            pst.setString(8, this.phoneNr);
-            pst.execute();
-
-            ResultSet rsNewId = pst.getGeneratedKeys();
-
-
-            // TODO Get userId from the database
-            saveSpecificDetails(userId);
-
-        } finally {
-            pst.close();
-        }
-
-    }
-
-    protected void saveSpecificDetails(String userId) throws SQLException {
-
     }
 
     @Override

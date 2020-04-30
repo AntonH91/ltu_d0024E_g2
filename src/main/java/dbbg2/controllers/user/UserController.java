@@ -67,7 +67,8 @@ public abstract class  UserController {
      * Saves the changes to the user object
      */
     public void saveChanges() throws SQLException {
-        subjectToChange.saveUser();
+        // TODO JPA
+
     }
 
 }

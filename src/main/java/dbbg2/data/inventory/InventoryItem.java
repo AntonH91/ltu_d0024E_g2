@@ -2,6 +2,9 @@ package dbbg2.data.inventory;
 
 import dbbg2.data.inventory.itemCategory.ItemCategory;
 
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import java.util.ArrayList;
 
 public abstract class InventoryItem {
