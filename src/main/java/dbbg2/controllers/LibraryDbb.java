@@ -1,6 +1,7 @@
 package dbbg2.controllers;
 
 import dbbg2.data.inventory.Book;
+import dbbg2.data.inventory.InventoryCopy;
 import dbbg2.data.inventory.InventoryItem;
 import dbbg2.data.inventory.itemCategory.ItemCategoryType;
 import dbbg2.data.users.Employee;
@@ -28,7 +29,7 @@ public class LibraryDbb {
         EntityManager em = JpaPersistence.getEntityManager();
 
 
-        Query q = em.createQuery("SELECT invItem FROM InventoryItem invItem");
+        Query q = em.createQuery("SELECT invItem FROM Inventory invItem");
         List<InventoryItem> inventoryItemList = q.getResultList();
 
         for (InventoryItem invItem: inventoryItemList) {
@@ -40,8 +41,10 @@ public class LibraryDbb {
 
         em.getTransaction().begin();
         Book b = new Book("Harry potter", ItemCategoryType.OTHER_BOOKS, true, "15682", "JK Rowling");
+        b.getCopies().add(new InventoryCopy("474", "shelf", true, b));
 
         em.merge(b);
+        em.getTransaction().commit();
 
     }
 

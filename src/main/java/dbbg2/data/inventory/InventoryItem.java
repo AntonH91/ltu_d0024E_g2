@@ -19,7 +19,7 @@ public abstract class InventoryItem {
 
     private static int nextInventoryId = 10001;
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int invId;
 
     private String inventoryId = "";
@@ -30,7 +30,7 @@ public abstract class InventoryItem {
     private ArrayList<String> keyword = new ArrayList<String>();
     @OneToMany(cascade = CascadeType.ALL)
     private ArrayList<InventoryCopy> copies = new ArrayList<>();
-    @Basic(optional = false)
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
     private ItemCategory category;
     @Basic(optional = false)
     private boolean isAvailable;

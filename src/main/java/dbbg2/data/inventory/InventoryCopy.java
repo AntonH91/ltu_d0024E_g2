@@ -1,13 +1,13 @@
 package dbbg2.data.inventory;
 
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 public class InventoryCopy {
 
+    @Id
+    @GeneratedValue
+    private long cid;
 
     @Basic(optional = false)
     private String barcode = "";
@@ -18,11 +18,11 @@ public class InventoryCopy {
     private InventoryItem item;
 
 
-    private InventoryCopy(){
+    public InventoryCopy(){
 
     }
 
-    private InventoryCopy(String barcode, String location, boolean lendable, InventoryItem item) {
+    public InventoryCopy(String barcode, String location, boolean lendable, InventoryItem item) {
 
         this.barcode = barcode;
         this.location = location;
