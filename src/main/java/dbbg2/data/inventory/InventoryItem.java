@@ -7,6 +7,9 @@ import javax.persistence.*;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import java.util.ArrayList;
 
 @Entity(name = "Inventory")
@@ -32,7 +35,6 @@ public abstract class InventoryItem {
     private boolean isAvailable;
 
 
-
     public InventoryItem() {
 
     }
@@ -43,7 +45,6 @@ public abstract class InventoryItem {
         this.category = category;
         this.isAvailable = isAvailable;
     }
-
 
 
     public void setAvailable(boolean isAvailable) {
@@ -74,7 +75,6 @@ public abstract class InventoryItem {
     public boolean isAvailable() {
         return isAvailable;
     }
-
 
 
     public void setCategory(ItemCategory category) {

@@ -65,7 +65,7 @@ public class LibraryDbb {
 
         u.setFirstName("Anton");
         u.setLastName("Högelin");
-        u.setPersonNr("123");
+        //u.setPersonNr("123");
         u.setEmail("b@c.d");
         em.merge(u);
 
