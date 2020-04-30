@@ -2,12 +2,19 @@ package dbbg2.data.users;
 
 import dbbg2.persistence.Database;
 
+import javax.persistence.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
-public abstract class User {
+@Entity
+public class User {
+
+    @Id
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    private long uid;
 
     private String userId = "";
     private String personNr = "";
@@ -108,9 +115,12 @@ public abstract class User {
 
     /**
      * Gets a string representation of which kind of user this is.
+     *
      * @return A string describing the user type.
      */
-    public abstract String getUserType();
+    public String getUserType() {
+        return "User";
+    }
 
     /**
      * Saves the user to the database.
@@ -199,9 +209,9 @@ public abstract class User {
 
     }
 
+    protected void saveSpecificDetails(String userId) throws SQLException {
 
-
-    protected abstract void saveSpecificDetails(String userId) throws SQLException;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -229,4 +239,55 @@ public abstract class User {
 
         return newId;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "uid=" + uid +
+                ", userId='" + userId + '\'' +
+                ", personNr='" + personNr + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", streetAddress='" + streetAddress + '\'' +
+                ", postCode='" + postCode + '\'' +
+                ", postArea='" + postArea + '\'' +
+                ", phoneNr='" + phoneNr + '\'' +
+                ", email='" + email + '\'' +
+                ", authenticated=" + authenticated +
+                '}';
+    }
+
+    // TODO remove this
+    public static void main(String[] args) {
+        final String PERSISTENCE_UNIT_NAME = "lddb_jpa";
+
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        EntityManager em = factory.createEntityManager();
+
+        // Read existing
+        Query q = em.createQuery("SELECT u FROM User u");
+        List<User> userList = q.getResultList();
+
+        for (User u : userList) {
+            System.out.println(u.toString());
+        }
+        System.out.println("Size: " + userList.size());
+
+        // New user
+
+        em.getTransaction().begin();
+        User u = new User();
+
+        u.setFirstName("Anton");
+        u.setLastName("Högelin");
+
+        em.persist(u);
+
+        em.getTransaction().commit();
+
+        em.close();
+
+
+    }
+
 }

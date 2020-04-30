@@ -2,6 +2,9 @@ package dbbg2.persistence;
 
 import java.sql.*;
 
+
+
+
 /**
  * This class manages the innner workings of the database and encapsulates the global database connection used by the application.
  *
