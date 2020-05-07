@@ -2,10 +2,13 @@ package dbbg2.controllers;
 
 import dbbg2.data.loans.Loan;
 import dbbg2.data.loans.LoanCopies;
+import dbbg2.data.users.UserManager;
 import dbbg2.data.users.Visitor;
 import dbbg2.data.users.visitorcategory.*;
 import dbbg2.persistence.Database;
 import dbbg2.data.users.visitorcategory.VisitorCategory;
+
+import javax.persistence.NoResultException;
 import java.sql.*;
 import java.util.Calendar;
 
@@ -14,21 +17,26 @@ public class LoanController {
     private Loan loan;
     
 
-    public ResultSet getUser(String userName, String pw) throws Exception {
-        //Prepare statement for authentication (maybe should be moved)?
-        PreparedStatement pst = Database.getDefaultInstance().getPreparedStatement("SELECT * FROM USERS WHERE EMAIL = ? LIMIT 1;");
-        Database.addParam(pst, 1, userName);
-        ResultSet rs = pst.executeQuery();
-        // Get the result and check if a user exist
-        if(rs.next()) {
-            return rs;
-            }
-         else {
-             throw new Exception("userName or password is incorrect");
+    /*
+        1. Get user
+        2. Start new loan
+        3. Add user to loan
+        4. Get item
+        5. Add item to loan
+        6. Goto 4 if not done
+        7. Finalize loan
+     */
 
+    public void getUser(String userName, String pw) throws Exception {
+
+        try {
+            client = (Visitor) UserManager.getAuthenticatedUser(userName, pw);
+        } catch (ClassCastException cce) {
 
         }
-
+        catch (NoResultException e) {
+            e.printStackTrace();
+        }
 
 
     }
@@ -177,20 +185,12 @@ public class LoanController {
      * Begin the loan process for the user
      * @throws IllegalStateException Thrown if a loan is attempted when one is already in progress
      */
-    public void startLoan(String barcode) throws Exception {
+    public void startLoan(String barcode) throws IllegalStateException {
         if (loan != null) {
             throw new IllegalStateException("Cannot start a loan while one is active");
         }
 
-        // Checks user for maxloan permission
-        if(client.getLoanedItems() >= client.getCategory().getMaxLoanedAmount()) {
-            throw new Exception("Can not borrow more than "+client.getCategory().getMaxLoanedAmount()+" items!");
-        }
-                    int copy_id = getBookWithRightBarCode(barcode);
-                        int loan_id = createLoan();
-                        insertLoanCopies(loan_id, copy_id);
-                        updateInventoryCopies(copy_id);
-
+        loan = new Loan();
 
     }
 
