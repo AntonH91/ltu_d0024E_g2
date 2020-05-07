@@ -74,7 +74,7 @@ public abstract class  UserController {
 
         em.getTransaction().begin();
 
-        subjectToChange = em.merge(subjectToChange);
+        this.setUser(em.merge(subjectToChange));
 
         em.getTransaction().commit();
 
