@@ -17,6 +17,7 @@ public class Loan {
     @JoinColumn(name = "lender")
     private Visitor client;
 
+
     @OneToMany(orphanRemoval = true)
     @JoinColumn(name = "loan_id")
     private final List<LoanCopies> loanedCopies = new ArrayList<>();
@@ -28,7 +29,18 @@ public class Loan {
 
     }
 
-    //Vart ska denna inventory copy någonstans?
+    public Visitor getClient() {
+        return client;
+    }
+
+    public void setClient(Visitor client) {
+        this.client = client;
+    }
+
+    public long getLoan_id() {
+        return loan_id;
+    }
+//Vart ska denna inventory copy någonstans?
 
 
 }

@@ -1,5 +1,7 @@
 package dbbg2.controllers;
 
+import dbbg2.data.inventory.InventoryCopy;
+import dbbg2.data.inventory.InventoryManager;
 import dbbg2.data.loans.Loan;
 import dbbg2.data.loans.LoanCopies;
 import dbbg2.data.users.UserManager;
@@ -27,36 +29,26 @@ public class LoanController {
         7. Finalize loan
      */
 
-    public void getUser(String userName, String pw) throws Exception {
-
-        try {
-            client = (Visitor) UserManager.getAuthenticatedUser(userName, pw);
-        } catch (ClassCastException cce) {
-
-        }
-        catch (NoResultException e) {
-            e.printStackTrace();
-        }
+    public void getUser(String userName, String pw) throws NoResultException, ClassCastException {
+        client = (Visitor) UserManager.getAuthenticatedUser(userName, pw);
+        loan.setClient(client);
 
 
     }
 
 
-
-
-
-    public VisitorCategory userGetCategory (int VisitorCategory) throws Exception {
+    public VisitorCategory userGetCategory(int VisitorCategory) throws Exception {
         PreparedStatement pst_cat = Database.getDefaultInstance().getPreparedStatement("SELECT * FROM VISITOR_categories WHERE category_id = ? LIMIT 1;");
         Database.addParam(pst_cat, 1, VisitorCategory);
         ResultSet rs_cat = pst_cat.executeQuery();
-        if(rs_cat.next()){
+        if (rs_cat.next()) {
             VisitorCategory vc;
             switch (rs_cat.getString("categoryTitle")) {
                 case "GeneralPublic":
                     vc = dbbg2.data.users.visitorcategory.VisitorCategory.getDefaultCategory(VisitorCategoryType.GENERAL_PUBLIC);
                     break;
                 case "Researcher":
-                        vc = dbbg2.data.users.visitorcategory.VisitorCategory.getDefaultCategory(VisitorCategoryType.RESEARCHER);
+                    vc = dbbg2.data.users.visitorcategory.VisitorCategory.getDefaultCategory(VisitorCategoryType.RESEARCHER);
                     break;
                 case "UniversityStaff":
                     vc = dbbg2.data.users.visitorcategory.VisitorCategory.getDefaultCategory(VisitorCategoryType.UNIVERSITY_STAFF);
@@ -68,12 +60,9 @@ public class LoanController {
                     throw new Exception("ERROR, Couldn't find matching category!");
             }
             return vc;
-        }else {
+        } else {
             throw new Exception("You are not in any of the visitor categories!");
         }
-
-
-
 
 
     }
@@ -82,7 +71,7 @@ public class LoanController {
         PreparedStatement pst_loan = Database.getDefaultInstance().getPreparedStatement("SELECT * loan WHERE user_id = ?;");
         Database.addParam(pst_loan, 1, userID);
         ResultSet rs_loan = pst_loan.executeQuery();
-        while (rs_loan.next())  {
+        while (rs_loan.next()) {
             // Add the copies to the client
             PreparedStatement pst_copies = Database.getDefaultInstance().getPreparedStatement("SELECT * loan_copies WHERE loan_loan_id = ?;");
             Database.addParam(pst_copies, 1, rs_loan.getInt("loan_id"));
@@ -107,32 +96,27 @@ public class LoanController {
         addLoanToUser(userID);
 
 
-
-
-
-
         // TODO Make this good. It could fetch a user and authenticate them - throwing exceptions if it fails
 
 
     }
 
+    //TODO Fix ItemNotLendable Excepetion
 
-    public int getBookWithRightBarCode(String barcode) throws Exception {
-        PreparedStatement pst = Database.getDefaultInstance().getPreparedStatement("SELECT * FROM inventory_copies WHERE barcode = ? LIMIT 1;");
-        Database.addParam(pst, 1, barcode);
-        ResultSet rs = pst.executeQuery();
-        if(rs.next()) {
-            if (rs.getInt("onLoan") == 0) {
-                if (rs.getInt("lendable") == 1) {
-                    return rs.getInt("copy_id");
-                } else {
-                    throw new Exception("This book is not lendable");
-                }
-            } else {
-                throw new Exception("This book is already loaned");
-            }
+    /**
+     * Checks ifs book is available
+     * @param barcode
+     * @return Returns lenable inventorycopy
+     * @throws ItemNotLendableException throws exception if item is not lendable
+     * @throws NoResultException throws if item cannot be found
+     */
+
+    public InventoryCopy getBookWithRightBarCode(String barcode) throws ItemNotLendableException, NoResultException {
+        InventoryCopy copy = InventoryManager.getInventoryCopy(barcode);
+        if (copy.getLendable() && !copy.getOnLoan()) {
+            return copy;
         } else {
-            throw new Exception("Barcode doesnt match any books in store");
+            throw new ItemNotLendableException("Item is not lendable");
         }
 
 
@@ -154,6 +138,7 @@ public class LoanController {
             throw new Exception("Could not get loan id");
         }
     }
+
     public void insertLoanCopies(int loan_id, int copy_id) throws Exception {
         PreparedStatement stmt = Database.getDefaultInstance().getPreparedStatement("INSERT INTO loan_copies (return_date, returned, fined, loan_loan_id, inventory_copies_copy_id) VALUES (?,?,?,?,?);");
         stmt.setDate(1, new Date(Calendar.getInstance().getTime().getTime())); // Fix so time is matching
@@ -172,7 +157,7 @@ public class LoanController {
         Database.addParam(stmt, 1, 1);
         Database.addParam(stmt, 2, copy_id);
         int rows = stmt.executeUpdate();
-        if(rows == 0) {
+        if (rows == 0) {
             throw new SQLException("Could not update invertory");
         }
 
@@ -180,9 +165,9 @@ public class LoanController {
     }
 
 
-
     /**
      * Begin the loan process for the user
+     *
      * @throws IllegalStateException Thrown if a loan is attempted when one is already in progress
      */
     public void startLoan(String barcode) throws IllegalStateException {

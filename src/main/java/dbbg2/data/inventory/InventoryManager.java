@@ -1,7 +1,12 @@
 package dbbg2.data.inventory;
 
 import dbbg2.data.inventory.itemCategory.ItemCategoryType;
+import dbbg2.persistence.JpaPersistence;
+import org.eclipse.persistence.jpa.JpaEntityManager;
 
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 
 public class InventoryManager {
@@ -21,5 +26,12 @@ public class InventoryManager {
         ArrayList<InventoryCopy> invCopy = new ArrayList<>();
         return invCopy;
     }
+    public static InventoryCopy getInventoryCopy(String barCode) throws NoResultException {
+        EntityManager em = JpaPersistence.getEntityManager();
+        TypedQuery<InventoryCopy> q = em.createQuery("SELECT ic FROM inventorycopy ic WHERE ic.barcode =:barcode", InventoryCopy.class);
 
+        return q.setParameter("barcode", barCode).getSingleResult();
+
+
+    }
 }
