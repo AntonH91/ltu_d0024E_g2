@@ -32,13 +32,15 @@ public abstract class InventoryItem {
     @SuppressWarnings("JpaAttributeTypeInspection")
     @Basic(optional = false)
     private List<String> keyword = new ArrayList<String>();
-    @OneToMany(cascade = CascadeType.ALL)
+
+    // Tried to fix the many to many table being created
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
     private List<InventoryCopy> copies = new ArrayList<>();
+
     @OneToOne(optional = false, cascade = CascadeType.ALL)
     private ItemCategory category;
     @Basic(optional = false)
     private boolean isAvailable;
-
 
     public InventoryItem() {
 

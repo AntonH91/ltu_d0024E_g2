@@ -15,6 +15,7 @@ public class InventoryCopy {
     private boolean onLoan = false;
     private boolean lendable = true;
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "Inventory_ID")
     private InventoryItem item;
 
 
