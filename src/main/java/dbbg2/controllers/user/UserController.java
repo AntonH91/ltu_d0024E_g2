@@ -5,7 +5,10 @@ import dbbg2.data.users.User;
 import dbbg2.data.users.UserManager;
 import dbbg2.data.users.Visitor;
 import dbbg2.data.users.visitorcategory.VisitorCategory;
+import dbbg2.persistence.JpaPersistence;
 
+import javax.persistence.EntityManager;
+import javax.swing.text.html.parser.Entity;
 import java.sql.SQLException;
 
 /**
@@ -66,8 +69,14 @@ public abstract class  UserController {
     /**
      * Saves the changes to the user object
      */
-    public void saveChanges() throws SQLException {
-        // TODO JPA
+    public void saveChanges() {
+        EntityManager em = JpaPersistence.getEntityManager();
+
+        em.getTransaction().begin();
+
+        subjectToChange = em.merge(subjectToChange);
+
+        em.getTransaction().commit();
 
     }
 
