@@ -6,6 +6,7 @@ import dbbg2.data.inventory.InventoryItem;
 import dbbg2.data.inventory.itemCategory.ItemCategoryType;
 import dbbg2.data.users.Employee;
 import dbbg2.data.users.User;
+import dbbg2.data.users.UserManager;
 import dbbg2.data.users.Visitor;
 import dbbg2.data.users.visitorcategory.VisitorCategoryType;
 import dbbg2.persistence.JpaPersistence;
@@ -22,8 +23,15 @@ public class LibraryDbb {
 
         testUsers();
         testInventory();
-
+        testUserRetrieval();
     }
+
+
+    private static void testUserRetrieval() {
+        User u = UserManager.getUser("alin629");
+        System.out.println(u);
+    }
+
 
     private static void testInventory(){
         EntityManager em = JpaPersistence.getEntityManager();

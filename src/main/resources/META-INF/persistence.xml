@@ -15,7 +15,9 @@
         <class>dbbg2.data.inventory.Film</class>
         <class>dbbg2.data.inventory.Book</class>
         <class>dbbg2.data.inventory.itemCategory.ItemCategory</class>
-
+        <class>dbbg2.data.loans.LoanCopies</class>
+        <class>dbbg2.data.loans.Loan</class>
+        
         <class>dbbg2.data.users.visitorcategory.VisitorCategory</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

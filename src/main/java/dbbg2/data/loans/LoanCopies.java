@@ -1,14 +1,25 @@
 package dbbg2.data.loans;
 
 import dbbg2.data.inventory.InventoryCopy;
+import jdk.jfr.Timestamp;
 
+import javax.persistence.*;
 import java.util.Date;
-
+@Entity
 public class LoanCopies {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long loan_copy_id;
+
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     private InventoryCopy copy;
+
+    @Timestamp
     private Date returnDate;
-    private boolean returned;
-    private boolean fined;
+
+    private boolean returned = false;
+    private boolean fined = false;
 
     public InventoryCopy getCopy() {
         return copy;
