@@ -1,16 +1,20 @@
 package dbbg2.data.users;
 
+import dbbg2.persistence.JpaPersistence;
+import org.eclipse.persistence.annotations.Index;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity(name = "Users")
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User {
 
-    private static int nextUserId = 10001;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long uid;
 
+    @Index(unique = true)
     private String userId = "";
 
     @Basic(optional = false)
@@ -28,10 +32,10 @@ public abstract class User {
     @Basic(optional = false)
     private String email = "";
 
+    @Transient
     private boolean authenticated = false;
 
     public User() {
-        this.userId = generateUserId();
     }
 
     /* ---------------------------
@@ -134,18 +138,6 @@ public abstract class User {
             Private helpers
         ---------------------------  */
 
-    /**
-     * Generates or gets the userId for a User class. This secures UID unicity.
-     * In the future this will be the responsibility of the database.
-     */
-    private String generateUserId() {
-        // TODO Change this to query database for User ID.
-        String newId = "U" + Integer.toString(nextUserId);
-        nextUserId++;
-
-        return newId;
-    }
-
     @Override
     public String toString() {
         return "User{" +
@@ -161,6 +153,20 @@ public abstract class User {
                 ", email='" + email + '\'' +
                 ", authenticated=" + authenticated +
                 '}';
+    }
+
+    private void createUserId() {
+        String temp = firstName.substring(0,Math.min(1,firstName.length())) + lastName.substring(0,Math.min(3, lastName.length())) +
+                Long.toString(Math.round(Math.random() * 10000));
+        this.userId = temp.toLowerCase();
+    }
+
+    @PrePersist
+    private void onPrePersist() {
+        if (this.userId.equals("")) {
+            createUserId();
+        }
+
     }
 
 }
