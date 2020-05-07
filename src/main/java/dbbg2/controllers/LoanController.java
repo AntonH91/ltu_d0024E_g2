@@ -1,6 +1,7 @@
 package dbbg2.controllers;
 
 import dbbg2.data.inventory.InventoryCopy;
+import dbbg2.data.inventory.InventoryItem;
 import dbbg2.data.inventory.InventoryManager;
 import dbbg2.data.loans.Loan;
 import dbbg2.data.loans.LoanCopies;
@@ -9,7 +10,9 @@ import dbbg2.data.users.Visitor;
 import dbbg2.data.users.visitorcategory.*;
 import dbbg2.persistence.Database;
 import dbbg2.data.users.visitorcategory.VisitorCategory;
+import dbbg2.persistence.JpaPersistence;
 
+import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import java.sql.*;
 import java.util.Calendar;
@@ -37,36 +40,6 @@ public class LoanController {
     }
 
 
-    public VisitorCategory userGetCategory(int VisitorCategory) throws Exception {
-        PreparedStatement pst_cat = Database.getDefaultInstance().getPreparedStatement("SELECT * FROM VISITOR_categories WHERE category_id = ? LIMIT 1;");
-        Database.addParam(pst_cat, 1, VisitorCategory);
-        ResultSet rs_cat = pst_cat.executeQuery();
-        if (rs_cat.next()) {
-            VisitorCategory vc;
-            switch (rs_cat.getString("categoryTitle")) {
-                case "GeneralPublic":
-                    vc = dbbg2.data.users.visitorcategory.VisitorCategory.getDefaultCategory(VisitorCategoryType.GENERAL_PUBLIC);
-                    break;
-                case "Researcher":
-                    vc = dbbg2.data.users.visitorcategory.VisitorCategory.getDefaultCategory(VisitorCategoryType.RESEARCHER);
-                    break;
-                case "UniversityStaff":
-                    vc = dbbg2.data.users.visitorcategory.VisitorCategory.getDefaultCategory(VisitorCategoryType.UNIVERSITY_STAFF);
-                    break;
-                case "Student":
-                    vc = dbbg2.data.users.visitorcategory.VisitorCategory.getDefaultCategory(VisitorCategoryType.STUDENT);
-                    break;
-                default:
-                    throw new Exception("ERROR, Couldn't find matching category!");
-            }
-            return vc;
-        } else {
-            throw new Exception("You are not in any of the visitor categories!");
-        }
-
-
-    }
-
     public void addLoanToUser(String userID) throws Exception {
         PreparedStatement pst_loan = Database.getDefaultInstance().getPreparedStatement("SELECT * loan WHERE user_id = ?;");
         Database.addParam(pst_loan, 1, userID);
@@ -84,22 +57,6 @@ public class LoanController {
         }
     }
 
-
-    public void getAuthenticatedUser(String userName, String pw) throws Exception {
-        // Insert all the loans
-        ResultSet rs = getUser(userName, pw);
-        String userID = rs.getString("user_id");
-        int Vc = rs.getInt("visitor_category");
-        VisitorCategory userVc = userGetCategory(Vc);
-        client = new Visitor(userVc);
-        loan = new Loan();
-        addLoanToUser(userID);
-
-
-        // TODO Make this good. It could fetch a user and authenticate them - throwing exceptions if it fails
-
-
-    }
 
     //TODO Fix ItemNotLendable Excepetion
 
@@ -164,13 +121,49 @@ public class LoanController {
 
     }
 
+    public void addItemToLoan(String barcode) throws ItemNotLendableException, TooManyItemsOnLoanException{
+        if (client.getLoanedItems() + loan.getCopies().size() >= client.getCategory().getMaxLoanedAmount()){
+            throw new TooManyItemsOnLoanException("There are too many items on loan. You cannot borrow more at this time");
+        }
+        InventoryCopy invItem = getBookWithRightBarCode(barcode);
+        loan.addCopy(invItem);
+    }
+
+    public void finalizeLoan(){
+        EntityManager em = JpaPersistence.getEntityManager();
+        em.getTransaction().begin();
+
+        //TODO mark inventory copies as "on loan"
+        //TODO increment count of users loan item
+        //TODO persist loan
+        //TODO mark item "isAvailable"
+
+        try {
+            for (LoanCopies ic: loan.getCopies()){
+                ic.getCopy().setOnLoan(true);
+
+            }
+
+            client.setLoanedItems(client.getLoanedItems() + loan.getCopies().size());
+
+            em.persist(loan);
+
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw e;
+        }
+    }
+
+
+
 
     /**
      * Begin the loan process for the user
      *
      * @throws IllegalStateException Thrown if a loan is attempted when one is already in progress
      */
-    public void startLoan(String barcode) throws IllegalStateException {
+    public void startLoan() throws IllegalStateException {
         if (loan != null) {
             throw new IllegalStateException("Cannot start a loan while one is active");
         }

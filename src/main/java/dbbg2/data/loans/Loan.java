@@ -1,10 +1,10 @@
 package dbbg2.data.loans;
 
+import dbbg2.data.inventory.InventoryCopy;
 import dbbg2.data.users.Visitor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class Loan {
@@ -28,6 +28,30 @@ public class Loan {
         loanedCopies.add(copy);
 
     }
+
+    public void addCopy(InventoryCopy invCopy){
+        LoanCopies lc = new LoanCopies();
+        lc.setCopy(invCopy);
+
+
+        // Calculate return date for item
+        int lendingDays = invCopy.getItem().getCategory().getLendingDays();
+        Date returnDate = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(returnDate);
+        c.add(Calendar.DATE, lendingDays);
+        returnDate = c.getTime();
+
+
+        lc.setReturnDate(returnDate);
+
+        this.addCopy(lc);
+    }
+
+    public List<LoanCopies> getCopies(){
+        return Collections.unmodifiableList(this.loanedCopies);
+    }
+
 
     public Visitor getClient() {
         return client;
