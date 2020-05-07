@@ -1,15 +1,27 @@
 package dbbg2.data.loans;
 
+import dbbg2.persistence.JpaPersistence;
+
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
+import java.util.List;
 
 public class LoanManager {
 
 
-    public static ArrayList<Loan> getLoansFromUser(String userId){
-        //getUserFromDb [SQL Query Here]
-        ArrayList<String> Loans; //get loans from user
+    public static List<Loan> getLoansFromUser(String userId) throws NoResultException {
+        EntityManager em = JpaPersistence.getEntityManager();
 
-        return null;
+        TypedQuery<Loan> lq = em.createQuery("SELECT l " +
+                                                    "FROM Loan l " +
+                                                    "INNER JOIN Visitor v ON l.client = v " +
+                                                    "WHERE v.userId=:userId", Loan.class);
+
+        List<Loan>  loanList = lq.setParameter("userId",userId).getResultList();
+
+        return loanList;
     }
 
 

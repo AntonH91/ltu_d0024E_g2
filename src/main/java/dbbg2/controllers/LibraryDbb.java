@@ -12,6 +12,7 @@ import dbbg2.data.users.visitorcategory.VisitorCategoryType;
 import dbbg2.persistence.JpaPersistence;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.List;
 
@@ -28,8 +29,15 @@ public class LibraryDbb {
 
 
     private static void testUserRetrieval() {
-        User u = UserManager.getUser("alin629");
-        System.out.println(u);
+
+        User u = null;
+        try {
+            u = UserManager.getUser("alin629");
+            System.out.println(u);
+        } catch (NoResultException e) {
+            System.out.println("Could not find user!");
+        }
+
     }
 
 

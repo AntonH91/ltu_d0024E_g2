@@ -1,10 +1,10 @@
 package dbbg2.data.loans;
 
 import dbbg2.data.inventory.InventoryCopy;
-import jdk.jfr.Timestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+
 @Entity
 public class LoanCopies {
 
@@ -15,7 +15,7 @@ public class LoanCopies {
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     private InventoryCopy copy;
 
-    @Timestamp
+    @Temporal(TemporalType.DATE)
     private Date returnDate;
 
     private boolean returned = false;

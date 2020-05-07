@@ -11,13 +11,14 @@ public class Loan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long uid;
+    private long loan_id;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "lender")
     private Visitor client;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(orphanRemoval = true)
+    @JoinColumn(name = "loan_id")
     private final List<LoanCopies> loanedCopies = new ArrayList<>();
 
     public void addCopy(LoanCopies copy) {
