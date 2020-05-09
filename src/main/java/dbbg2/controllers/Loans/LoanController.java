@@ -1,15 +1,14 @@
-package dbbg2.controllers;
+package dbbg2.controllers.Loans;
 
+import dbbg2.controllers.Loans.Exceptions.ItemNotLendableException;
+import dbbg2.controllers.Loans.Exceptions.TooManyItemsOnLoanException;
 import dbbg2.data.inventory.InventoryCopy;
-import dbbg2.data.inventory.InventoryItem;
 import dbbg2.data.inventory.InventoryManager;
 import dbbg2.data.loans.Loan;
 import dbbg2.data.loans.LoanCopies;
 import dbbg2.data.users.UserManager;
 import dbbg2.data.users.Visitor;
-import dbbg2.data.users.visitorcategory.*;
 import dbbg2.persistence.Database;
-import dbbg2.data.users.visitorcategory.VisitorCategory;
 import dbbg2.persistence.JpaPersistence;
 
 import javax.persistence.EntityManager;
@@ -121,7 +120,7 @@ public class LoanController {
 
     }
 
-    public void addItemToLoan(String barcode) throws ItemNotLendableException, TooManyItemsOnLoanException{
+    public void addItemToLoan(String barcode) throws ItemNotLendableException, TooManyItemsOnLoanException {
         if (client.getLoanedItems() + loan.getCopies().size() >= client.getCategory().getMaxLoanedAmount()){
             throw new TooManyItemsOnLoanException("There are too many items on loan. You cannot borrow more at this time");
         }
