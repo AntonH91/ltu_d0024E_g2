@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane id="userOverviewAnchor" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="dbbg2.view.user.UserOverviewController">
+    <children>
+        <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0">
+            <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="146.0" prefWidth="598.0">
+                    <children>
+                        <TextField fx:id="txtUserId" layoutX="47.0" layoutY="35.0" promptText="User ID"/>
+                        <TextField fx:id="txtFirstName" layoutX="47.0" layoutY="73.0" promptText="First Name"/>
+                        <TextField fx:id="txtLastName" layoutX="47.0" layoutY="105.0" promptText="Last Name"/>
+                        <TextField fx:id="txtEmail" layoutX="47.0" layoutY="139.0" promptText="E-mail"/>
+                        <Button fx:id="btnSearchUser" layoutX="481.0" layoutY="152.0" mnemonicParsing="false"
+                                onAction="#handleSearchButtonClick" text="Search"/>
+                    </children>
+                </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                    <children>
+                        <TableView fx:id="tblUserList" prefHeight="196.0" prefWidth="598.0"
+                                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <columns>
+                                <TableColumn id="tcUserId" prefWidth="75.0" text="User ID"/>
+                                <TableColumn id="tcFirstName" prefWidth="75.0" text="First Name"/>
+                                <TableColumn id="tcLastName" prefWidth="75.0" text="Last Name"/>
+                                <TableColumn id="tcEmail" prefWidth="75.0" text="E-mail"/>
+                            </columns>
+                        </TableView>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+    </children>
+</AnchorPane>
