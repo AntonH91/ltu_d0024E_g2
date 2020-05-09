@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
 }
 
 group 'org.example'
@@ -11,6 +12,14 @@ repositories {
     mavenCentral()
 }
 
+javafx {
+    version='14+'
+    modules = [
+            'javafx.controls',
+            'javafx.fxml'
+    ]
+}
+
 dependencies {
     testImplementation group: 'junit', name: 'junit', version: '4.12'
 
@@ -18,10 +27,7 @@ dependencies {
             [group: 'mysql', name: 'mysql-connector-java', version: '8.0.19'],
             [group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'],
             [group: 'org.eclipse.persistence', name: 'eclipselink', version: '2.7.6'],
-            [group: 'org.openjfx', name:'javafx-controls', version:'14+'],
-            [group: 'org.openjfx', name:'javafx-base', version:'14+'],
-            [group: 'org.openjfx', name:'javafx-fxml', version:'14+'],
-            [group: 'org.openjfx', name:'javafx-swing', version:'14+']
+
 
     )
 }
