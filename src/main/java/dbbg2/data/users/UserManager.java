@@ -60,5 +60,21 @@ public class UserManager {
         return q.getResultList();
     }
 
+    public static List<User> getUsers(String userID, String firstName, String lastName, String email){
+        EntityManager em = JpaPersistence.getEntityManager();
+        TypedQuery<User> q = em.createQuery("SELECT u FROM Users u " +
+                "WHERE (u.userId = :userId or :userId = '') " +
+                "AND (u.firstName = :firstName or :firstName = '') " +
+                "AND (u.lastName = :lastName or :lastName = '') " +
+                "AND (u.email = :email or :email = '') ", User.class);
+
+        q.setParameter("userId", userID);
+        q.setParameter("firstName", firstName);
+        q.setParameter("lastName", lastName);
+        q.setParameter("email", email);
+
+        return q.getResultList();
+    }
+
 
 }

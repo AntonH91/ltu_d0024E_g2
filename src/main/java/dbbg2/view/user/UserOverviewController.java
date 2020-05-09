@@ -27,7 +27,10 @@ public class UserOverviewController implements Initializable {
     public TableColumn tcEmail;
 
     public void handleSearchButtonClick(ActionEvent actionEvent) {
-        tblUserList.setItems(FXCollections.observableArrayList(UserManager.getUsers()));
+        tblUserList.setItems(FXCollections.observableArrayList(UserManager.getUsers(txtUserId.getText(), txtFirstName.getText(), txtLastName.getText(), txtEmail.getText())));
+
+
+
     }
 
     @Override
