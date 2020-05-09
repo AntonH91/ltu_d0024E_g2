@@ -8,7 +8,7 @@ import dbbg2.data.loans.Loan;
 import dbbg2.data.loans.LoanCopies;
 import dbbg2.data.users.UserManager;
 import dbbg2.data.users.Visitor;
-import dbbg2.persistence.JpaPersistence;
+import dbbg2.utils.persistence.JpaPersistence;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;

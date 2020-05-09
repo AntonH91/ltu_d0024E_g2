@@ -1,6 +1,6 @@
 package dbbg2;
 
-import dbbg2.persistence.JpaPersistence;
+import dbbg2.utils.persistence.JpaPersistence;
 
 /**
  * Used to actually start the application so that there is no need to have downloaded JavaFX modules.

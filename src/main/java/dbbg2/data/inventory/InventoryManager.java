@@ -1,8 +1,7 @@
 package dbbg2.data.inventory;
 
 import dbbg2.data.inventory.itemCategory.ItemCategoryType;
-import dbbg2.persistence.JpaPersistence;
-import org.eclipse.persistence.jpa.JpaEntityManager;
+import dbbg2.utils.persistence.JpaPersistence;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;

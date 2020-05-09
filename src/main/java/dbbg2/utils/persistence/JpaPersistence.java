@@ -1,4 +1,4 @@
-package dbbg2.persistence;
+package dbbg2.utils.persistence;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

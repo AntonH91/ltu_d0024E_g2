@@ -2,14 +2,13 @@ package dbbg2.controllers;
 
 import dbbg2.data.inventory.Book;
 import dbbg2.data.inventory.InventoryCopy;
-import dbbg2.data.inventory.InventoryItem;
 import dbbg2.data.inventory.itemCategory.ItemCategoryType;
 import dbbg2.data.users.Employee;
 import dbbg2.data.users.User;
 import dbbg2.data.users.UserManager;
 import dbbg2.data.users.Visitor;
 import dbbg2.data.users.visitorcategory.VisitorCategoryType;
-import dbbg2.persistence.JpaPersistence;
+import dbbg2.utils.persistence.JpaPersistence;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -23,10 +22,10 @@ import java.util.List;
 public class LibraryDbb {
     public static void main(String[] args) {
 
-        testUsers();
+        //testUsers();
         //testInventory();
         testUserRetrieval();
-        createBooks();
+        //createBooks();
     }
 
     private static void createBooks() {
@@ -56,7 +55,7 @@ public class LibraryDbb {
 
         User u = null;
         try {
-            u = UserManager.getUser("alin629");
+            u = UserManager.getAuthenticatedUser("bspr9817","password4" );
             System.out.println(u);
         } catch (NoResultException e) {
             System.out.println("Could not find user!");
@@ -117,6 +116,7 @@ public class LibraryDbb {
         e.setLastName("Geofferson");
         e.setPersonNr("123");
         e.setEmail("a@b.c");
+        e.setPassword("password1");
         em.merge(e);
 
         Visitor v = new Visitor(VisitorCategoryType.GENERAL_PUBLIC);
@@ -124,6 +124,7 @@ public class LibraryDbb {
         v.setLastName("Lincoln");
         v.setPersonNr("321");
         v.setEmail("abe@example.com");
+        v.setPassword("password2");
         em.merge(v);
 
         v = new Visitor(VisitorCategoryType.RESEARCHER);
@@ -131,6 +132,7 @@ public class LibraryDbb {
         v.setLastName("Einstein");
         v.setPersonNr("321");
         v.setEmail("aeinstein@example.com");
+        v.setPassword("password3");
         em.merge(v);
 
 
@@ -139,6 +141,7 @@ public class LibraryDbb {
         v.setLastName("Springsteen");
         v.setPersonNr("321");
         v.setEmail("ssteen@example.com");
+        v.setPassword("password4");
         em.merge(v);
 
         em.getTransaction().commit();
