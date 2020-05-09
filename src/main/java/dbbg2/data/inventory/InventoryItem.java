@@ -102,12 +102,18 @@ public abstract class InventoryItem {
         return newInventoryId;
     }
 
-    public void addNewItem() throws SQLException {
-        PreparedStatement pst;
-        pst = Database.getDefaultInstance().getPreparedStatement("INSERT INTO inventory title, category, is_available" + "values (?, ?, ?, ?, ?");
-        pst.setString(1, this.title);
-        pst.setObject(2, this.category);
-        pst.setBoolean(3, this.isAvailable);
+    public void addCopy(String barcode, String location) {
+        InventoryCopy ic = new InventoryCopy(barcode,  location, this.getCategory().isLendable(), this);
+        this.copies.add(ic);
+
+
     }
+
+    public void removeCopy(String barcode) {
+        this.copies.removeIf(inventoryCopy ->
+            inventoryCopy.getBarcode().equals(barcode));
+    }
+
+
 
 }

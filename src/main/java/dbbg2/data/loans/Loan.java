@@ -13,12 +13,12 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long loan_id;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "lender")
     private Visitor client;
 
 
-    @OneToMany(orphanRemoval = true)
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "loan_id")
     private final List<LoanCopies> loanedCopies = new ArrayList<>();
 

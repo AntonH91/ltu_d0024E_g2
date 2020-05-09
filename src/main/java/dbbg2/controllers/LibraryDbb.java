@@ -14,6 +14,7 @@ import dbbg2.persistence.JpaPersistence;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,8 +24,32 @@ public class LibraryDbb {
     public static void main(String[] args) {
 
         testUsers();
-        testInventory();
+        //testInventory();
         testUserRetrieval();
+        createBooks();
+    }
+
+    private static void createBooks() {
+        List<Book> books = new ArrayList<>();
+
+
+        books.add(new Book("The Hobbit", ItemCategoryType.OTHER_BOOKS, true,"123", "JRR Tolkien"));
+        books.add(new Book("Harry Potter",ItemCategoryType.OTHER_BOOKS, true,"123", "JK Rowling"));
+        books.add(new Book("Emil",ItemCategoryType.OTHER_BOOKS, true,"123", "Astrid Lindgren"));
+        books.add(new Book("Dexter",ItemCategoryType.OTHER_BOOKS, true,"123", "Jeff Lindsay"));
+
+        int index = 0;
+        EntityManager em = JpaPersistence.getEntityManager();
+
+        em.getTransaction().begin();
+        for(Book b : books) {
+            b.addCopy(String.valueOf(index), "A Shelf");
+            index++;
+            em.merge(b);
+        }
+
+        em.getTransaction().commit();
+
     }
 
     private static void testUserRetrieval() {

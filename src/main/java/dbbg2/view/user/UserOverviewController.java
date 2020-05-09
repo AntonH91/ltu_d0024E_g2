@@ -34,5 +34,14 @@ public class UserOverviewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         tcUserId.setCellValueFactory(new PropertyValueFactory<User, String>("userId"));
         tcFirstName.setCellValueFactory(new PropertyValueFactory<User, String>("firstName"));
+        tcLastName.setCellValueFactory(new PropertyValueFactory<User, String>("lastName"));
+        tcEmail.setCellValueFactory(new PropertyValueFactory<User, String>("email"));
+    }
+
+    public void handleClearButtonClick(ActionEvent actionEvent) {
+        txtUserId.clear();
+        txtFirstName.clear();
+        txtLastName.clear();
+        txtEmail.clear();
     }
 }

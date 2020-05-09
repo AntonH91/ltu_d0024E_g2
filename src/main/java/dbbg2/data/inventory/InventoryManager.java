@@ -28,7 +28,7 @@ public class InventoryManager {
     }
     public static InventoryCopy getInventoryCopy(String barCode) throws NoResultException {
         EntityManager em = JpaPersistence.getEntityManager();
-        TypedQuery<InventoryCopy> q = em.createQuery("SELECT ic FROM inventorycopy ic WHERE ic.barcode =:barcode", InventoryCopy.class);
+        TypedQuery<InventoryCopy> q = em.createQuery("SELECT ic FROM InventoryCopy ic WHERE ic.barcode =:barcode", InventoryCopy.class);
 
         return q.setParameter("barcode", barCode).getSingleResult();
 

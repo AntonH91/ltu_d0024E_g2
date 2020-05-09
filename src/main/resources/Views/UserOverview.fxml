@@ -14,8 +14,10 @@
                         <TextField fx:id="txtFirstName" layoutX="47.0" layoutY="73.0" promptText="First Name"/>
                         <TextField fx:id="txtLastName" layoutX="47.0" layoutY="105.0" promptText="Last Name"/>
                         <TextField fx:id="txtEmail" layoutX="47.0" layoutY="139.0" promptText="E-mail"/>
-                        <Button fx:id="btnSearchUser" layoutX="481.0" layoutY="152.0" mnemonicParsing="false"
+                        <Button fx:id="btnSearchUser" layoutX="432.0" layoutY="152.0" mnemonicParsing="false"
                                 onAction="#handleSearchButtonClick" text="Search"/>
+                        <Button fx:id="btnClearSearch" layoutX="495.0" layoutY="152.0" mnemonicParsing="false"
+                                onAction="#handleClearButtonClick" text="Clear"/>
                     </children>
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">

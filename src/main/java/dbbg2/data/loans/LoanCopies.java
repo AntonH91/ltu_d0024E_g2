@@ -12,7 +12,7 @@ public class LoanCopies {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long loan_copy_id;
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     private InventoryCopy copy;
 
     @Temporal(TemporalType.DATE)
