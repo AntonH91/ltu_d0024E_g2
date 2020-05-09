@@ -24,10 +24,10 @@
                                    AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <columns>
-                                <TableColumn id="tcUserId" prefWidth="75.0" text="User ID"/>
-                                <TableColumn id="tcFirstName" prefWidth="75.0" text="First Name"/>
-                                <TableColumn id="tcLastName" prefWidth="75.0" text="Last Name"/>
-                                <TableColumn id="tcEmail" prefWidth="75.0" text="E-mail"/>
+                                <TableColumn fx:id="tcUserId" prefWidth="75.0" text="User ID"/>
+                                <TableColumn fx:id="tcFirstName" prefWidth="75.0" text="First Name"/>
+                                <TableColumn fx:id="tcLastName" prefWidth="75.0" text="Last Name"/>
+                                <TableColumn fx:id="tcEmail" prefWidth="75.0" text="E-mail"/>
                             </columns>
                         </TableView>
                     </children>
