@@ -9,10 +9,14 @@ public class JpaPersistence {
 
     private static EntityManagerFactory factory;
 
-    public static EntityManager getEntityManager() {
+    public static void startUp() {
         if (factory == null) {
             factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
         }
+    }
+
+    public static EntityManager getEntityManager() {
+        startUp();
         return factory.createEntityManager();
     }
 

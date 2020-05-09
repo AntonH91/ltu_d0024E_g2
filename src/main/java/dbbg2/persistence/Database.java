@@ -42,23 +42,6 @@ public class Database {
         return defaultInstance;
     }
 
-    /**
-     * Purely for testing
-     *
-     * @param args TODO Remove this, really.
-     */
-    public static void main(String[] args) {
-        Database db;
-
-        try {
-            db = Database.getDefaultInstance();
-            System.out.println("Connection successful!");
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-
-        }
-    }
 
     /**
      * Gets a Statement object from the active connection
