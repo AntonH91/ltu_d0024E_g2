@@ -1,5 +1,7 @@
 package dbbg2.data.inventory;
 
+import org.eclipse.persistence.annotations.Index;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,6 +12,7 @@ public class InventoryCopy {
     private long cid;
 
     @Basic(optional = false)
+    @Index(unique = true)
     private String barcode = "";
     private String location = "";
     private boolean onLoan = false;

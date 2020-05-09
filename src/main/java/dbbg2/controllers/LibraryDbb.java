@@ -27,7 +27,6 @@ public class LibraryDbb {
         testUserRetrieval();
     }
 
-
     private static void testUserRetrieval() {
 
         User u = null;

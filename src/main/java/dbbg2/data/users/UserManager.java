@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.swing.text.html.parser.Entity;
+import java.util.List;
 
 public class UserManager {
 
@@ -51,5 +52,13 @@ public class UserManager {
         TypedQuery<Visitor> q = em.createQuery("SELECT v FROM Visitor v WHERE v.userId=:userId",  Visitor.class);
         return q.setParameter("userId",userId).getSingleResult();
     }
+
+    public static List<User> getUsers() {
+        EntityManager em = JpaPersistence.getEntityManager();
+        TypedQuery<User> q = em.createQuery("SELECT u FROM Users u", User.class);
+
+        return q.getResultList();
+    }
+
 
 }
