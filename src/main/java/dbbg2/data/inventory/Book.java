@@ -3,13 +3,15 @@ package dbbg2.data.inventory;
 import dbbg2.data.inventory.itemCategory.ItemCategory;
 import dbbg2.data.inventory.itemCategory.ItemCategoryType;
 import dbbg2.utils.persistence.Database;
+import dbbg2.utils.persistence.JpaPersistence;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import java.sql.*;
 import java.util.ArrayList;
 
-@Entity
+@Entity(name = "Book")
 public class Book extends InventoryItem {
 
 

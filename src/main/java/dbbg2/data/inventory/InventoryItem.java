@@ -2,13 +2,18 @@ package dbbg2.data.inventory;
 
 import dbbg2.data.inventory.itemCategory.ItemCategory;
 import dbbg2.data.inventory.itemCategory.ItemCategoryType;
+import dbbg2.data.inventory.Keyword;
+import dbbg2.data.users.User;
+import org.eclipse.persistence.annotations.Index;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity(name = "Inventory")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -19,6 +24,7 @@ public abstract class InventoryItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int invId;
 
+    @Index(unique = true)
     private String inventoryId = "";
 
     @Basic(optional = false)
@@ -26,12 +32,13 @@ public abstract class InventoryItem {
 
     // TODO Make this attribute a ManyToMany
     @SuppressWarnings("JpaAttributeTypeInspection")
-    @Basic(optional = false)
-    private List<String> keyword = new ArrayList<String>();
+    @ManyToMany(mappedBy = "items", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    //@Basic(optional = false)
+    private List<Keyword> keyword = new ArrayList<>();
 
     // Tried to fix the many to many table being created
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
-    private List<InventoryCopy> copies = new ArrayList<>();
+    private Set<InventoryCopy> copies = new HashSet<>();
 
     @OneToOne(optional = false, cascade = CascadeType.ALL)
     private ItemCategory category;
@@ -58,8 +65,8 @@ public abstract class InventoryItem {
         this.isAvailable = isAvailable;
     }
 
-    public int getInventoryId() {
-        return nextInventoryId;
+    public String getInventoryId() {
+        return inventoryId;
     }
 
 
@@ -75,7 +82,8 @@ public abstract class InventoryItem {
         return category;
     }
 
-    public List<InventoryCopy> getCopies() {
+    //Tried changing from list to see if it works
+    public Set<InventoryCopy> getCopies() {
         return copies;
     }
 
@@ -88,7 +96,8 @@ public abstract class InventoryItem {
         this.category = category;
     }
 
-    public List<String> getKeyword() {
+    //Tried changing from list to see if it works
+    public List<Keyword> getKeyword() {
         return keyword;
     }
 
@@ -109,7 +118,5 @@ public abstract class InventoryItem {
         this.copies.removeIf(inventoryCopy ->
             inventoryCopy.getBarcode().equals(barcode));
     }
-
-
 
 }

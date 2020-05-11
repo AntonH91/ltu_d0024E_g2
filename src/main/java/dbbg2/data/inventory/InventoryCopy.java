@@ -4,7 +4,7 @@ import org.eclipse.persistence.annotations.Index;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "InventoryCopy")
 public class InventoryCopy {
 
     @Id
