@@ -1,11 +1,10 @@
 package dbbg2.data.loans;
 
-import dbbg2.persistence.JpaPersistence;
+import dbbg2.utils.persistence.JpaPersistence;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-import java.util.ArrayList;
 import java.util.List;
 
 public class LoanManager {

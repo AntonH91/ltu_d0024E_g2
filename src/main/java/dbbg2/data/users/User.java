@@ -1,10 +1,9 @@
 package dbbg2.data.users;
 
-import dbbg2.persistence.JpaPersistence;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.eclipse.persistence.annotations.Index;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity(name = "Users")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -31,6 +30,10 @@ public abstract class User {
 
     @Basic(optional = false)
     private String email = "";
+
+
+    @Basic(optional = false)
+    private String password = "";
 
     @Transient
     private boolean authenticated = false;
@@ -113,6 +116,11 @@ public abstract class User {
     public boolean isAuthenticated() {
         return authenticated;
     }
+
+    public void setPassword(String password) {
+        this.password = DigestUtils.md5Hex(password);
+    }
+
 
     /**
      * Gets a string representation of which kind of user this is.

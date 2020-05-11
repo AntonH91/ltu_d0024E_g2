@@ -1,4 +1,4 @@
-package dbbg2.persistence;
+package dbbg2.utils.persistence;
 
 import java.sql.*;
 

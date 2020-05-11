@@ -2,13 +2,10 @@ package dbbg2.data.inventory;
 
 import dbbg2.data.inventory.itemCategory.ItemCategory;
 import dbbg2.data.inventory.itemCategory.ItemCategoryType;
-import dbbg2.persistence.Database;
+import dbbg2.utils.persistence.Database;
 
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.ArrayList;
 

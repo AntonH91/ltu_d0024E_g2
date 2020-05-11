@@ -1,12 +1,11 @@
 package dbbg2.data.users;
 
-import dbbg2.data.users.visitorcategory.VisitorCategoryType;
-import dbbg2.persistence.JpaPersistence;
+import dbbg2.utils.persistence.JpaPersistence;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-import javax.swing.text.html.parser.Entity;
 import java.util.List;
 
 public class UserManager {
@@ -19,8 +18,13 @@ public class UserManager {
      * @throws NoResultException If no user can be found with the given credentials
      */
     public static User getAuthenticatedUser(String userId, String password) throws NoResultException {
-        // TODO Implement this
-        return getUser(userId);
+        EntityManager em = JpaPersistence.getEntityManager();
+
+        TypedQuery<User> q = em.createQuery("SELECT u FROM Users u WHERE u.userId=:userId AND u.password=:password", User.class);
+        q.setParameter("userId",userId);
+        q.setParameter("password", DigestUtils.md5Hex(password));
+
+        return q.getSingleResult();
     }
 
     /**

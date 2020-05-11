@@ -1,15 +1,9 @@
 package dbbg2.controllers.user;
 
-import dbbg2.data.users.Employee;
 import dbbg2.data.users.User;
-import dbbg2.data.users.UserManager;
-import dbbg2.data.users.Visitor;
-import dbbg2.data.users.visitorcategory.VisitorCategory;
-import dbbg2.persistence.JpaPersistence;
+import dbbg2.utils.persistence.JpaPersistence;
 
 import javax.persistence.EntityManager;
-import javax.swing.text.html.parser.Entity;
-import java.sql.SQLException;
 
 /**
  * @author Anton Högelin (anthge-7)
