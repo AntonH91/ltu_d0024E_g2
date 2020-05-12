@@ -4,6 +4,7 @@ import dbbg2.data.inventory.itemCategory.ItemCategory;
 import dbbg2.data.inventory.itemCategory.ItemCategoryType;
 import dbbg2.data.users.User;
 import dbbg2.utils.persistence.JpaPersistence;
+import jdk.jfr.Category;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -20,6 +21,8 @@ public class InventoryManager {
         output.add(new Book("Harry Potter",ItemCategoryType.OTHER_BOOKS, true,"123", "JK Rowling"));
         output.add(new Book("Emil",ItemCategoryType.OTHER_BOOKS, true,"123", "Astrid Lindgren"));
         output.add(new Book("Dexter",ItemCategoryType.OTHER_BOOKS, true,"123", "Jeff Lindsay"));
+        output.add(new Film("Avatar", ItemCategoryType.FILM, true, "nobody", 18, "US"));
+//String title, ItemCategoryType category, boolean isAvailable, String director, int ageLimit, String originCountry
 
         return output;
     }
@@ -64,5 +67,22 @@ public class InventoryManager {
 
         return q.getResultList();
     }
+
+    public static List<Book> getBooks(String title, String inventoryId){
+        EntityManager em = JpaPersistence.getEntityManager();
+        TypedQuery<Book> q = em.createQuery("select b from Book b " +
+                        "WHERE (b.title = :title or :title = '') " +
+                        "AND (b.inventoryId = :inventoryId or :inventoryId = '') "
+                        //"AND (b.category = :category or :category = '')"
+                , Book.class);
+
+        q.setParameter("title", title);
+        q.setParameter("inventoryId", inventoryId);
+        //q.setParameter("category", category);
+
+        return q.getResultList();
+    }
+
+
 
 }

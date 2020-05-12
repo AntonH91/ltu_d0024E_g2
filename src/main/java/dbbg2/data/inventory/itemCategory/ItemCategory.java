@@ -26,7 +26,6 @@ public class ItemCategory {
     }
 
 
-
     public String getItemCategoryTitle() {
         return itemCategoryTitle;
     }

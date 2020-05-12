@@ -1,4 +1,4 @@
-package dbbg2.view.item;
+package dbbg2.view.item.search;
 import dbbg2.utils.persistence.JpaPersistence;
 
 

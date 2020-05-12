@@ -1,4 +1,4 @@
-package dbbg2.view.item;
+package dbbg2.view.item.search;
 
 import dbbg2.data.inventory.Book;
 import dbbg2.data.inventory.InventoryItem;
@@ -43,8 +43,9 @@ public class ItemSearchController implements Initializable {
 
     public Button btnSearchBook;
 
+
     public void handleSearchBookClick(ActionEvent actionEvent){
-        tblBookList.setItems(FXCollections.observableArrayList(InventoryManager.getInventoryItems(txtItemTitle.getText(), txtItemId.getText())));
+        tblBookList.setItems(FXCollections.observableArrayList(InventoryManager.getBooks(txtItemTitle.getText(), txtItemId.getText())));
     }
 
 

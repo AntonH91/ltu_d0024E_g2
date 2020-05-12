@@ -57,30 +57,17 @@ public class Book extends InventoryItem {
             pst.setString(1, inventoryId);
             pst.executeQuery();
 
-            /*final String IS_AVAILABLE = "UPDATE InventoryItem SET is_available = ? WHERE inventory_id = ?";
-            PreparedStatement pstAvailable = Database.getDefaultInstance().getPreparedStatement(IS_AVAILABLE);
-            pstAvailable.setString(2, inventoryId);
-
-            // If there are results where on_loan = false (meaning that there are books available) set the availability of the item to "available"
-            if(resultSet.next()){
-                //Get the value of the inventory ID from the table that was previously input in the system so that you do not have to enter it again
-                final String BOOK_AVAILABLE = "UPDATE InventoryItem SET is_available = true WHERE inventory_id = ?";
-                pst.setString(1, inventoryId);
-                PreparedStatement pst2 = Database.getDefaultInstance().getPreparedStatement(BOOK_AVAILABLE);
-                pst.executeQuery(BOOK_AVAILABLE);
-            }
-            // If there are no results where on_loan = false (meaning that there are no books available) set the availability of the item to "unavailable"
-            else {
-                //Get the value of the inventory ID from the table that was previously input in the system so that you do not have to enter it again
-                String bookInventoryId = resultSet.getString("inventory_id");
-                final String BOOK_UNAVAILABLE = "UPDATE InventoryItem SET is_available = false WHERE inventory_id = " + bookInventoryId;
-                PreparedStatement pst3 = Database.getDefaultInstance().getPreparedStatement(BOOK_UNAVAILABLE);
-                pst.executeQuery(BOOK_UNAVAILABLE);
-            }*/
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
     }
+
+    //Fix method for adding book to database
+    public void addBookToDb(String title, ItemCategoryType category, boolean isAvailable, String isbn, String author){
+
+    }
+
+
 
 
 }

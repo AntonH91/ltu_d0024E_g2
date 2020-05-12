@@ -1,6 +1,7 @@
 package dbbg2.controllers;
 
 import dbbg2.data.inventory.Book;
+import dbbg2.data.inventory.Film;
 import dbbg2.data.inventory.InventoryCopy;
 import dbbg2.data.inventory.itemCategory.ItemCategoryType;
 import dbbg2.data.users.Employee;
@@ -22,10 +23,11 @@ import java.util.List;
 public class LibraryDbb {
     public static void main(String[] args) {
 
-        //testUsers();
-        //testInventory();
+        testUsers();
+        testInventory();
         testUserRetrieval();
-        //createBooks();
+        createBooks();
+
     }
 
     private static void createBooks() {
@@ -50,6 +52,8 @@ public class LibraryDbb {
         em.getTransaction().commit();
 
     }
+
+
 
     private static void testUserRetrieval() {
 
