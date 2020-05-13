@@ -12,6 +12,7 @@ import dbbg2.utils.persistence.JpaPersistence;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import java.util.List;
 
 public class LoanController {
     private Visitor client;
@@ -125,5 +126,44 @@ public class LoanController {
         }
     }
 
+    public void returnItem(String barcode) {
+        for (LoanCopies item : loan.getCopies()) {
+            if (item.getCopy().getBarcode() == barcode) {
+                EntityManager em = JpaPersistence.getEntityManager();
+                em.getTransaction().begin();
 
+                try {
+                    item.getCopy().setOnLoan(false);
+                    em.merge(item.getCopy());
+
+
+                    client.setLoanedItems(client.getLoanedItems() + loan.getCopies().size());
+
+                    em.merge(client);
+                    em.persist(loan);
+
+                    em.getTransaction().commit();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    em.getTransaction().rollback();
+                    throw e;
+                }
+                return;
+            }
+        }
+
+    }
+
+    public LoanCopies getLoan(String barcode) {
+        for(LoanCopies lc : loan.getCopies()) {
+            if(lc.getCopy().getBarcode() == barcode) {
+                return lc;
+            }
+        }
+        return null;
+    }
+    
+    public List<LoanCopies> getLoans() {
+        return loan.getCopies();
+    }
 }
