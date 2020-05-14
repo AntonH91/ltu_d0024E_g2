@@ -3,6 +3,7 @@ package dbbg2.view.user;
 import dbbg2.controllers.user.UserController;
 import dbbg2.data.users.Employee;
 import dbbg2.data.users.User;
+import dbbg2.data.users.UserManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -41,6 +42,7 @@ public class UserDetailController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(resourceUrl));
             childController = loader.getController();
             childPane.getChildren().setAll((AnchorPane) loader.load());
+
             userController = childController.getDataController();
 
         } catch (IOException e) {
@@ -63,8 +65,15 @@ public class UserDetailController implements Initializable {
 
     }
 
+    /**
+     * Loads a user with the given User ID.
+     *
+     * @param userId The userID to load
+     */
     public void loadUser(String userId) {
 
+        User u = UserManager.getUser(userId);
+        this.loadUser(u);
 
     }
 
@@ -104,6 +113,7 @@ public class UserDetailController implements Initializable {
     }
 
     public void handleSaveButtonClick(ActionEvent actionEvent) {
+        childController.updateUserData();
         saveUser();
     }
 
