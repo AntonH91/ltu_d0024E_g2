@@ -1,7 +1,7 @@
 package dbbg2.controllers;
 
+import dbbg2.data.genericexceptions.LibraryEntityNotFoundException;
 import dbbg2.data.inventory.Book;
-import dbbg2.data.inventory.Film;
 import dbbg2.data.inventory.InventoryCopy;
 import dbbg2.data.inventory.itemCategory.ItemCategoryType;
 import dbbg2.data.users.Employee;
@@ -12,7 +12,6 @@ import dbbg2.data.users.visitorcategory.VisitorCategoryType;
 import dbbg2.utils.persistence.JpaPersistence;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,9 +58,9 @@ public class LibraryDbb {
 
         User u = null;
         try {
-            u = UserManager.getAuthenticatedUser("bspr9817","password4" );
+            u = UserManager.getAuthenticatedUser("bspr9817", "password4");
             System.out.println(u);
-        } catch (NoResultException e) {
+        } catch (LibraryEntityNotFoundException e) {
             System.out.println("Could not find user!");
         }
 

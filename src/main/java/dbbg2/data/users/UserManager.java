@@ -1,5 +1,6 @@
 package dbbg2.data.users;
 
+import dbbg2.data.genericexceptions.LibraryEntityNotFoundException;
 import dbbg2.utils.persistence.JpaPersistence;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -12,19 +13,28 @@ public class UserManager {
 
     /**
      * Gets a user from the database and marks them as authenticated
-     * @param userId The userID to retrieve
+     *
+     * @param userId   The userID to retrieve
      * @param password The user's password
      * @return The retrieved user
-     * @throws NoResultException If no user can be found with the given credentials
+     * @throws LibraryEntityNotFoundException If no user can be found with the given credentials
      */
-    public static User getAuthenticatedUser(String userId, String password) throws NoResultException {
+    public static User getAuthenticatedUser(String userId, String password) throws LibraryEntityNotFoundException {
         EntityManager em = JpaPersistence.getEntityManager();
 
         TypedQuery<User> q = em.createQuery("SELECT u FROM Users u WHERE u.userId=:userId AND u.password=:password", User.class);
-        q.setParameter("userId",userId);
+        q.setParameter("userId", userId);
         q.setParameter("password", DigestUtils.md5Hex(password));
 
-        return q.getSingleResult();
+
+        User u;
+        try {
+            u = q.getSingleResult();
+        } catch (NoResultException nre) {
+            throw new LibraryEntityNotFoundException("UserID / Password mismatch.");
+        }
+
+        return u;
     }
 
     /**
