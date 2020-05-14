@@ -1,7 +1,7 @@
 package dbbg2;
 
 
-import dbbg2.view.user.UserDetailController;
+import dbbg2.view.user.details.UserDetailController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

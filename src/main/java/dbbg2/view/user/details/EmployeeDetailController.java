@@ -1,4 +1,4 @@
-package dbbg2.view.user;
+package dbbg2.view.user.details;
 
 import dbbg2.controllers.user.EmployeeController;
 import dbbg2.controllers.user.UserController;

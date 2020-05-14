@@ -1,4 +1,4 @@
-package dbbg2.view.user;
+package dbbg2.view.user.details;
 
 import dbbg2.controllers.user.UserController;
 import dbbg2.data.users.Employee;
@@ -96,8 +96,7 @@ public class UserDetailController implements Initializable {
     public void loadUser(User user) throws UnknownUserTypeException {
         if (user instanceof Employee) {
             loadChildPane("/Views/User/EmployeeDetail.fxml");
-            childController.initializeUserController(user);
-            userController = childController.getDataController();
+
 
         } else if (user instanceof Visitor) {
             loadChildPane("/Views/User/VisitorView.fxml");
@@ -105,6 +104,8 @@ public class UserDetailController implements Initializable {
             throw new UnknownUserTypeException("Usertype " + user.getClass().getName() + " is not a known kind of user.");
         }
 
+        childController.initializeUserController(user);
+        userController = childController.getDataController();
         refreshFields();
     }
 

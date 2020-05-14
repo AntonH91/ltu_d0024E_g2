@@ -4,7 +4,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="341.0" prefWidth="447.0"
-            xmlns="http://javafx.com/javafx/10.0.2-internal" fx:controller="dbbg2.view.user.UserDetailController">
+            xmlns="http://javafx.com/javafx/10.0.2-internal"
+            fx:controller="dbbg2.view.user.details.UserDetailController">
     <children>
         <BorderPane layoutX="300.0" layoutY="57.0" prefHeight="341.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
                     AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
