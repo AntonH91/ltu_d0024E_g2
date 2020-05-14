@@ -4,36 +4,31 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="userOverviewAnchor" prefHeight="583.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="dbbg2.view.user.UserOverviewController">
-    <VBox prefHeight="583.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<AnchorPane id="userOverviewAnchor" prefHeight="583.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dbbg2.view.user.UserOverviewController">
+    <VBox fx:id="vbSearchControls" prefHeight="583.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <AnchorPane>
             <VBox.margin>
-                <Insets bottom="20.0"/>
+                <Insets bottom="20.0" />
             </VBox.margin>
-            <TextField fx:id="txtUserId" layoutX="47.0" layoutY="35.0" promptText="User ID"/>
-            <TextField fx:id="txtFirstName" layoutX="47.0" layoutY="73.0" promptText="First Name"/>
-            <TextField fx:id="txtLastName" layoutX="47.0" layoutY="105.0" promptText="Last Name"/>
-            <TextField fx:id="txtEmail" layoutX="47.0" layoutY="139.0" promptText="E-mail"/>
-            <Button fx:id="btnSearchUser" layoutX="432.0" layoutY="152.0" mnemonicParsing="false"
-                    onAction="#handleSearchButtonClick" text="Search"/>
-            <Button fx:id="btnClearSearch" layoutX="495.0" layoutY="152.0" mnemonicParsing="false"
-                    onAction="#handleClearButtonClick" text="Clear"/>
+            <TextField fx:id="txtUserId" layoutX="47.0" layoutY="35.0" promptText="User ID" />
+            <TextField fx:id="txtFirstName" layoutX="47.0" layoutY="73.0" promptText="First Name" />
+            <TextField fx:id="txtLastName" layoutX="47.0" layoutY="105.0" promptText="Last Name" />
+            <TextField fx:id="txtEmail" layoutX="47.0" layoutY="139.0" promptText="E-mail" />
+            <Button fx:id="btnSearchUser" layoutX="432.0" layoutY="152.0" mnemonicParsing="false" onAction="#handleSearchButtonClick" text="Search" />
+            <Button fx:id="btnClearSearch" layoutX="495.0" layoutY="152.0" mnemonicParsing="false" onAction="#handleClearButtonClick" text="Clear" />
         </AnchorPane>
         <ToolBar prefHeight="40.0" prefWidth="200.0">
-            <Button fx:id="btnEditUser" mnemonicParsing="false" onAction="#handleEditUserButtonClick"
-                    text="Edit"/>
-            <Button fx:id="btnNewUser" mnemonicParsing="false" onAction="#handleNewUserButtonClick" text="New"/>
+            <Button fx:id="btnEditUser" mnemonicParsing="false" onAction="#handleEditUserButtonClick" text="Edit" />
+            <Button fx:id="btnNewUser" mnemonicParsing="false" onAction="#handleNewUserButtonClick" text="New" />
         </ToolBar>
         <TableView fx:id="tblUserList">
             <columns>
-                <TableColumn fx:id="tcUserId" prefWidth="75.0" text="User ID"/>
-                <TableColumn fx:id="tcFirstName" prefWidth="75.0" text="First Name"/>
-                <TableColumn fx:id="tcLastName" prefWidth="75.0" text="Last Name"/>
-                <TableColumn fx:id="tcEmail" prefWidth="75.0" text="E-mail"/>
+                <TableColumn fx:id="tcUserId" prefWidth="75.0" text="User ID" />
+                <TableColumn fx:id="tcFirstName" prefWidth="75.0" text="First Name" />
+                <TableColumn fx:id="tcLastName" prefWidth="75.0" text="Last Name" />
+                <TableColumn fx:id="tcEmail" prefWidth="75.0" text="E-mail" />
             </columns>
         </TableView>
     </VBox>
+   <AnchorPane fx:id="acUserDetail" prefHeight="583.0" prefWidth="600.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
 </AnchorPane>

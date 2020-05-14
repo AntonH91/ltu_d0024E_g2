@@ -19,15 +19,15 @@ public class ApplicationMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/User/UserDetail.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/User/UserOverview.fxml"));
 
 
         Parent root = loader.load();
-
+        /*
         UserDetailController udc = loader.getController();
         udc.loadUser("jgeo7710");
         //udc.loadUser(new Visitor());
-
+        */
         Scene scene = new Scene(root);
 
         primaryStage.setTitle("Library DBB");
