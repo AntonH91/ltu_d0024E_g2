@@ -5,11 +5,9 @@ import dbbg2.data.inventory.InventoryItem;
 import dbbg2.data.inventory.InventoryManager;
 import dbbg2.data.inventory.Keyword;
 import dbbg2.data.inventory.itemCategory.ItemCategory;
-import dbbg2.data.inventory.itemCategory.ItemCategoryType;
-import dbbg2.data.users.UserManager;
-import javafx.fxml.Initializable;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -17,6 +15,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -44,14 +44,15 @@ public class ItemSearchController implements Initializable {
     public Button btnSearchBook;
 
 
-    public void handleSearchBookClick(ActionEvent actionEvent){
+    public void handleSearchBookClick(ActionEvent actionEvent) {
+        List<String> keywordList = Arrays.asList(txtKeyword.getText().toLowerCase().split(" "));
+
         tblBookList.setItems(FXCollections.observableArrayList(InventoryManager.getBooks(txtItemTitle.getText(), txtItemId.getText())));
     }
 
 
-
     @Override
-    public void initialize(URL location, ResourceBundle resources){
+    public void initialize(URL location, ResourceBundle resources) {
 
 
         tcTitle.setCellValueFactory(new PropertyValueFactory <InventoryItem, String>("title"));

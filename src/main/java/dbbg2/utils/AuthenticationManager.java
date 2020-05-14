@@ -1,9 +1,9 @@
 package dbbg2.utils;
 
+import dbbg2.data.genericexceptions.LibraryEntityNotFoundException;
 import dbbg2.data.users.User;
 import dbbg2.data.users.UserManager;
-
-import javax.persistence.NoResultException;
+import dbbg2.utils.exceptions.LoginFailureException;
 
 public class AuthenticationManager {
     private static User currentlyLoggedInUser = null;
@@ -19,17 +19,22 @@ public class AuthenticationManager {
 
     /**
      * Logs in a user in the application
+     *
      * @param userName The username of the user to be logged in
      * @param password The password of the user to be logged in
-     * @throws NoResultException Thrown if the login fails due to invalid username/password combo
+     * @throws LoginFailureException Thrown if the login fails due to invalid username/password combo
      * @throws IllegalStateException Thrown if a login is attempted when there is already a logged in user.
      */
-    public static void logIn(String userName, String password) throws NoResultException, IllegalStateException {
+    public static void logIn(String userName, String password) throws LoginFailureException, IllegalStateException {
         if (currentlyLoggedInUser != null) {
             throw new IllegalStateException("A user is already logged in!");
         }
 
-        currentlyLoggedInUser = UserManager.getAuthenticatedUser(userName, password);
+        try {
+            currentlyLoggedInUser = UserManager.getAuthenticatedUser(userName, password);
+        } catch (LibraryEntityNotFoundException e) {
+            throw new LoginFailureException("UserID/Password mismatch.");
+        }
 
     }
 
