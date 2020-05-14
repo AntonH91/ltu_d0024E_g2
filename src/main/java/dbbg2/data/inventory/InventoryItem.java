@@ -19,12 +19,15 @@ import java.util.Set;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class InventoryItem {
 
-    private static int nextInventoryId = 10001;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int invId;
 
-    @Index(unique = true)
+    private static int nextInventoryId = 10001;
+
+
+    //@Index(unique = true)
     private String inventoryId = "";
 
     @Basic(optional = false)
@@ -40,8 +43,14 @@ public abstract class InventoryItem {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
     private Set<InventoryCopy> copies = new HashSet<>();
 
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    //Tried fixing keyword relation
+    //@OneToOne(optional = false, cascade = CascadeType.ALL)
+    //private ItemCategory category;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "Item_Category")
     private ItemCategory category;
+
     @Basic(optional = false)
     private boolean isAvailable;
 
@@ -69,6 +78,9 @@ public abstract class InventoryItem {
         return inventoryId;
     }
 
+    public int getInvId() {
+        return invId;
+    }
 
     public String getTitle() {
         return title;
@@ -101,14 +113,12 @@ public abstract class InventoryItem {
         return keyword;
     }
 
-    private String generateInventoryId() {
-        String newInventoryId = "I" + Integer.toString(nextInventoryId);
-        nextInventoryId++;
-        return newInventoryId;
-    }
+
+
+
 
     public void addCopy(String barcode, String location) {
-        InventoryCopy ic = new InventoryCopy(barcode,  location, this.getCategory().isLendable(), this);
+        InventoryCopy ic = new InventoryCopy(barcode, location, this.getCategory().isLendable(), this);
         this.copies.add(ic);
 
 
@@ -118,5 +128,17 @@ public abstract class InventoryItem {
         this.copies.removeIf(inventoryCopy ->
             inventoryCopy.getBarcode().equals(barcode));
     }
+
+
+    @PrePersist
+    private String generateInventoryId() {
+
+        String newInventoryId = "I" + Integer.toString(nextInventoryId);
+        nextInventoryId++;
+        return newInventoryId;
+    }
+
+
+
 
 }

@@ -1,11 +1,12 @@
 package dbbg2.data.inventory.itemCategory;
 
 
+import dbbg2.data.inventory.InventoryCopy;
 import dbbg2.data.inventory.InventoryItem;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class ItemCategory {
@@ -14,6 +15,10 @@ public class ItemCategory {
     private String itemCategoryTitle = "";
     private int lendingDays = 0;
     private boolean isLendable = false;
+
+
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "category")
+    private Set<InventoryItem> invItem = new HashSet<>();
 
     public ItemCategory(){
 

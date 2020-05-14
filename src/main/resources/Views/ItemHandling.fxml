@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="483.0" prefWidth="648.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="483.0" prefWidth="648.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dbbg2.view.item.manage.ItemManageController">
   <tabs>
     <Tab closable="false" text="Manage Books">
       <content>
@@ -32,6 +32,19 @@
                                  <font>
                                     <Font size="18.0" />
                                  </font></Text>
+                              <TextField fx:id="txtRemoveTitle" layoutX="37.0" layoutY="80.0" promptText="Book title" />
+                              <TextField fx:id="txtRemoveIsbn" layoutX="37.0" layoutY="116.0" promptText="ISBN" />
+                              <TableView fx:id="tblListBooks" layoutY="257.0" onMouseClicked="#handleTableViewMouseClickedAction" prefHeight="200.0" prefWidth="328.0">
+                                <columns>
+                                  <TableColumn fx:id="tcBookTitle" prefWidth="75.0" text="Book title" />
+                                    <TableColumn fx:id="tcInventoryId" prefWidth="75.0" text="Inventory ID" />
+                                    <TableColumn fx:id="tcInvId" prefWidth="75.0" text="InvID" />
+                                </columns>
+                              </TableView>
+                              <TextField fx:id="txtRemoveInventoryId" layoutX="37.0" layoutY="153.0" promptText="Inventory ID" />
+                              <Button fx:id="btnSearch" layoutX="37.0" layoutY="216.0" mnemonicParsing="false" onAction="#handleFindBook" text="Search" />
+                              <Button fx:id="btnRemove" layoutX="155.0" layoutY="216.0" mnemonicParsing="false" onAction="#handleRemovebook" text="Remove" />
+                              <TextField fx:id="txtPkId" editable="false" layoutX="214.0" layoutY="80.0" prefHeight="25.0" prefWidth="28.0" promptText="ID" />
                            </children>
                         </AnchorPane>
                     </items>
@@ -40,9 +53,36 @@
       </content>
     </Tab>
     <Tab closable="false" text="Manage Films">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-      </content>
+        <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <children>
+                    <SplitPane dividerPositions="0.49079754601226994" layoutX="-1.0" layoutY="-3.0" prefHeight="459.0" prefWidth="654.0">
+                        <items>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                <children>
+                                    <Text layoutX="22.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add films">
+                                        <font>
+                                            <Font size="18.0" />
+                                        </font></Text>
+                                    <TextField fx:id="txtAbbFilmTitle" layoutX="22.0" layoutY="76.0" promptText="Film title" />
+                                    <TextField fx:id="txtOriginCountry" layoutX="22.0" layoutY="178.0" promptText="Country of origin" />
+                                    <TextField fx:id="txtFilmDirector" layoutX="22.0" layoutY="110.0" promptText="Director" />
+                                    <Button layoutX="183.0" layoutY="263.0" mnemonicParsing="false" onAction="#handleAddFilm" text="Add" />
+                              <ComboBox fx:id="cbAgeLimit" layoutX="22.0" layoutY="143.0" prefWidth="150.0" promptText="Age limit" />
+                                </children>
+                            </AnchorPane>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                <children>
+                                    <Text layoutX="37.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Remove films">
+                                        <font>
+                                            <Font size="18.0" />
+                                        </font></Text>
+                                </children>
+                            </AnchorPane>
+                        </items>
+                    </SplitPane>
+                </children></AnchorPane>
+        </content>
     </Tab>
   </tabs>
 </TabPane>
