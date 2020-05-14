@@ -4,6 +4,8 @@ import dbbg2.controllers.user.UserController;
 import dbbg2.data.users.Employee;
 import dbbg2.data.users.User;
 import dbbg2.data.users.UserManager;
+import dbbg2.data.users.Visitor;
+import dbbg2.view.user.exceptions.UnknownUserTypeException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -37,6 +39,11 @@ public class UserDetailController implements Initializable {
     protected UserController userController;
 
 
+    /**
+     * Loads a child pane to the user view GUI.
+     *
+     * @param resourceUrl The resource URL to load
+     */
     public void loadChildPane(String resourceUrl) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(resourceUrl));
@@ -49,6 +56,9 @@ public class UserDetailController implements Initializable {
         }
     }
 
+    /**
+     * Saves the user to database
+     */
     public void saveUser() {
         userController.amendSettings(txtFirstName.getText(),
                 txtLastName.getText(),
@@ -68,26 +78,40 @@ public class UserDetailController implements Initializable {
      * Loads a user with the given User ID.
      *
      * @param userId The userID to load
+     * @throws UnknownUserTypeException Thrown when the loaded user is not a known type to the UI component
      */
-    public void loadUser(String userId) {
+    public void loadUser(String userId) throws UnknownUserTypeException {
 
         User u = UserManager.getUser(userId);
         this.loadUser(u);
 
     }
 
-    public void loadUser(User u) {
-        if (u instanceof Employee) {
+    /**
+     * Loads the user  type
+     *
+     * @param user The user to be loaded
+     * @throws UnknownUserTypeException Thrown when the user is not a handled type of user by the detail controller
+     */
+    public void loadUser(User user) throws UnknownUserTypeException {
+        if (user instanceof Employee) {
             loadChildPane("/Views/User/EmployeeDetail.fxml");
-            childController.initializeUserController(u);
+            childController.initializeUserController(user);
             userController = childController.getDataController();
 
+        } else if (user instanceof Visitor) {
+            loadChildPane("/Views/User/VisitorView.fxml");
+        } else {
+            throw new UnknownUserTypeException("Usertype " + user.getClass().getName() + " is not a known kind of user.");
         }
 
         refreshFields();
     }
 
 
+    /**
+     * Refreshes the fields in the main- and subforms.
+     */
     public void refreshFields() {
         User u = userController.getUser();
         if (u != null) {
