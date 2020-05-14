@@ -25,7 +25,7 @@ public class ApplicationMain extends Application {
         Parent root = loader.load();
 
         UserDetailController udc = loader.getController();
-        udc.loadUser("jgeo7710");
+        udc.loadUser("aein4027");
 
         Scene scene = new Scene(root);
 

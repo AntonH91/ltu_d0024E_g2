@@ -35,6 +35,28 @@ public class VisitorCategory {
         this.maxLoanedAmount = maxLoanedAmount;
     }
 
+    public static VisitorCategory getDefaultCategory(VisitorCategoryType category) {
+        VisitorCategory vc;
+        switch (category) {
+            case GENERAL_PUBLIC:
+                vc = new VisitorCategory("General Public", 3);
+                break;
+            case STUDENT:
+                vc = new VisitorCategory("Student", 5);
+                break;
+            case UNIVERSITY_STAFF:
+                vc = new VisitorCategory("University Staff", 20);
+                break;
+            case RESEARCHER:
+                vc = new VisitorCategory("Researcher", 10);
+                break;
+            default:
+                throw new IllegalArgumentException("This is not a valid category type");
+        }
+
+        return vc;
+    }
+
     @Override
     public String toString() {
         return "VisitorCategory{" +
@@ -51,39 +73,15 @@ public class VisitorCategory {
         return maxLoanedAmount;
     }
 
-
     @Override
     public boolean equals(Object obj) {
-        if (super.equals(obj)) {
-            if (obj instanceof VisitorCategory) {
-                VisitorCategory otherVc = (VisitorCategory) obj;
-                return this.getCategoryTitle().equals(otherVc.getCategoryTitle());
-            }
-
+        if (obj instanceof VisitorCategory) {
+            VisitorCategory otherVc = (VisitorCategory) obj;
+            return this.getCategoryTitle().equals(otherVc.getCategoryTitle());
         }
+
+
         return false;
-    }
-
-    public static VisitorCategory getDefaultCategory(VisitorCategoryType category) {
-        VisitorCategory vc;
-        switch (category) {
-            case GENERAL_PUBLIC:
-                vc = new VisitorCategory("General Public", 3);
-                break;
-            case STUDENT:
-                vc = new VisitorCategory("Student", 5);
-                break;
-            case UNIVERSITY_STAFF:
-                vc = new VisitorCategory("University Staff", 20);
-                break;
-            case RESEARCHER:
-                vc = new VisitorCategory("Researcher",10);
-                break;
-            default:
-                throw new IllegalArgumentException("This is not a valid category type");
-        }
-
-        return vc;
     }
 
 }

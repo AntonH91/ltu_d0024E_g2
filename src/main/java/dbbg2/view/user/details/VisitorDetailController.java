@@ -52,8 +52,18 @@ public class VisitorDetailController implements ChildController, Initializable {
     @Override
     public void refreshInterface() {
         Visitor v = (Visitor) visitorController.getUser();
-        cbxVisitorCategory.setValue(v.getCategory());
+        //cbxVisitorCategory.setValue(v.getCategory());
+        selectCategory(v.getCategory());
 
+    }
+
+    private void selectCategory(VisitorCategory targetCategory) {
+        for (VisitorCategory vc : cbxVisitorCategory.getItems()) {
+            if (targetCategory.equals(vc)) {
+                cbxVisitorCategory.setValue(vc);
+                break;
+            }
+        }
     }
 
     @Override
