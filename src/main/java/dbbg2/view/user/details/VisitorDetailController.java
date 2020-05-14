@@ -44,19 +44,29 @@ public class VisitorDetailController implements ChildController, Initializable {
         return visitorController;
     }
 
+    /**
+     * Change the visitor category of the user.
+     */
     @Override
     public void updateUserData() {
         visitorController.setVisitorCategory(cbxVisitorCategory.getValue());
     }
 
+    /**
+     * Refresh the user interface.
+     */
     @Override
     public void refreshInterface() {
         Visitor v = (Visitor) visitorController.getUser();
-        //cbxVisitorCategory.setValue(v.getCategory());
         selectCategory(v.getCategory());
 
     }
 
+    /**
+     * Helper method to set the value of the combobox to the target visitor category.
+     *
+     * @param targetCategory The category that should be selected.
+     */
     private void selectCategory(VisitorCategory targetCategory) {
         for (VisitorCategory vc : cbxVisitorCategory.getItems()) {
             if (targetCategory.equals(vc)) {
@@ -68,9 +78,15 @@ public class VisitorDetailController implements ChildController, Initializable {
 
     @Override
     public boolean isInputValid() {
-        return true;
+        return cbxVisitorCategory.getValue() != null;
     }
 
+    /**
+     * Initialize the VisitorDetail view and configure the visitorcategory combobox to show the correct user type.
+     *
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         cbxVisitorCategory.setCellFactory(new Callback<ListView<VisitorCategory>, ListCell<VisitorCategory>>() {
