@@ -84,7 +84,7 @@ public class VisitorDetailController implements ChildController, Initializable {
     }
 
     /**
-     * Initialize the VisitorDetail view and configure the visitorcategory combobox to show the correct user type.
+     * Initialize the VisitorDetail view and configure the visitor category combobox to show the correct user type.
      *
      * @param location
      * @param resources
