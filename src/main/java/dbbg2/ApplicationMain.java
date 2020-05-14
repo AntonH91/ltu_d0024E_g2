@@ -18,12 +18,14 @@ public class ApplicationMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/Views/User/UserOverview.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Views/User/UserDetail.fxml"));
+
 
         Scene scene = new Scene(root);
 
         primaryStage.setTitle("Library DBB");
         primaryStage.setScene(scene);
+
 
         primaryStage.show();
     }
