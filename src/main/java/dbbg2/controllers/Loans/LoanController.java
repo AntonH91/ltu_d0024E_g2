@@ -2,6 +2,7 @@ package dbbg2.controllers.Loans;
 
 import dbbg2.controllers.Loans.Exceptions.ItemNotLendableException;
 import dbbg2.controllers.Loans.Exceptions.TooManyItemsOnLoanException;
+import dbbg2.data.genericexceptions.LibraryEntityNotFoundException;
 import dbbg2.data.inventory.InventoryCopy;
 import dbbg2.data.inventory.InventoryManager;
 import dbbg2.data.loans.Loan;
@@ -34,7 +35,12 @@ public class LoanController {
 
         lc.startLoan();
 
-        lc.getUser("aein3799", "pass");
+
+        try {
+            lc.getUser("aein3799", "pass");
+        } catch (LibraryEntityNotFoundException e) {
+            e.printStackTrace();
+        }
 
 
         try {
@@ -49,7 +55,7 @@ public class LoanController {
 
     }
 
-    public void getUser(String userName, String pw) throws NoResultException, ClassCastException {
+    public void getUser(String userName, String pw) throws LibraryEntityNotFoundException, ClassCastException {
         client = (Visitor) UserManager.getAuthenticatedUser(userName, pw);
         loan.setClient(client);
 
