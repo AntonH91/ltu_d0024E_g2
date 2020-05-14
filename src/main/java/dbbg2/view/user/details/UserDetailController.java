@@ -72,6 +72,8 @@ public class UserDetailController implements Initializable {
 
         userController.saveChanges();
 
+        this.refreshFields();
+
     }
 
     /**
@@ -125,12 +127,22 @@ public class UserDetailController implements Initializable {
             txtPhoneNr.setText(u.getPhoneNr());
             txtStreetAddress.setText(u.getStreetAddress());
             txtPostCode.setText(u.getPostCode());
-            txtPostArea.setText(u.getPostCode());
+            txtPostArea.setText(u.getPostArea());
 
             // Refresh the child form
             childController.refreshInterface();
         }
 
+    }
+
+    private boolean hasValidInput() {
+        boolean isValid = false;
+
+
+        if (childController.isInputValid()) {
+
+        }
+        return isValid;
     }
 
     public void handleCancelButtonClick(ActionEvent actionEvent) {

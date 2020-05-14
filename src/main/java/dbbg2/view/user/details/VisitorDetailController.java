@@ -59,7 +59,6 @@ public class VisitorDetailController implements ChildController, Initializable {
     public void refreshInterface() {
         Visitor v = (Visitor) visitorController.getUser();
         selectCategory(v.getCategory());
-
     }
 
     /**
@@ -68,12 +67,15 @@ public class VisitorDetailController implements ChildController, Initializable {
      * @param targetCategory The category that should be selected.
      */
     private void selectCategory(VisitorCategory targetCategory) {
-        for (VisitorCategory vc : cbxVisitorCategory.getItems()) {
-            if (targetCategory.equals(vc)) {
-                cbxVisitorCategory.setValue(vc);
-                break;
+        if (targetCategory != null) {
+            for (VisitorCategory vc : cbxVisitorCategory.getItems()) {
+                if (targetCategory.equals(vc)) {
+                    cbxVisitorCategory.setValue(vc);
+                    break;
+                }
             }
         }
+
     }
 
     @Override

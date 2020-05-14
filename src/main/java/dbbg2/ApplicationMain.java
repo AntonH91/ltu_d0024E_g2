@@ -26,6 +26,7 @@ public class ApplicationMain extends Application {
 
         UserDetailController udc = loader.getController();
         udc.loadUser("aein4027");
+        //udc.loadUser(new Visitor());
 
         Scene scene = new Scene(root);
 
