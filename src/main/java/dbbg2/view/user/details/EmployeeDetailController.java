@@ -5,6 +5,8 @@ import dbbg2.controllers.user.UserController;
 import dbbg2.data.users.Employee;
 import dbbg2.data.users.User;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 
@@ -47,6 +49,21 @@ public class EmployeeDetailController implements ChildController, Initializable 
 
     }
 
+    @Override
+    public boolean isInputValid() {
+        return validateSalary();
+    }
+
+    public boolean validateSalary() {
+        boolean isValid = false;
+        try {
+            Double.valueOf(txtSalary.getText());
+            isValid = true;
+        } catch (Exception e) {
+
+        }
+        return isValid;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -54,7 +71,18 @@ public class EmployeeDetailController implements ChildController, Initializable 
     }
 
     private void bindListeners() {
+        // Bind a listener to validate the salary amount
+        txtSalary.focusedProperty().addListener((observable, oldValue, newValue) -> {
+                    if (!newValue) {
+                        if (!validateSalary()) {
+                            Alert a = new Alert(Alert.AlertType.WARNING, "Please input a valid salary number.", ButtonType.OK);
+                            a.showAndWait();
+                            txtSalary.requestFocus();
+                        }
+                    }
 
+                }
+        );
     }
 
 }

@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
             xmlns="http://javafx.com/javafx/10.0.2-internal"
             fx:controller="dbbg2.view.user.details.VisitorDetailController">
     <children>
-        <SplitPane dividerPositions="0.43467336683417085" layoutX="109.0" layoutY="63.0" orientation="VERTICAL"
-                   prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <items>
+        <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
                 <AnchorPane>
                     <children>
-                        <GridPane layoutX="72.0" layoutY="40.0" prefHeight="90.0" prefWidth="309.0">
+                        <GridPane layoutX="8.0" layoutY="6.0" prefHeight="90.0" prefWidth="496.0">
                             <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="243.0" minWidth="10.0"
+                                                   prefWidth="116.0"/>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="380.0" minWidth="10.0"
+                                                   prefWidth="380.0"/>
                             </columnConstraints>
                             <rowConstraints>
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
@@ -24,28 +25,37 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                             </rowConstraints>
                             <children>
-                                <ComboBox prefWidth="150.0" promptText="User Category" GridPane.columnIndex="1"/>
-                                <Label text="Label"/>
+                                <ComboBox fx:id="cbxVisitorCategory" prefHeight="25.0" prefWidth="371.0"
+                                          promptText="Visitor Category" GridPane.columnIndex="1"/>
+                                <Label text="Category"/>
                             </children>
                         </GridPane>
                     </children>
                 </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                <VBox prefHeight="312.0" prefWidth="600.0">
                     <children>
-                        <TitledPane text="Loaned Items" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <content>
-                                <TableView prefHeight="200.0" prefWidth="200.0">
-                                    <columns>
-                                        <TableColumn prefWidth="75.0" text="C1"/>
-                                        <TableColumn prefWidth="75.0" text="C2"/>
-                                    </columns>
-                                </TableView>
-                            </content>
-                        </TitledPane>
+                        <ToolBar prefHeight="40.0" prefWidth="200.0">
+                            <items>
+                                <Label text="Show:">
+                                    <padding>
+                                        <Insets right="20.0"/>
+                                    </padding>
+                                </Label>
+                                <CheckBox fx:id="chkShowReturned" mnemonicParsing="false" text="Returned"/>
+                                <CheckBox fx:id="chkShowLate" mnemonicParsing="false" selected="true" text="Late"/>
+                                <CheckBox fx:id="chkShowActive" mnemonicParsing="false" selected="true" text="Active"/>
+                            </items>
+                        </ToolBar>
+                        <TableView prefHeight="231.0" prefWidth="600.0">
+                            <columns>
+                                <TableColumn minWidth="70.0" prefWidth="-1.0" text="Returned"/>
+                                <TableColumn minWidth="70.0" prefWidth="-1.0" text="Title"/>
+                                <TableColumn minWidth="70.0" prefWidth="-1.0" text="Return Date"/>
+                            </columns>
+                        </TableView>
                     </children>
-                </AnchorPane>
-            </items>
-        </SplitPane>
+                </VBox>
+            </children>
+        </VBox>
     </children>
 </AnchorPane>

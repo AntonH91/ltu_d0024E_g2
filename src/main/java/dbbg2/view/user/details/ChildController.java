@@ -28,5 +28,11 @@ public interface ChildController {
      */
     void refreshInterface();
 
+    /**
+     * Checks if all the controls on the subform have a valid value.
+     *
+     * @return True if everything is valid, false otherwise
+     */
+    boolean isInputValid();
 
 }
