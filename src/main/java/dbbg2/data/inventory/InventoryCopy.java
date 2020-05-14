@@ -12,7 +12,7 @@ public class InventoryCopy {
     private long cid;
 
     @Basic(optional = false)
-    @Index(unique = true)
+    //@Index(unique = true)
     private String barcode = "";
     private String location = "";
     private boolean onLoan = false;

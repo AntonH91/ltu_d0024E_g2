@@ -7,6 +7,7 @@ import dbbg2.utils.persistence.JpaPersistence;
 import jdk.jfr.Category;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
@@ -78,11 +79,45 @@ public class InventoryManager {
 
         q.setParameter("title", title);
         q.setParameter("inventoryId", inventoryId);
-        //q.setParameter("category", category);
+        //q.setParameter("category", ItemCategory.getDefaultItemCategory(category).getItemCategoryTitle());
 
         return q.getResultList();
     }
 
+    public void deleteBook(String title, int invId){
+        EntityManager em = JpaPersistence.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            InventoryItem remItem = null;
+            try {
+                remItem = em.getReference(InventoryItem.class, invId);
+                remItem.getInventoryId();
+            } catch (EntityNotFoundException enfe) {
+
+            }
+            em.remove(remItem);
+            em.getTransaction().commit();
+        } finally {
+            if(em != null) {
+                em.close();
+            }
+        }
+
+    }
+
+   /* public void deleteBook(String title, String inventoryId){
+        EntityManager em = JpaPersistence.getEntityManager();
+
+        em.getTransaction().begin();
+
+        TypedQuery<InventoryManager> q = em.createQuery("DELETE FROM Inventory i WHERE i.inventoryId = :inventoryId and i.title = :title", InventoryManager.class);
+
+        q.setParameter("title", title);
+        q.setParameter("inventoryId", inventoryId);
+
+        q.executeUpdate();
+
+    }*/
 
 
 }

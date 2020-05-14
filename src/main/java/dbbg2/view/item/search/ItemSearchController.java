@@ -48,6 +48,7 @@ public class ItemSearchController implements Initializable {
         tblBookList.setItems(FXCollections.observableArrayList(InventoryManager.getBooks(txtItemTitle.getText(), txtItemId.getText())));
     }
 
+    //ItemCategory.getDefaultItemCategory(OTHER_BOOKS).getItemCategoryTitle()
 
 
     @Override

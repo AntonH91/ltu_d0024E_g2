@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "Book")
 public class Book extends InventoryItem {
@@ -68,6 +69,29 @@ public class Book extends InventoryItem {
     }
 
 
+
+    public static void addBook(String title, ItemCategory category, boolean isAvailable, String isbn, String author) {
+        List<Book> books = new ArrayList<>();
+
+
+        books.add(new Book());
+        books.add(new Book("Harry Potter",ItemCategoryType.OTHER_BOOKS, true,"123", "JK Rowling"));
+        books.add(new Book("Emil",ItemCategoryType.OTHER_BOOKS, true,"123", "Astrid Lindgren"));
+        books.add(new Book("Dexter",ItemCategoryType.OTHER_BOOKS, true,"123", "Jeff Lindsay"));
+
+        int index = 0;
+        EntityManager em = JpaPersistence.getEntityManager();
+
+        em.getTransaction().begin();
+        for(Book b : books) {
+            //b.addCopy(String.valueOf(index), "A Shelf");
+            index++;
+            em.merge(b);
+        }
+
+        em.getTransaction().commit();
+
+    }
 
 
 }
