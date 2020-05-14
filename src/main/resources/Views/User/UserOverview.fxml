@@ -1,40 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane id="userOverviewAnchor" prefHeight="400.0" prefWidth="600.0"
+
+<AnchorPane id="userOverviewAnchor" prefHeight="583.0" prefWidth="600.0"
             xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="dbbg2.view.user.UserOverviewController">
-    <children>
-        <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0">
-            <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="146.0" prefWidth="598.0">
-                    <children>
-                        <TextField fx:id="txtUserId" layoutX="47.0" layoutY="35.0" promptText="User ID"/>
-                        <TextField fx:id="txtFirstName" layoutX="47.0" layoutY="73.0" promptText="First Name"/>
-                        <TextField fx:id="txtLastName" layoutX="47.0" layoutY="105.0" promptText="Last Name"/>
-                        <TextField fx:id="txtEmail" layoutX="47.0" layoutY="139.0" promptText="E-mail"/>
-                        <Button fx:id="btnSearchUser" layoutX="432.0" layoutY="152.0" mnemonicParsing="false"
-                                onAction="#handleSearchButtonClick" text="Search"/>
-                        <Button fx:id="btnClearSearch" layoutX="495.0" layoutY="152.0" mnemonicParsing="false"
-                                onAction="#handleClearButtonClick" text="Clear"/>
-                    </children>
-                </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                    <children>
-                        <TableView fx:id="tblUserList" prefHeight="196.0" prefWidth="598.0"
-                                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <columns>
-                                <TableColumn fx:id="tcUserId" prefWidth="75.0" text="User ID"/>
-                                <TableColumn fx:id="tcFirstName" prefWidth="75.0" text="First Name"/>
-                                <TableColumn fx:id="tcLastName" prefWidth="75.0" text="Last Name"/>
-                                <TableColumn fx:id="tcEmail" prefWidth="75.0" text="E-mail"/>
-                            </columns>
-                        </TableView>
-                    </children>
-                </AnchorPane>
-            </items>
-        </SplitPane>
-    </children>
+    <VBox prefHeight="583.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <AnchorPane>
+            <VBox.margin>
+                <Insets bottom="20.0"/>
+            </VBox.margin>
+            <TextField fx:id="txtUserId" layoutX="47.0" layoutY="35.0" promptText="User ID"/>
+            <TextField fx:id="txtFirstName" layoutX="47.0" layoutY="73.0" promptText="First Name"/>
+            <TextField fx:id="txtLastName" layoutX="47.0" layoutY="105.0" promptText="Last Name"/>
+            <TextField fx:id="txtEmail" layoutX="47.0" layoutY="139.0" promptText="E-mail"/>
+            <Button fx:id="btnSearchUser" layoutX="432.0" layoutY="152.0" mnemonicParsing="false"
+                    onAction="#handleSearchButtonClick" text="Search"/>
+            <Button fx:id="btnClearSearch" layoutX="495.0" layoutY="152.0" mnemonicParsing="false"
+                    onAction="#handleClearButtonClick" text="Clear"/>
+        </AnchorPane>
+        <ToolBar prefHeight="40.0" prefWidth="200.0">
+            <Button fx:id="btnEditUser" mnemonicParsing="false" onAction="#handleEditUserButtonClick"
+                    text="Edit"/>
+            <Button fx:id="btnNewUser" mnemonicParsing="false" onAction="#handleNewUserButtonClick" text="New"/>
+        </ToolBar>
+        <TableView fx:id="tblUserList">
+            <columns>
+                <TableColumn fx:id="tcUserId" prefWidth="75.0" text="User ID"/>
+                <TableColumn fx:id="tcFirstName" prefWidth="75.0" text="First Name"/>
+                <TableColumn fx:id="tcLastName" prefWidth="75.0" text="Last Name"/>
+                <TableColumn fx:id="tcEmail" prefWidth="75.0" text="E-mail"/>
+            </columns>
+        </TableView>
+    </VBox>
 </AnchorPane>
