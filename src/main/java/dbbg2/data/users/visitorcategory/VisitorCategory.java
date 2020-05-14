@@ -2,8 +2,6 @@ package dbbg2.data.users.visitorcategory;
 
 import javax.persistence.*;
 
-import static dbbg2.data.users.visitorcategory.VisitorCategoryType.GENERAL_PUBLIC;
-
 /**
  * Data container for holding category information for a visitor.
  */
@@ -54,14 +52,26 @@ public class VisitorCategory {
     }
 
 
+    @Override
+    public boolean equals(Object obj) {
+        if (super.equals(obj)) {
+            if (obj instanceof VisitorCategory) {
+                VisitorCategory otherVc = (VisitorCategory) obj;
+                return this.getCategoryTitle().equals(otherVc.getCategoryTitle());
+            }
+
+        }
+        return false;
+    }
+
     public static VisitorCategory getDefaultCategory(VisitorCategoryType category) {
         VisitorCategory vc;
         switch (category) {
             case GENERAL_PUBLIC:
-                vc = new VisitorCategory( "General Public", 3);
+                vc = new VisitorCategory("General Public", 3);
                 break;
             case STUDENT:
-                vc = new VisitorCategory("Student",5);
+                vc = new VisitorCategory("Student", 5);
                 break;
             case UNIVERSITY_STAFF:
                 vc = new VisitorCategory("University Staff", 20);
