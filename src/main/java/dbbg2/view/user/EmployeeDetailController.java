@@ -3,6 +3,7 @@ package dbbg2.view.user;
 import dbbg2.controllers.user.EmployeeController;
 import dbbg2.controllers.user.UserController;
 import dbbg2.data.users.Employee;
+import dbbg2.data.users.User;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
@@ -17,8 +18,14 @@ public class EmployeeDetailController implements ChildController, Initializable 
     private EmployeeController employeeController;
 
     @Override
-    public void initializeUserController() {
-        employeeController = new EmployeeController();
+    public void initializeUserController(User u) {
+        if (u instanceof Employee) {
+            employeeController = new EmployeeController();
+            employeeController.setUser((Employee) u);
+        } else {
+            throw new ClassCastException("Cannot initialize EmployeeDetailController with non-Employee User");
+        }
+
     }
 
     @Override
@@ -43,7 +50,6 @@ public class EmployeeDetailController implements ChildController, Initializable 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        initializeUserController();
         bindListeners();
     }
 

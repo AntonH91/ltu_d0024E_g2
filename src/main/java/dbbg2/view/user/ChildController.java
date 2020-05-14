@@ -1,6 +1,7 @@
 package dbbg2.view.user;
 
 import dbbg2.controllers.user.UserController;
+import dbbg2.data.users.User;
 
 public interface ChildController {
 
@@ -8,7 +9,7 @@ public interface ChildController {
     /**
      * Instantiates the UserController
      */
-    void initializeUserController();
+    void initializeUserController(User u);
 
     /**
      * Gets the user controller in use by the ChildController

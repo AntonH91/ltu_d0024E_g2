@@ -21,11 +21,11 @@ public class ApplicationMain extends Application {
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/User/UserDetail.fxml"));
 
-        UserDetailController udc = loader.getController();
-        udc.loadUser("jgeo7710");
 
         Parent root = loader.load();
 
+        UserDetailController udc = loader.getController();
+        udc.loadUser("jgeo7710");
 
         Scene scene = new Scene(root);
 

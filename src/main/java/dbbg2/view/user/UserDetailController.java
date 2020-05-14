@@ -40,10 +40,9 @@ public class UserDetailController implements Initializable {
     public void loadChildPane(String resourceUrl) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(resourceUrl));
-            childController = loader.getController();
             childPane.getChildren().setAll((AnchorPane) loader.load());
 
-            userController = childController.getDataController();
+            childController = loader.getController();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -80,9 +79,10 @@ public class UserDetailController implements Initializable {
     public void loadUser(User u) {
         if (u instanceof Employee) {
             loadChildPane("/Views/User/EmployeeDetail.fxml");
-            childController.getDataController().setUser(u);
-        }
+            childController.initializeUserController(u);
+            userController = childController.getDataController();
 
+        }
 
         refreshFields();
     }
@@ -122,7 +122,6 @@ public class UserDetailController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        loadChildPane("/Views/User/EmployeeDetail.fxml");
     }
 
 
