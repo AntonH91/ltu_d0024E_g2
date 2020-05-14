@@ -1,92 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="341.0" prefWidth="447.0"
-            xmlns="http://javafx.com/javafx/10.0.2-internal"
-            fx:controller="dbbg2.view.user.details.UserDetailController">
+
+<AnchorPane prefHeight="341.0" prefWidth="764.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dbbg2.view.user.details.UserDetailController">
     <children>
-        <BorderPane layoutX="300.0" layoutY="57.0" prefHeight="341.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
-                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <BorderPane layoutX="300.0" layoutY="57.0" prefHeight="341.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <left>
-                <GridPane BorderPane.alignment="CENTER">
+                <GridPane prefHeight="263.0" prefWidth="342.0" BorderPane.alignment="CENTER">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="226.0" minWidth="10.0" prefWidth="102.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="365.0" minWidth="10.0" prefWidth="230.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-                        <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="5.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-                        <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES"/>
-                        <RowConstraints maxHeight="44.0" minHeight="10.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="5.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="44.0" minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <TextField fx:id="txtUserId" editable="false" promptText="User ID" GridPane.columnIndex="1"/>
-                        <TextField fx:id="txtPersonNr" promptText="Person Nr" GridPane.columnIndex="1"
-                                   GridPane.rowIndex="1"/>
-                        <TextField fx:id="txtFirstName" promptText="First Name" GridPane.columnIndex="1"
-                                   GridPane.rowIndex="3"/>
-                        <TextField fx:id="txtLastName" promptText="Last Name" GridPane.columnIndex="1"
-                                   GridPane.rowIndex="4"/>
-                        <TextField fx:id="txtEmail" promptText="E-Mail" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
-                        <Label text="User ID"/>
-                        <Label text="Person Nr" GridPane.rowIndex="1"/>
-                        <Label text="First Name" GridPane.rowIndex="3"/>
-                        <Label text="Last Name" GridPane.rowIndex="4"/>
-                        <Label text="E-Mail" GridPane.rowIndex="5"/>
-                        <Label text="Phone Nr" GridPane.rowIndex="6"/>
-                        <TextField fx:id="txtPhoneNr" promptText="Phone Nr" GridPane.columnIndex="1"
-                                   GridPane.rowIndex="6"/>
-                        <Label text="Street Address" GridPane.rowIndex="8"/>
-                        <TextField fx:id="txtStreetAddress" prefHeight="25.0" prefWidth="149.0"
-                                   promptText="Street Address" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
-                        <TextField fx:id="txtPostCode" promptText="Post Code" GridPane.columnIndex="1"
-                                   GridPane.rowIndex="9"/>
-                        <TextField fx:id="txtPostArea" promptText="Post Area" GridPane.columnIndex="1"
-                                   GridPane.rowIndex="10"/>
-                        <Label text="Post Code" GridPane.rowIndex="9"/>
-                        <Label text="Post Area" GridPane.rowIndex="10"/>
+                        <TextField fx:id="txtUserId" editable="false" prefHeight="26.0" prefWidth="202.0" promptText="User ID" GridPane.columnIndex="1" />
+                        <TextField fx:id="txtPersonNr" promptText="Person Nr" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtFirstName" promptText="First Name" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="txtLastName" promptText="Last Name" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <TextField fx:id="txtEmail" promptText="E-Mail" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label text="User ID" />
+                        <Label text="Person Nr" GridPane.rowIndex="1" />
+                        <Label text="First Name" GridPane.rowIndex="3" />
+                        <Label text="Last Name" GridPane.rowIndex="4" />
+                        <Label text="E-Mail" GridPane.rowIndex="5" />
+                        <Label text="Phone Nr" GridPane.rowIndex="6" />
+                        <TextField fx:id="txtPhoneNr" promptText="Phone Nr" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label text="Street Address" GridPane.rowIndex="8" />
+                        <TextField fx:id="txtStreetAddress" prefHeight="25.0" prefWidth="149.0" promptText="Street Address" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <TextField fx:id="txtPostCode" promptText="Post Code" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                        <TextField fx:id="txtPostArea" promptText="Post Area" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                        <Label text="Post Code" GridPane.rowIndex="9" />
+                        <Label text="Post Area" GridPane.rowIndex="10" />
                     </children>
                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </padding>
                 </GridPane>
             </left>
             <bottom>
                 <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                     <buttons>
-                        <Button fx:id="btnCancelButton" cancelButton="true" mnemonicParsing="false"
-                                onAction="#handleCancelButtonClick" text="Cancel"/>
-                        <Button fx:id="btnSaveButton" defaultButton="true" mnemonicParsing="false"
-                                onAction="#handleSaveButtonClick" text="Save"/>
+                        <Button fx:id="btnCancelButton" cancelButton="true" mnemonicParsing="false" onAction="#handleCancelButtonClick" text="Cancel" />
+                        <Button fx:id="btnSaveButton" defaultButton="true" mnemonicParsing="false" onAction="#handleSaveButtonClick" text="Save" />
                     </buttons>
                     <BorderPane.margin>
-                        <Insets right="10.0"/>
+                        <Insets right="10.0" />
                     </BorderPane.margin>
                 </ButtonBar>
             </bottom>
             <top>
-                <ButtonBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="38.0" prefWidth="506.0"
-                           BorderPane.alignment="CENTER">
+                <ButtonBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="38.0" prefWidth="506.0" BorderPane.alignment="CENTER">
                     <buttons>
-                        <Button fx:id="btnReturn" mnemonicParsing="false" onAction="#handleReturnButtonClick"
-                                text="&lt;---"/>
+                        <Button fx:id="btnReturn" mnemonicParsing="false" onAction="#handleReturnButtonClick" text="&lt;---" />
                     </buttons>
                     <BorderPane.margin>
-                        <Insets left="10.0"/>
+                        <Insets left="10.0" />
                     </BorderPane.margin>
                 </ButtonBar>
             </top>
             <center>
-                <AnchorPane fx:id="childPane" prefHeight="261.0" prefWidth="236.0" BorderPane.alignment="CENTER"/>
+                <AnchorPane fx:id="childPane" prefHeight="261.0" prefWidth="236.0" BorderPane.alignment="CENTER" />
             </center>
         </BorderPane>
     </children>

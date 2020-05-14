@@ -60,6 +60,9 @@ public class UserDetailController implements Initializable {
      * Saves the user to database
      */
     public void saveUser() {
+        // TODO Add prompt when user is successfully saved
+        // TODO Input validation
+        // TODO Lock out Save button when there is invalid input
         userController.amendSettings(txtFirstName.getText(),
                 txtLastName.getText(),
                 txtStreetAddress.getText(),
@@ -140,7 +143,8 @@ public class UserDetailController implements Initializable {
 
 
         if (childController.isInputValid()) {
-
+            // TODO complete the input validation
+            // TODO add password field
         }
         return isValid;
     }
