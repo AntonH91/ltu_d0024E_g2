@@ -117,6 +117,7 @@ public class UserDetailController implements Initializable {
         childController.initializeUserController(user);
         userController = childController.getDataController();
         refreshFields();
+        childPane.getScene().getWindow().sizeToScene();
     }
 
 
