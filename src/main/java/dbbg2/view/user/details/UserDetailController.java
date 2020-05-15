@@ -9,7 +9,9 @@ import dbbg2.view.user.exceptions.UnknownUserTypeException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
@@ -33,11 +35,8 @@ public class UserDetailController implements Initializable {
     public Button btnReturn;
 
     public AnchorPane childPane;
-
-    private ChildController childController;
-
     protected UserController userController;
-
+    private ChildController childController;
 
     /**
      * Loads a child pane to the user view GUI.
@@ -60,22 +59,28 @@ public class UserDetailController implements Initializable {
      * Saves the user to database
      */
     public void saveUser() {
-        // TODO Add prompt when user is successfully saved
-        // TODO Input validation
-        // TODO Lock out Save button when there is invalid input
-        userController.amendSettings(txtFirstName.getText(),
-                txtLastName.getText(),
-                txtStreetAddress.getText(),
-                txtPostCode.getText(),
-                txtPostArea.getText(),
-                txtEmail.getText(),
-                txtPhoneNr.getText());
 
-        userController.amendPersonNumber(txtPersonNr.getText());
 
-        userController.saveChanges();
+        if (this.hasValidInput()) {
+            userController.amendSettings(txtFirstName.getText(),
+                    txtLastName.getText(),
+                    txtStreetAddress.getText(),
+                    txtPostCode.getText(),
+                    txtPostArea.getText(),
+                    txtEmail.getText(),
+                    txtPhoneNr.getText());
 
-        this.refreshFields();
+            userController.amendPersonNumber(txtPersonNr.getText());
+
+            userController.saveChanges();
+
+            this.refreshFields();
+            new Alert(Alert.AlertType.INFORMATION, "User saved successfully!", ButtonType.OK).showAndWait();
+        } else {
+            new Alert(Alert.AlertType.WARNING, "Please fill in all mandatory fields!", ButtonType.OK).showAndWait();
+            // TODO Tell user which fields are mandatory
+        }
+
 
     }
 
@@ -138,13 +143,20 @@ public class UserDetailController implements Initializable {
 
     }
 
+    /**
+     * Checks the input in all the fields for validity, including in the childform
+     *
+     * @return True if all input fields are correctly filled in, false otherwise
+     */
     private boolean hasValidInput() {
-        boolean isValid = false;
+        boolean isValid = !(txtFirstName.getText().isEmpty()
+                || txtLastName.getText().isEmpty()
+                || txtEmail.getText().isEmpty()
+                || txtPersonNr.getText().isEmpty());
 
-
-        if (childController.isInputValid()) {
-            // TODO complete the input validation
-            // TODO add password field
+        // TODO Add password for a new user
+        if (isValid && childController != null) {
+            isValid = childController.isInputValid();
         }
         return isValid;
     }
