@@ -2,7 +2,6 @@ package dbbg2.view.user;
 
 import dbbg2.data.users.User;
 import dbbg2.data.users.UserManager;
-import dbbg2.view.user.details.ChildController;
 import dbbg2.view.user.details.UserDetailController;
 import dbbg2.view.user.exceptions.UnknownUserTypeException;
 import javafx.collections.FXCollections;
@@ -51,6 +50,7 @@ public class UserOverviewController implements Initializable {
         tcFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         tcLastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         tcEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+
     }
 
     public void handleClearButtonClick(ActionEvent actionEvent) {
@@ -75,6 +75,9 @@ public class UserOverviewController implements Initializable {
 
             vbSearchControls.setVisible(false);
             acUserDetail.setVisible(true);
+            vbSearchControls.getParent().autosize();
+            acUserDetail.autosize();
+            acUserDetail.getParent().autosize();
         } catch (IOException | UnknownUserTypeException e) {
             e.printStackTrace();
         }
