@@ -61,6 +61,15 @@ public abstract class  UserController {
 
 
     /**
+     * Changes the password of the currently selected user
+     * @param newPassword The new password to set
+     */
+    public void setPassword(String newPassword) {
+        subjectToChange.setPassword(newPassword);
+    }
+
+
+    /**
      * Saves the changes to the user object
      */
     public void saveChanges() {

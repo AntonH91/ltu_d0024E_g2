@@ -75,8 +75,9 @@ public class UserDetailController implements Initializable {
             userController.amendPersonNumber(txtPersonNr.getText());
 
 
+            // Change the password only if there is a new one entered
             if (!pwdNewPassword.getText().isEmpty()) {
-                // TODO Set the password here.
+                userController.setPassword(pwdNewPassword.getText());
             }
 
             userController.saveChanges();
