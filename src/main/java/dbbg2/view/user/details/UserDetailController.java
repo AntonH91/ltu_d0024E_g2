@@ -9,11 +9,9 @@ import dbbg2.view.user.exceptions.UnknownUserTypeException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
 
 import java.io.IOException;
 import java.net.URL;
@@ -35,6 +33,10 @@ public class UserDetailController implements Initializable {
     public Button btnReturn;
 
     public AnchorPane childPane;
+
+    public PasswordField pwdNewPassword;
+    public PasswordField pwdConfirmPassword;
+
     protected UserController userController;
     private ChildController childController;
 
@@ -71,6 +73,11 @@ public class UserDetailController implements Initializable {
                     txtPhoneNr.getText());
 
             userController.amendPersonNumber(txtPersonNr.getText());
+
+
+            if (!pwdNewPassword.getText().isEmpty()) {
+                // TODO Set the password here.
+            }
 
             userController.saveChanges();
 
@@ -150,16 +157,54 @@ public class UserDetailController implements Initializable {
      * @return True if all input fields are correctly filled in, false otherwise
      */
     private boolean hasValidInput() {
-        boolean isValid = !(txtFirstName.getText().isEmpty()
-                || txtLastName.getText().isEmpty()
-                || txtEmail.getText().isEmpty()
-                || txtPersonNr.getText().isEmpty());
+
+        TextField [] fieldsToValidate = {txtFirstName, txtLastName, txtEmail, txtPersonNr};
+
+        boolean isValid = true;
+
+        for (TextField tf : fieldsToValidate) {
+            boolean fieldValid = !tf.getText().isEmpty();
+            isValid = isValid && fieldValid;
+            markTextFieldValidity(tf, fieldValid);
+
+        }
+
+        isValid = isValid && validatePassword();
+
 
         // TODO Add password for a new user
         if (isValid && childController != null) {
             isValid = childController.isInputValid();
         }
         return isValid;
+    }
+
+    /**
+     * Validates the password input of the form.
+     * @return True if the password form is valid, False otherwise
+     */
+    private boolean validatePassword() {
+        boolean isValid = true;
+        // New user - we should define a password as well.
+        if (userController.getUser().getUserId().isEmpty()) {
+            isValid = isValid && !pwdNewPassword.getText().isEmpty() && !pwdConfirmPassword.getText().isEmpty();
+        }
+
+        // If a password is defined, they must both match each other
+        if (!pwdNewPassword.getText().isEmpty()) {
+            isValid = isValid && pwdNewPassword.getText().equals(pwdConfirmPassword.getText());
+        }
+
+        return isValid;
+    }
+
+    /**
+     * Sets the layout of the text field to indicate to a user that it is a mandatory field
+     * @param textField The textfield to be changed
+     * @param valid True if the input is valid, false otherwise
+     */
+    private void markTextFieldValidity(TextField textField, boolean valid) {
+        //TODO Change the layout of the text field to indicate it's mandatory
     }
 
     public void handleCancelButtonClick(ActionEvent actionEvent) {
