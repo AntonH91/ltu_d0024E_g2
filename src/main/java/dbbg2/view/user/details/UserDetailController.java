@@ -7,6 +7,7 @@ import dbbg2.data.users.UserManager;
 import dbbg2.data.users.Visitor;
 import dbbg2.view.user.exceptions.UnknownUserTypeException;
 import dbbg2.view.utils.GenericStyler;
+import dbbg2.view.utils.nested.ChildController;
 import dbbg2.view.utils.nested.ParentController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -22,7 +23,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class UserDetailController implements Initializable, ParentController {
+public class UserDetailController extends ChildController implements Initializable, ParentController {
     public TextField txtUserId;
     public TextField txtPersonNr;
     public TextField txtFirstName;
@@ -42,6 +43,7 @@ public class UserDetailController implements Initializable, ParentController {
     public PasswordField pwdNewPassword;
     public PasswordField pwdConfirmPassword;
     public Label lblInputError;
+    public ButtonBar bbrTopBar;
 
     protected UserController userController;
     private UserChildController childController;
@@ -170,6 +172,18 @@ public class UserDetailController implements Initializable, ParentController {
     public void notifyUpdate() {
         // The child-form has changed - re-run validation
         handleValidationChanges();
+    }
+
+    /**
+     * If there is a parent controller then the return button should be made visible.
+     *
+     * @param parentController The parent controller
+     */
+    @Override
+    public void setParentController(ParentController parentController) {
+        super.setParentController(parentController);
+        btnReturn.setVisible(parentController != null);
+
     }
 
     /**
