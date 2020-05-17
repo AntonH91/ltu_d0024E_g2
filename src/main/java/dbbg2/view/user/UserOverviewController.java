@@ -66,29 +66,44 @@ public class UserOverviewController implements Initializable, ParentController {
     public void handleEditUserButtonClick(ActionEvent actionEvent) {
         // TODO Refactor this into a better structure
         User currentUser = tblUserList.getSelectionModel().getSelectedItem();
-        System.out.println(currentUser);
 
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/User/UserDetail.fxml"));
-            acUserDetail.getChildren().setAll((AnchorPane) loader.load());
-            UserDetailController udc = loader.getController();
+        if (currentUser != null) {
 
-            udc.loadUser(currentUser);
-            udc.setParentController(this);
+            try {
+                showUserDetail(currentUser);
 
-            vbSearchControls.setVisible(false);
-            acUserDetail.setVisible(true);
-
-            vbSearchControls.getParent().autosize();
-            acUserDetail.autosize();
-            //acUserDetail.getParent().autosize();
-
-        } catch (IOException | UnknownUserTypeException e) {
-            e.printStackTrace();
-            Logger.getLogger("").log(Level.SEVERE, "Exception triggered when loading form in UserOverviewController", e);
+            } catch (IOException | UnknownUserTypeException e) {
+                e.printStackTrace();
+                Logger.getLogger("").log(Level.SEVERE, "Exception triggered when loading form in UserOverviewController", e);
+            }
+        } else {
+            Logger.getLogger("").log(Level.WARNING, "Attempt to Edit user without selecting entity.");
         }
 
 
+    }
+
+    /**
+     * Displays the detail view for a given User
+     *
+     * @param theUser The user to display the detail view for
+     * @throws IOException              Thrown if loading the JavaFX resource fails
+     * @throws UnknownUserTypeException Thrown if the User class is not implemented in the Edit view.
+     */
+    private void showUserDetail(User theUser) throws IOException, UnknownUserTypeException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/User/UserDetail.fxml"));
+        acUserDetail.getChildren().setAll((AnchorPane) loader.load());
+        UserDetailController udc = loader.getController();
+
+        udc.loadUser(theUser);
+        udc.setParentController(this);
+
+        vbSearchControls.setVisible(false);
+        acUserDetail.setVisible(true);
+
+        vbSearchControls.getParent().autosize();
+        acUserDetail.autosize();
+        //acUserDetail.getParent().autosize();
     }
 
     /**
