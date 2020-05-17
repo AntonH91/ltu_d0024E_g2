@@ -1,4 +1,4 @@
-package data.Inventory;
+package unittest.data.Inventory;
 
 import dbbg2.data.inventory.Book;
 import dbbg2.data.inventory.itemCategory.ItemCategoryType;
