@@ -125,18 +125,35 @@ public class UserOverviewController implements Initializable, ParentController {
      *
      * @param actionEvent The event triggering the action
      */
-
     public void handleNewUserButtonClick(ActionEvent actionEvent) {
-        // TODO Implement New User addition
 
+        User newUser = getUserFromDialog();
+        if (newUser != null) {
+
+            try {
+                showUserDetail(newUser);
+            } catch (IOException | UnknownUserTypeException e) {
+                Logger.getLogger("").log(Level.SEVERE, "Exception during User loading during User Creation.", e);
+            }
+        } else {
+            Logger.getLogger("").log(Level.SEVERE, "Could not select a new user type during User Creation");
+        }
+
+    }
+
+    /**
+     * Prompts with a dialog to create a new user.
+     *
+     * @return The newly created User object, or null if none created.
+     */
+    private User getUserFromDialog() {
         String[] choices = {"Visitor", "Employee"};
 
         ChoiceDialog<String> cd = new ChoiceDialog<>(choices[0], Arrays.asList(choices));
 
         Optional<String> o = cd.showAndWait();
-
+        User newUser = null;
         if (o.isPresent()) {
-            User newUser = null;
             switch (o.get()) {
                 case "Visitor":
                     newUser = new Visitor();
@@ -146,19 +163,9 @@ public class UserOverviewController implements Initializable, ParentController {
                     break;
             }
 
-            if (newUser != null) {
-
-                try {
-                    showUserDetail(newUser);
-                } catch (IOException | UnknownUserTypeException e) {
-                    Logger.getLogger("").log(Level.SEVERE, "Exception during User loading during User Creation.", e);
-                }
-            } else {
-                Logger.getLogger("").log(Level.SEVERE, "Could not select a new user type during User Creation");
-            }
 
         }
-
+        return newUser;
     }
 
 
