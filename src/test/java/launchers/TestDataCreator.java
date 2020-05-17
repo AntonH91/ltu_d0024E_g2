@@ -1,8 +1,8 @@
 package launchers;
 
 import dbbg2.data.inventory.Book;
+import dbbg2.data.inventory.InventoryItem;
 import dbbg2.data.inventory.itemCategory.ItemCategory;
-import dbbg2.data.inventory.itemCategory.ItemCategoryType;
 import dbbg2.data.users.Employee;
 import dbbg2.data.users.Visitor;
 import dbbg2.data.users.visitorcategory.VisitorCategory;
@@ -21,7 +21,6 @@ public class TestDataCreator {
 
         em.getTransaction().begin();
 
-
         try {
             clearDatabase(em);
         } catch (Exception e) {
@@ -33,7 +32,7 @@ public class TestDataCreator {
         createVisitorCategories(em);
         createItemCategories(em);
         createUsers(em);
-        //createInventory(em);
+        createInventory(em);
 
         em.getTransaction().commit();
         JpaPersistence.disconnect();
@@ -49,7 +48,7 @@ public class TestDataCreator {
     }
 
     private static void createItemCategories(EntityManager em) {
-        em.persist(new ItemCategory("film", 7, true));
+        em.persist(new ItemCategory("Film", 7, true));
         em.persist(new ItemCategory("Journal", 0, false));
         em.persist(new ItemCategory("Other Books", 30, true));
         em.persist(new ItemCategory("Reference Literature", 0, false));
@@ -97,12 +96,14 @@ public class TestDataCreator {
 
     private static void createInventory(EntityManager em) {
         List<Book> books = new ArrayList<>();
+        List<ItemCategory> categories = em.createQuery("SELECT ic FROM ItemCategory ic", ItemCategory.class).getResultList();
 
+        String[] keywords = {"Action", "Adventure", "Studying", "Science", "Weird", "Story", "Fantasy", "Egg", "Thriller"};
 
-        books.add(new Book("The Hobbit", ItemCategoryType.OTHER_BOOKS, true, "123", "JRR Tolkien"));
-        books.add(new Book("Harry Potter", ItemCategoryType.OTHER_BOOKS, true, "123", "JK Rowling"));
-        books.add(new Book("Emil", ItemCategoryType.OTHER_BOOKS, true, "123", "Astrid Lindgren"));
-        books.add(new Book("Dexter", ItemCategoryType.OTHER_BOOKS, true, "123", "Jeff Lindsay"));
+        books.add(new Book("The Hobbit", categories.get(1), true, "123", "JRR Tolkien"));
+        books.add(new Book("Harry Potter", categories.get(1), true, "123", "JK Rowling"));
+        books.add(new Book("Emil", categories.get(1), true, "123", "Astrid Lindgren"));
+        books.add(new Book("Dexter", categories.get(3), true, "123", "Jeff Lindsay"));
 
         int index = 0;
 
@@ -111,6 +112,28 @@ public class TestDataCreator {
             index++;
             em.merge(b);
         }
+
+    }
+
+    private static void addRandomKeywords(InventoryItem i, String[] keywords) {
+
+        /*
+        int length = keywords.length;
+
+        Random rng = new Random();
+
+        int keywordAmount = rng.nextInt(length/2) + 1;
+        keywordAmount = Math.min(keywordAmount, length);
+
+
+
+        while(keywordAmount-- > 0) {
+            Keyword kw = new Keyword();
+            kw.setKeyword(keywords[rng.nextInt(length)]);
+            i.getKeyword().add(kw);
+        }
+        */
+
 
     }
 
@@ -130,16 +153,25 @@ public class TestDataCreator {
                 "DELETE FROM visitor;",
                 "DELETE FROM employees;",
                 "DELETE FROM users;",
-                "DELETE FROM sequence;",
                 "DELETE FROM itemcategory;",
                 "DELETE FROM visitorcategory"
         };
 
+        runNativeQueries(em, queries);
+
+    }
+
+    private static void dropAndRemakeDatabase(EntityManager em) {
+        runNativeQueries(em, "DROP DATABASE library_dbb_jpa;", "CREATE DATABASE library_dbb_jpa;");
+    }
+
+
+    private static void runNativeQueries(EntityManager em, String... queries) {
         for (String query : queries) {
             Query q = em.createNativeQuery(query);
             q.executeUpdate();
         }
-
     }
+
 
 }
