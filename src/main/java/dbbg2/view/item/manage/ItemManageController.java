@@ -1,26 +1,21 @@
 package dbbg2.view.item.manage;
 
-import dbbg2.controllers.LibraryDbb;
-import dbbg2.data.inventory.*;
+import dbbg2.data.inventory.Book;
+import dbbg2.data.inventory.Film;
+import dbbg2.data.inventory.InventoryItem;
+import dbbg2.data.inventory.InventoryManager;
 import dbbg2.data.inventory.itemCategory.ItemCategory;
-import dbbg2.data.inventory.itemCategory.ItemCategoryType;
 import dbbg2.utils.persistence.JpaPersistence;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import java.awt.*;
 import java.net.URL;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
