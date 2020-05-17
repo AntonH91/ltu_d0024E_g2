@@ -186,7 +186,7 @@ public class UserOverviewController implements Initializable, ParentController {
         acUserDetail.autosize();
         // TODO Make auto-sizing work correctly
         vbSearchControls.autosize();
-        vbSearchControls.getParent().autosize();
+        vbSearchControls.getScene().getWindow().sizeToScene();
     }
 
     @Override
