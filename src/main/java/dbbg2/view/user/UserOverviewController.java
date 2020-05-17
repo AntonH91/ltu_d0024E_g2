@@ -45,6 +45,7 @@ public class UserOverviewController implements Initializable, ParentController {
     public ChoiceBox<VisitorCategory> cboCategoryFilter;
 
     public void handleSearchButtonClick(ActionEvent actionEvent) {
+        // TODO Make it so that only Employees can search users
         tblUserList.setItems(FXCollections.observableArrayList(UserManager.getUsers(txtUserId.getText(), txtFirstName.getText(), txtLastName.getText(), txtEmail.getText())));
 
 
@@ -129,6 +130,7 @@ public class UserOverviewController implements Initializable, ParentController {
      */
     public void handleNewUserButtonClick(ActionEvent actionEvent) {
 
+        // TODO Make it so that only Employees can create new users
         User newUser = getUserFromDialog();
         if (newUser != null) {
 
@@ -149,6 +151,7 @@ public class UserOverviewController implements Initializable, ParentController {
      * @return The newly created User object, or null if none created.
      */
     private User getUserFromDialog() {
+        // TODO Make it so that only Manager-level employees can create new Employees
         String[] choices = {"Visitor", "Employee"};
 
         ChoiceDialog<String> cd = new ChoiceDialog<>(choices[0], Arrays.asList(choices));
@@ -171,6 +174,9 @@ public class UserOverviewController implements Initializable, ParentController {
     }
 
 
+    /**
+     * Binds the change listeners in this controller
+     */
     private void bindListeners() {
         tblUserList.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> btnEditUser.setDisable(newValue == null)

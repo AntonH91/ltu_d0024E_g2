@@ -5,8 +5,6 @@ import dbbg2.controllers.user.UserController;
 import dbbg2.data.users.Employee;
 import dbbg2.data.users.User;
 import dbbg2.view.utils.GenericStyler;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -21,6 +19,8 @@ public class EmployeeDetailController extends UserChildController implements Ini
     public TextField txtSalary;
     public CheckBox chkManagerAccess;
     private EmployeeController employeeController;
+
+    private String validationMessage = null;
 
     @Override
     public void initializeUserController(User u) {
@@ -47,6 +47,10 @@ public class EmployeeDetailController extends UserChildController implements Ini
 
     @Override
     public void refreshInterface() {
+        // TODO Make it so that only Managers can see employee salaries
+        // TODO Make it so that only Managers can change the Manager Access checkbox
+        // TODO Make it so that it's not possible for a Manager to revoke their own Manager access
+
         Employee e = (Employee) employeeController.getUser();
         txtSalary.setText(String.valueOf(e.getSalary()));
         chkManagerAccess.setSelected(e.isManagerAccess());
@@ -65,8 +69,9 @@ public class EmployeeDetailController extends UserChildController implements Ini
         try {
             Double.valueOf(txtSalary.getText());
             isValid = true;
+            validationMessage = null;
         } catch (Exception e) {
-
+            validationMessage = "Salary must be a valid number.";
         }
         return isValid;
     }
@@ -90,17 +95,12 @@ public class EmployeeDetailController extends UserChildController implements Ini
 
         });
 
-        chkManagerAccess.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                triggerParentUpdate();
-            }
-        });
+        chkManagerAccess.selectedProperty().addListener((observable, oldValue, newValue) -> triggerParentUpdate());
 
     }
 
     @Override
     public String getValidationMessage() {
-        return null;
+        return validationMessage;
     }
 }

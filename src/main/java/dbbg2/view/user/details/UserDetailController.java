@@ -309,6 +309,8 @@ public class UserDetailController extends ChildController implements Initializab
      * Called when the delete button is pressed.
      */
     public void handleDeleteButtonClick(ActionEvent actionEvent) {
+        // TODO Make this button only show for Employees
+        // TODO Make managers the only Employees that can delete other Employees
         Optional<ButtonType> o = new Alert(Alert.AlertType.CONFIRMATION, "Delete the current user?", ButtonType.YES, ButtonType.NO).showAndWait();
 
         if (o.isPresent() && o.get() == ButtonType.YES) {
