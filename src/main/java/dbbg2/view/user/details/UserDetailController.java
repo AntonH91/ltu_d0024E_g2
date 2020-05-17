@@ -10,7 +10,6 @@ import dbbg2.view.utils.GenericStyler;
 import dbbg2.view.utils.nested.ChildController;
 import dbbg2.view.utils.nested.ParentController;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -96,7 +95,6 @@ public class UserDetailController extends ChildController implements Initializab
             new Alert(Alert.AlertType.INFORMATION, "User saved successfully!", ButtonType.OK).showAndWait();
         } else {
             new Alert(Alert.AlertType.WARNING, "Please fill in all mandatory fields!", ButtonType.OK).showAndWait();
-            // TODO Tell user which fields are mandatory
         }
 
 
@@ -164,7 +162,7 @@ public class UserDetailController extends ChildController implements Initializab
     }
 
     @Override
-    public void requestReturn() {
+    public void notifyRequestReturn() {
         // Do nothing - we will not return from the childform
     }
 
@@ -182,8 +180,10 @@ public class UserDetailController extends ChildController implements Initializab
     @Override
     public void setParentController(ParentController parentController) {
         super.setParentController(parentController);
-        btnReturn.setVisible(parentController != null);
 
+        boolean makeVisible = parentController != null;
+        btnReturn.setVisible(makeVisible);
+        bbrTopBar.setVisible(makeVisible);
     }
 
     /**
@@ -300,6 +300,7 @@ public class UserDetailController extends ChildController implements Initializab
     }
 
     public void handleReturnButtonClick(ActionEvent actionEvent) {
+        this.triggerReturnRequest();
     }
 
     @Override
@@ -313,12 +314,7 @@ public class UserDetailController extends ChildController implements Initializab
     private void bindListeners() {
 
         // Define the new change listener for the text fields
-        ChangeListener<String> txtChangedListener = new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                handleValidationChanges();
-            }
-        };
+        ChangeListener<String> txtChangedListener = (observable, oldValue, newValue) -> handleValidationChanges();
 
         // Add the change listener to the default monitored fields
         for (TextField tf : fieldsToValidate) {

@@ -4,6 +4,7 @@ import dbbg2.data.users.User;
 import dbbg2.data.users.UserManager;
 import dbbg2.view.user.details.UserDetailController;
 import dbbg2.view.user.exceptions.UnknownUserTypeException;
+import dbbg2.view.utils.nested.ParentController;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -19,8 +20,10 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class UserOverviewController implements Initializable {
+public class UserOverviewController implements Initializable, ParentController {
     public TextField txtUserId;
     public TextField txtFirstName;
     public TextField txtLastName;
@@ -40,7 +43,7 @@ public class UserOverviewController implements Initializable {
 
     public void handleSearchButtonClick(ActionEvent actionEvent) {
         tblUserList.setItems(FXCollections.observableArrayList(UserManager.getUsers(txtUserId.getText(), txtFirstName.getText(), txtLastName.getText(), txtEmail.getText())));
-
+        tblUserList.autosize();
 
     }
 
@@ -62,7 +65,6 @@ public class UserOverviewController implements Initializable {
 
     public void handleEditUserButtonClick(ActionEvent actionEvent) {
         // TODO Refactor this into a better structure
-        // TODO Implement functionality to use back button to return to detail view
         User currentUser = tblUserList.getSelectionModel().getSelectedItem();
         System.out.println(currentUser);
 
@@ -72,19 +74,47 @@ public class UserOverviewController implements Initializable {
             UserDetailController udc = loader.getController();
 
             udc.loadUser(currentUser);
+            udc.setParentController(this);
 
             vbSearchControls.setVisible(false);
             acUserDetail.setVisible(true);
+
             vbSearchControls.getParent().autosize();
             acUserDetail.autosize();
-            acUserDetail.getParent().autosize();
+            //acUserDetail.getParent().autosize();
+
         } catch (IOException | UnknownUserTypeException e) {
             e.printStackTrace();
+            Logger.getLogger("").log(Level.SEVERE, "Exception triggered when loading form in UserOverviewController", e);
         }
 
 
     }
 
+    /**
+     * Handle a click on the New User button
+     *
+     * @param actionEvent The event triggering the action
+     */
+
     public void handleNewUserButtonClick(ActionEvent actionEvent) {
+        // TODO Implement New User addition
+    }
+
+    @Override
+    public void notifyRequestReturn() {
+        vbSearchControls.setVisible(true);
+
+        acUserDetail.setVisible(false);
+        acUserDetail.getChildren().clear();
+        acUserDetail.autosize();
+        // TODO Make auto-sizing work correctly
+        vbSearchControls.autosize();
+        vbSearchControls.getParent().autosize();
+    }
+
+    @Override
+    public void notifyUpdate() {
+        // No need to handle updates from the child form
     }
 }

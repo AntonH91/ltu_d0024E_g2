@@ -29,4 +29,10 @@ public class ChildController {
             parentController.notifyUpdate();
         }
     }
+
+    protected void triggerReturnRequest() {
+        if (parentController != null) {
+            parentController.notifyRequestReturn();
+        }
+    }
 }
