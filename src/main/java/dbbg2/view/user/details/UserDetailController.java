@@ -8,13 +8,12 @@ import dbbg2.data.users.Visitor;
 import dbbg2.view.user.exceptions.UnknownUserTypeException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.css.Styleable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
 import java.io.IOException;
 import java.net.URL;
@@ -217,7 +216,7 @@ public class UserDetailController implements Initializable {
         for (TextField tf : fieldsToValidate) {
             boolean fieldValid = !tf.getText().isEmpty();
             isValid = isValid && fieldValid;
-            markTextFieldValidity(tf, fieldValid);
+            markStyleableValidity(tf, fieldValid);
 
         }
 
@@ -254,8 +253,8 @@ public class UserDetailController implements Initializable {
             }
         }
 
-        markTextFieldValidity(pwdConfirmPassword, pst == PasswordStatus.OK);
-        markTextFieldValidity(pwdNewPassword, pst == PasswordStatus.OK);
+        markStyleableValidity(pwdConfirmPassword, pst == PasswordStatus.OK);
+        markStyleableValidity(pwdNewPassword, pst == PasswordStatus.OK);
 
         return pst;
     }
@@ -263,19 +262,18 @@ public class UserDetailController implements Initializable {
     /**
      * Sets the layout of the text field to indicate to a user that it is a mandatory field
      *
-     * @param textField The textfield to be changed
+     * @param styleable The styleable element to be changed
      * @param valid     True if the input is valid, false otherwise
      */
-    private void markTextFieldValidity(TextField textField, boolean valid) {
-        //TODO Change the layout of the text field to indicate it's mandatory
-        Font f = textField.getFont();
-        FontWeight targetWeight = FontWeight.NORMAL;
+    private void markStyleableValidity(Styleable styleable, boolean valid) {
 
         if (!valid) {
-            targetWeight = FontWeight.BOLD;
+            styleable.getStyleClass().add("invalid");
+
+        } else {
+            styleable.getStyleClass().removeAll("invalid");
         }
 
-        textField.setFont(Font.font(f.getFamily(), targetWeight, f.getSize()));
     }
 
     public void handleCancelButtonClick(ActionEvent actionEvent) {

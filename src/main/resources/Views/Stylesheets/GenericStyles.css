@@ -1,0 +1,5 @@
+.invalid {
+    -fx-border-color: crimson;
+    -fx-border-width: 2px;
+    -fx-font-weight: bold;
+}
