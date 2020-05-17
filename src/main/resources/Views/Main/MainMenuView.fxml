@@ -16,12 +16,13 @@
                     <Insets right="50.0"/>
                 </FlowPane.margin>
             </Label>
-            <Button fx:id="btnLoginLogout" mnemonicParsing="false" text="Log In">
+            <Button fx:id="btnLoginLogout" mnemonicParsing="false" onAction="#handleLoginButtonClick" text="Log In">
                 <FlowPane.margin>
                     <Insets right="10.0"/>
                 </FlowPane.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Register">
+            <Button fx:id="btnRegisterNewAccount" mnemonicParsing="false" onAction="#handleRegisterButtonClick"
+                    text="Register">
                 <FlowPane.margin>
                     <Insets right="10.0"/>
                 </FlowPane.margin>
@@ -29,10 +30,12 @@
         </FlowPane>
         <TabPane prefHeight="493.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
             <Tab text="Users">
-                <AnchorPane fx:id="achUsers" minHeight="0.0" minWidth="0.0" prefHeight="180.0"
-                            prefWidth="200.0"/>
+                <AnchorPane fx:id="achUsers" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
             </Tab>
             <Tab text="Inventory">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+            </Tab>
+            <Tab text="Loans">
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
             </Tab>
         </TabPane>
