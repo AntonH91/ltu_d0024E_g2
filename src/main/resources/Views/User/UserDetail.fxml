@@ -12,7 +12,7 @@
         <bottom>
             <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                 <buttons>
-                    <Label fx:id="lblInputError" textFill="#ff1500" wrapText="true">
+                    <Label fx:id="lblInputError" styleClass="invalid-lbl" wrapText="true">
                         <font>
                             <Font name="System Bold" size="12.0"/>
                         </font>
@@ -31,12 +31,14 @@
             </ButtonBar>
         </bottom>
         <top>
-            <ButtonBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="38.0" prefWidth="506.0" BorderPane.alignment="CENTER">
+            <ButtonBar fx:id="bbrTopBar" nodeOrientation="RIGHT_TO_LEFT" prefHeight="38.0" prefWidth="506.0"
+                       visible="false" BorderPane.alignment="CENTER">
                 <buttons>
-                    <Button fx:id="btnReturn" mnemonicParsing="false" onAction="#handleReturnButtonClick" text="&lt;---" />
+                    <Button fx:id="btnReturn" mnemonicParsing="false" onAction="#handleReturnButtonClick" text="&lt;---"
+                            visible="false"/>
                 </buttons>
                 <BorderPane.margin>
-                    <Insets left="10.0" />
+                    <Insets left="10.0"/>
                 </BorderPane.margin>
             </ButtonBar>
         </top>
