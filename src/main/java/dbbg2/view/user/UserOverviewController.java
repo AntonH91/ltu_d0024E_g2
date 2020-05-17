@@ -4,6 +4,7 @@ import dbbg2.data.users.Employee;
 import dbbg2.data.users.User;
 import dbbg2.data.users.UserManager;
 import dbbg2.data.users.Visitor;
+import dbbg2.data.users.visitorcategory.VisitorCategory;
 import dbbg2.view.user.details.UserDetailController;
 import dbbg2.view.user.exceptions.UnknownUserTypeException;
 import dbbg2.view.utils.nested.ParentController;
@@ -41,6 +42,7 @@ public class UserOverviewController implements Initializable, ParentController {
     public Button btnNewUser;
     public AnchorPane acUserDetail;
     public VBox vbSearchControls;
+    public ChoiceBox<VisitorCategory> cboCategoryFilter;
 
     public void handleSearchButtonClick(ActionEvent actionEvent) {
         tblUserList.setItems(FXCollections.observableArrayList(UserManager.getUsers(txtUserId.getText(), txtFirstName.getText(), txtLastName.getText(), txtEmail.getText())));
