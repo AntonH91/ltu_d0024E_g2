@@ -18,6 +18,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,6 +44,7 @@ public class UserDetailController extends ChildController implements Initializab
     public PasswordField pwdConfirmPassword;
     public Label lblInputError;
     public ButtonBar bbrTopBar;
+    public Button btnDeleteUser;
 
     protected UserController userController;
     private UserChildController childController;
@@ -301,6 +303,24 @@ public class UserDetailController extends ChildController implements Initializab
 
     public void handleReturnButtonClick(ActionEvent actionEvent) {
         this.triggerReturnRequest();
+    }
+
+    /**
+     * Called when the delete button is pressed.
+     */
+    public void handleDeleteButtonClick(ActionEvent actionEvent) {
+        Optional<ButtonType> o = new Alert(Alert.AlertType.CONFIRMATION, "Delete the current user?", ButtonType.YES, ButtonType.NO).showAndWait();
+
+        if (o.isPresent() && o.get() == ButtonType.YES) {
+
+            try {
+                userController.deleteUser();
+                this.triggerReturnRequest();
+                new Alert(Alert.AlertType.INFORMATION, "Deletion successful!");
+            } catch (IllegalArgumentException e) {
+                new Alert(Alert.AlertType.INFORMATION, "It's not possible to delete this user. They may be involved in loans or other items.");
+            }
+        }
     }
 
     @Override

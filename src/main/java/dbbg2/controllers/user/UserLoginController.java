@@ -8,17 +8,27 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class UserLoginController {
     public TextField txtUserName;
     public PasswordField pwdPassword;
 
     public void handleLoginClick(ActionEvent actionEvent) {
-        try {
-            AuthenticationManager.logIn(txtUserName.getText(), pwdPassword.getText());
-        } catch (LoginFailureException e) {
+        attemptLogin(txtUserName.getText(), pwdPassword.getText());
+    }
 
+    private void attemptLogin(String userName, String password) {
+        try {
+
+            AuthenticationManager.logIn(userName, password);
+        } catch (LoginFailureException e) {
+            Logger.getLogger("").log(Level.INFO, "Failed login attempt for user: " + userName);
+            showAlert("Invalid username / password combination.");
         } catch (IllegalStateException e) {
-            System.out.println("Someone is already logged in!");
+            Logger.getLogger("").log(Level.WARNING, "Login attempted when a user was already logged in.", e);
+            showAlert("Cannot login when a user is already logged in.");
         }
     }
 

@@ -32,8 +32,10 @@
         </bottom>
         <top>
             <ButtonBar fx:id="bbrTopBar" nodeOrientation="RIGHT_TO_LEFT" prefHeight="38.0" prefWidth="506.0"
-                       visible="false" BorderPane.alignment="CENTER">
+                       BorderPane.alignment="CENTER">
                 <buttons>
+                    <Button fx:id="btnDeleteUser" mnemonicParsing="false" onAction="#handleDeleteButtonClick"
+                            text="Delete"/>
                     <Button fx:id="btnReturn" mnemonicParsing="false" onAction="#handleReturnButtonClick" text="&lt;---"
                             visible="false"/>
                 </buttons>
