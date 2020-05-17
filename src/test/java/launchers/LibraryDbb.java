@@ -1,4 +1,4 @@
-package dbbg2.controllers;
+package launchers;
 
 import dbbg2.data.genericexceptions.LibraryEntityNotFoundException;
 import dbbg2.data.inventory.Book;
