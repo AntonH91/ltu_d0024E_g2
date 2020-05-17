@@ -6,6 +6,7 @@ import dbbg2.data.users.User;
 import dbbg2.data.users.Visitor;
 import dbbg2.data.users.visitorcategory.VisitorCategory;
 import dbbg2.utils.persistence.JpaPersistence;
+import dbbg2.view.utils.GenericStyler;
 import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
@@ -19,7 +20,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class VisitorDetailController implements ChildController, Initializable {
+public class VisitorDetailController extends UserChildController implements Initializable {
     public ComboBox<VisitorCategory> cbxVisitorCategory;
 
     public CheckBox chkShowReturned;
@@ -28,6 +29,12 @@ public class VisitorDetailController implements ChildController, Initializable {
 
     private VisitorController visitorController;
 
+    private String validationErrors;
+
+    @Override
+    public String getValidationMessage() {
+        return validationErrors;
+    }
 
     @Override
     public void initializeUserController(User u) {
@@ -80,7 +87,9 @@ public class VisitorDetailController implements ChildController, Initializable {
 
     @Override
     public boolean isInputValid() {
-        return cbxVisitorCategory.getValue() != null;
+        boolean isValid = cbxVisitorCategory.getValue() != null;
+        GenericStyler.markValidity(cbxVisitorCategory, isValid);
+        return isValid;
     }
 
     /**
@@ -115,6 +124,9 @@ public class VisitorDetailController implements ChildController, Initializable {
 
     }
 
+    /**
+     * Loads the selectable visitor categories from the database
+     */
     private void loadVisitorCategories() {
         EntityManager em = JpaPersistence.getEntityManager();
         List<VisitorCategory> categoryList = em.createQuery("SELECT vc FROM VisitorCategory vc", VisitorCategory.class).getResultList();

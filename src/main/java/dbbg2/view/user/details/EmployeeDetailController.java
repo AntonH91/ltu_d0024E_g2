@@ -4,6 +4,9 @@ import dbbg2.controllers.user.EmployeeController;
 import dbbg2.controllers.user.UserController;
 import dbbg2.data.users.Employee;
 import dbbg2.data.users.User;
+import dbbg2.view.utils.GenericStyler;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -13,7 +16,7 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class EmployeeDetailController implements ChildController, Initializable {
+public class EmployeeDetailController extends UserChildController implements Initializable {
 
     public TextField txtSalary;
     public CheckBox chkManagerAccess;
@@ -35,6 +38,7 @@ public class EmployeeDetailController implements ChildController, Initializable 
         return employeeController;
     }
 
+
     @Override
     public void updateUserData() {
         employeeController.changeSalary(Double.valueOf(txtSalary.getText()));
@@ -51,6 +55,8 @@ public class EmployeeDetailController implements ChildController, Initializable 
 
     @Override
     public boolean isInputValid() {
+        boolean isValid = validateSalary();
+        GenericStyler.markValidity(txtSalary, isValid);
         return validateSalary();
     }
 
@@ -73,16 +79,28 @@ public class EmployeeDetailController implements ChildController, Initializable 
     private void bindListeners() {
         // Bind a listener to validate the salary amount
         txtSalary.focusedProperty().addListener((observable, oldValue, newValue) -> {
-                    if (!newValue) {
-                        if (!validateSalary()) {
-                            Alert a = new Alert(Alert.AlertType.WARNING, "Please input a valid salary number.", ButtonType.OK);
-                            a.showAndWait();
-                            txtSalary.requestFocus();
-                        }
-                    }
-
+            if (!newValue) {
+                triggerParentUpdate();
+                if (!validateSalary()) {
+                    Alert a = new Alert(Alert.AlertType.WARNING, "Please input a valid salary number.", ButtonType.OK);
+                    a.showAndWait();
+                    txtSalary.requestFocus();
                 }
-        );
+            }
+
+        });
+
+        chkManagerAccess.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                triggerParentUpdate();
+            }
+        });
+
     }
 
+    @Override
+    public String getValidationMessage() {
+        return null;
+    }
 }

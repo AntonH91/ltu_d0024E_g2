@@ -6,9 +6,10 @@ import dbbg2.data.users.User;
 import dbbg2.data.users.UserManager;
 import dbbg2.data.users.Visitor;
 import dbbg2.view.user.exceptions.UnknownUserTypeException;
+import dbbg2.view.utils.GenericStyler;
+import dbbg2.view.utils.nested.ParentController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.css.Styleable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,8 +19,10 @@ import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class UserDetailController implements Initializable {
+public class UserDetailController implements Initializable, ParentController {
     public TextField txtUserId;
     public TextField txtPersonNr;
     public TextField txtFirstName;
@@ -41,10 +44,9 @@ public class UserDetailController implements Initializable {
     public Label lblInputError;
 
     protected UserController userController;
-    private ChildController childController;
+    private UserChildController childController;
 
     private TextField[] fieldsToValidate;
-
 
     /**
      * Loads a child pane to the user view GUI.
@@ -57,9 +59,9 @@ public class UserDetailController implements Initializable {
             childPane.getChildren().setAll((AnchorPane) loader.load());
 
             childController = loader.getController();
-
+            childController.setParentController(this);
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.getLogger("").log(Level.SEVERE, "IOException triggered when loading Child Pane", e);
         }
     }
 
@@ -159,7 +161,21 @@ public class UserDetailController implements Initializable {
 
     }
 
-    private void handleValidationChanges() {
+    @Override
+    public void requestReturn() {
+        // Do nothing - we will not return from the childform
+    }
+
+    @Override
+    public void notifyUpdate() {
+        // The child-form has changed - re-run validation
+        handleValidationChanges();
+    }
+
+    /**
+     * Called whenever a text field changes, so that input validation can be re-run.
+     */
+    public void handleValidationChanges() {
         boolean validInput = hasValidInput();
 
         // Lock the save button if the input is not valid
@@ -192,6 +208,7 @@ public class UserDetailController implements Initializable {
 
     }
 
+
     /**
      * Sets the text of the error label in the bottom row of the display
      *
@@ -216,7 +233,7 @@ public class UserDetailController implements Initializable {
         for (TextField tf : fieldsToValidate) {
             boolean fieldValid = !tf.getText().isEmpty();
             isValid = isValid && fieldValid;
-            markStyleableValidity(tf, fieldValid);
+            GenericStyler.markValidity(tf, fieldValid);
 
         }
 
@@ -253,27 +270,10 @@ public class UserDetailController implements Initializable {
             }
         }
 
-        markStyleableValidity(pwdConfirmPassword, pst == PasswordStatus.OK);
-        markStyleableValidity(pwdNewPassword, pst == PasswordStatus.OK);
+        GenericStyler.markValidity(pwdConfirmPassword, pst == PasswordStatus.OK);
+        GenericStyler.markValidity(pwdNewPassword, pst == PasswordStatus.OK);
 
         return pst;
-    }
-
-    /**
-     * Sets the layout of the text field to indicate to a user that it is a mandatory field
-     *
-     * @param styleable The styleable element to be changed
-     * @param valid     True if the input is valid, false otherwise
-     */
-    private void markStyleableValidity(Styleable styleable, boolean valid) {
-
-        if (!valid) {
-            styleable.getStyleClass().add("invalid");
-
-        } else {
-            styleable.getStyleClass().removeAll("invalid");
-        }
-
     }
 
     public void handleCancelButtonClick(ActionEvent actionEvent) {
@@ -317,11 +317,11 @@ public class UserDetailController implements Initializable {
 
     }
 
-
     public enum PasswordStatus {
         OK,
         PASSWORD_REQUIRED,
         PASSWORD_MISMATCH
     }
+
 
 }
