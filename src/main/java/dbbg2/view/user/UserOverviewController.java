@@ -1,7 +1,9 @@
 package dbbg2.view.user;
 
+import dbbg2.data.users.Employee;
 import dbbg2.data.users.User;
 import dbbg2.data.users.UserManager;
+import dbbg2.data.users.Visitor;
 import dbbg2.view.user.details.UserDetailController;
 import dbbg2.view.user.exceptions.UnknownUserTypeException;
 import dbbg2.view.utils.nested.ParentController;
@@ -9,16 +11,15 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,9 +44,10 @@ public class UserOverviewController implements Initializable, ParentController {
 
     public void handleSearchButtonClick(ActionEvent actionEvent) {
         tblUserList.setItems(FXCollections.observableArrayList(UserManager.getUsers(txtUserId.getText(), txtFirstName.getText(), txtLastName.getText(), txtEmail.getText())));
-        tblUserList.autosize();
+
 
     }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -54,8 +56,16 @@ public class UserOverviewController implements Initializable, ParentController {
         tcLastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         tcEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
 
+
+        bindListeners();
+
     }
 
+    /**
+     * Clears the search fields
+     *
+     * @param actionEvent The event that was fired
+     */
     public void handleClearButtonClick(ActionEvent actionEvent) {
         txtUserId.clear();
         txtFirstName.clear();
@@ -63,8 +73,12 @@ public class UserOverviewController implements Initializable, ParentController {
         txtEmail.clear();
     }
 
+    /**
+     * Triggers an edit of the currently selected user
+     *
+     * @param actionEvent The event that fired
+     */
     public void handleEditUserButtonClick(ActionEvent actionEvent) {
-        // TODO Refactor this into a better structure
         User currentUser = tblUserList.getSelectionModel().getSelectedItem();
 
         if (currentUser != null) {
@@ -114,6 +128,46 @@ public class UserOverviewController implements Initializable, ParentController {
 
     public void handleNewUserButtonClick(ActionEvent actionEvent) {
         // TODO Implement New User addition
+
+        String[] choices = {"Visitor", "Employee"};
+
+        ChoiceDialog<String> cd = new ChoiceDialog<>(choices[0], Arrays.asList(choices));
+
+        Optional<String> o = cd.showAndWait();
+
+        if (o.isPresent()) {
+            User newUser = null;
+            switch (o.get()) {
+                case "Visitor":
+                    newUser = new Visitor();
+                    break;
+                case "Employee":
+                    newUser = new Employee();
+                    break;
+            }
+
+            if (newUser != null) {
+
+                try {
+                    showUserDetail(newUser);
+                } catch (IOException | UnknownUserTypeException e) {
+                    Logger.getLogger("").log(Level.SEVERE, "Exception during User loading during User Creation.", e);
+                }
+            } else {
+                Logger.getLogger("").log(Level.SEVERE, "Could not select a new user type during User Creation");
+            }
+
+        }
+
+    }
+
+
+    private void bindListeners() {
+        tblUserList.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> btnEditUser.setDisable(newValue == null)
+        );
+
+
     }
 
     @Override
@@ -132,4 +186,6 @@ public class UserOverviewController implements Initializable, ParentController {
     public void notifyUpdate() {
         // No need to handle updates from the child form
     }
+
+
 }

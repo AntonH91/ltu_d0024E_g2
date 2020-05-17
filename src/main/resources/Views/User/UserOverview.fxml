@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <AnchorPane id="userOverviewAnchor" prefHeight="583.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dbbg2.view.user.UserOverviewController">
     <VBox fx:id="vbSearchControls" prefHeight="583.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <AnchorPane>
@@ -18,16 +17,20 @@
             <Button fx:id="btnClearSearch" layoutX="495.0" layoutY="152.0" mnemonicParsing="false" onAction="#handleClearButtonClick" text="Clear" />
         </AnchorPane>
         <ToolBar prefHeight="40.0" prefWidth="200.0">
-            <Button fx:id="btnEditUser" mnemonicParsing="false" onAction="#handleEditUserButtonClick" text="Edit" />
-            <Button fx:id="btnNewUser" mnemonicParsing="false" onAction="#handleNewUserButtonClick" text="New" />
+            <Button fx:id="btnEditUser" disable="true" mnemonicParsing="false" onAction="#handleEditUserButtonClick"
+                    text="Edit"/>
+            <Button fx:id="btnNewUser" mnemonicParsing="false" onAction="#handleNewUserButtonClick" text="New"/>
         </ToolBar>
-        <TableView fx:id="tblUserList">
+        <TableView fx:id="tblUserList" tableMenuButtonVisible="true">
             <columns>
-                <TableColumn fx:id="tcUserId" prefWidth="75.0" text="User ID" />
-                <TableColumn fx:id="tcFirstName" prefWidth="75.0" text="First Name" />
-                <TableColumn fx:id="tcLastName" prefWidth="75.0" text="Last Name" />
-                <TableColumn fx:id="tcEmail" prefWidth="75.0" text="E-mail" />
+                <TableColumn fx:id="tcUserId" editable="false" prefWidth="-1.0" text="User ID"/>
+                <TableColumn fx:id="tcFirstName" editable="false" prefWidth="-1.0" text="First Name"/>
+                <TableColumn fx:id="tcLastName" editable="false" prefWidth="-1.0" text="Last Name"/>
+                <TableColumn fx:id="tcEmail" editable="false" prefWidth="-1.0" text="E-mail"/>
             </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+            </columnResizePolicy>
         </TableView>
     </VBox>
    <AnchorPane fx:id="acUserDetail" prefHeight="583.0" prefWidth="600.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
