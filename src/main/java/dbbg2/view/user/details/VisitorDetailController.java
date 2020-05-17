@@ -95,8 +95,8 @@ public class VisitorDetailController extends UserChildController implements Init
     /**
      * Initialize the VisitorDetail view and configure the visitor category combobox to show the correct user type.
      *
-     * @param location
-     * @param resources
+     * @param location  The location
+     * @param resources The resource bundle
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -119,6 +119,7 @@ public class VisitorDetailController extends UserChildController implements Init
 
         cbxVisitorCategory.setButtonCell(cbxVisitorCategory.getCellFactory().call(null));
 
+        cbxVisitorCategory.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> this.triggerParentUpdate()));
 
         loadVisitorCategories();
 
