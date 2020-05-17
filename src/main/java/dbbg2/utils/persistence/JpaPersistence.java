@@ -21,5 +21,10 @@ public class JpaPersistence {
     }
 
 
+    public static void disconnect() {
+        factory.close();
+        factory = null;
+    }
+
 
 }

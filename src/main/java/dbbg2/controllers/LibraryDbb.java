@@ -3,6 +3,7 @@ package dbbg2.controllers;
 import dbbg2.data.genericexceptions.LibraryEntityNotFoundException;
 import dbbg2.data.inventory.Book;
 import dbbg2.data.inventory.InventoryCopy;
+import dbbg2.data.inventory.InventoryItem;
 import dbbg2.data.inventory.itemCategory.ItemCategoryType;
 import dbbg2.data.users.Employee;
 import dbbg2.data.users.User;
@@ -12,7 +13,7 @@ import dbbg2.data.users.visitorcategory.VisitorCategoryType;
 import dbbg2.utils.persistence.JpaPersistence;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,22 +28,23 @@ public class LibraryDbb {
         testUserRetrieval();
         createBooks();
 
+        JpaPersistence.disconnect();
     }
 
     private static void createBooks() {
         List<Book> books = new ArrayList<>();
 
 
-        books.add(new Book("The Hobbit", ItemCategoryType.OTHER_BOOKS, true,"123", "JRR Tolkien"));
-        books.add(new Book("Harry Potter",ItemCategoryType.OTHER_BOOKS, true,"123", "JK Rowling"));
-        books.add(new Book("Emil",ItemCategoryType.OTHER_BOOKS, true,"123", "Astrid Lindgren"));
-        books.add(new Book("Dexter",ItemCategoryType.OTHER_BOOKS, true,"123", "Jeff Lindsay"));
+        books.add(new Book("The Hobbit", ItemCategoryType.OTHER_BOOKS, true, "123", "JRR Tolkien"));
+        books.add(new Book("Harry Potter", ItemCategoryType.OTHER_BOOKS, true, "123", "JK Rowling"));
+        books.add(new Book("Emil", ItemCategoryType.OTHER_BOOKS, true, "123", "Astrid Lindgren"));
+        books.add(new Book("Dexter", ItemCategoryType.OTHER_BOOKS, true, "123", "Jeff Lindsay"));
 
         int index = 0;
         EntityManager em = JpaPersistence.getEntityManager();
 
         em.getTransaction().begin();
-        for(Book b : books) {
+        for (Book b : books) {
             b.addCopy(String.valueOf(index), "A Shelf");
             index++;
             em.merge(b);
@@ -53,12 +55,10 @@ public class LibraryDbb {
     }
 
 
-
     private static void testUserRetrieval() {
 
-        User u = null;
         try {
-            u = UserManager.getAuthenticatedUser("bspr9817", "password4");
+            User u = UserManager.getAuthenticatedUser("bspr9817", "password4");
             System.out.println(u);
         } catch (LibraryEntityNotFoundException e) {
             System.out.println("Could not find user!");
@@ -67,14 +67,14 @@ public class LibraryDbb {
     }
 
 
-    private static void testInventory(){
+    private static void testInventory() {
         EntityManager em = JpaPersistence.getEntityManager();
 
 
-        Query q = em.createQuery("SELECT invItem FROM Inventory invItem");
-        List inventoryItemList = q.getResultList();
+        TypedQuery<InventoryItem> q = em.createQuery("SELECT invItem FROM Inventory invItem", InventoryItem.class);
+        List<InventoryItem> inventoryItemList = q.getResultList();
 
-        for (Object o: inventoryItemList) {
+        for (Object o : inventoryItemList) {
             System.out.println(o);
         }
         System.out.println("Size: " + inventoryItemList.size());
@@ -95,7 +95,7 @@ public class LibraryDbb {
         EntityManager em = JpaPersistence.getEntityManager();
 
         // Read existing
-        Query q = em.createQuery("SELECT u FROM Users u");
+        TypedQuery<User> q = em.createQuery("SELECT u FROM Users u", User.class);
         List<User> userList = q.getResultList();
 
         for (User u : userList) {
