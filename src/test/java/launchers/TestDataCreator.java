@@ -4,6 +4,7 @@ import dbbg2.data.inventory.Book;
 import dbbg2.data.inventory.InventoryItem;
 import dbbg2.data.inventory.itemCategory.ItemCategory;
 import dbbg2.data.users.Employee;
+import dbbg2.data.users.UserManager;
 import dbbg2.data.users.Visitor;
 import dbbg2.data.users.visitorcategory.VisitorCategory;
 import dbbg2.utils.persistence.JpaPersistence;
@@ -25,12 +26,7 @@ public class TestDataCreator {
 
         em.getTransaction().begin();
 
-        try {
-            clearDatabase(em);
-        } catch (Exception e) {
-            System.out.println("Failed to clear database, with error: ");
-            e.printStackTrace();
-        }
+        clearDatabase(em);
 
 
         createVisitorCategories(em);
@@ -69,7 +65,7 @@ public class TestDataCreator {
         e.setPersonNr("123");
         e.setEmail("a@b.c");
         e.setPassword("password1");
-        em.persist(e);
+        UserManager.persistUser(e, em);
 
         Visitor v = new Visitor(categories.get(0));
         v.setFirstName("Abe");
@@ -77,7 +73,7 @@ public class TestDataCreator {
         v.setPersonNr("321");
         v.setEmail("abe@example.com");
         v.setPassword("password2");
-        em.persist(v);
+        UserManager.persistUser(v, em);
 
         v = new Visitor(categories.get(1));
         v.setFirstName("Albert");
@@ -85,7 +81,7 @@ public class TestDataCreator {
         v.setPersonNr("321");
         v.setEmail("aeinstein@example.com");
         v.setPassword("password3");
-        em.persist(v);
+        UserManager.persistUser( v, em);
 
 
         v = new Visitor(categories.get(3));
@@ -94,7 +90,7 @@ public class TestDataCreator {
         v.setPersonNr("321");
         v.setEmail("ssteen@example.com");
         v.setPassword("password4");
-        em.persist(v);
+        UserManager.persistUser(v, em);
     }
 
 
@@ -145,20 +141,20 @@ public class TestDataCreator {
     private static void clearDatabase(EntityManager em) {
 
         String[] queries = {
-                "DELETE FROM loancopies;",
-                "DELETE FROM Loan;",
+                "DELETE FROM LOANCOPIES;",
+                "DELETE FROM LOAN;",
                 "DELETE FROM Inventory_keyword;",
-                "DELETE FROM InventoryCopy;",
-                "DELETE FROM book;",
-                "DELETE FROM film;",
-                "DELETE FROM inventory;",
-                "DELETE FROM itemcategory;",
-                "DELETE FROM keyword;",
-                "DELETE FROM visitor;",
-                "DELETE FROM employees;",
-                "DELETE FROM users;",
-                "DELETE FROM itemcategory;",
-                "DELETE FROM visitorcategory"
+                "DELETE FROM INVENTORYCOPY;",
+                "DELETE FROM BOOK;",
+                "DELETE FROM FILM;",
+                "DELETE FROM INVENTORY;",
+                "DELETE FROM ITEMCATEGORY;",
+                "DELETE FROM KEYWORD;",
+                "DELETE FROM VISITOR;",
+                "DELETE FROM EMPLOYEES;",
+                "DELETE FROM USERS;",
+                "DELETE FROM ITEMCATEGORY;",
+                "DELETE FROM VISITORCATEGORY"
         };
 
         runNativeQueries(em, queries);
@@ -166,7 +162,9 @@ public class TestDataCreator {
     }
 
     private static void dropAndRemakeDatabase(EntityManager em) {
-        runNativeQueries(em, "DROP DATABASE library_dbb_jpa;", "CREATE DATABASE library_dbb_jpa;");
+        runNativeQueries(em, "DROP DATABASE library_dbb_jpa;",
+                "CREATE DATABASE library_dbb_jpa;",
+                "USE library_dbb_jpa;");
     }
 
 
