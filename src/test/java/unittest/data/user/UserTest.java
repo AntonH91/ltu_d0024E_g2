@@ -9,14 +9,6 @@ public abstract class UserTest {
     public abstract User getDefaultUser();
 
     @Test
-    public void newUserIdIsDistinctFromOld() {
-        User a = getDefaultUser();
-        User b = getDefaultUser();
-
-        Assert.assertNotEquals(a.getUserId(), b.getUserId());
-    }
-
-    @Test
     public void userFirstNameIsChangeable() {
         final String NAME = "Test";
         User a = getDefaultUser();
@@ -66,5 +58,40 @@ public abstract class UserTest {
         Assert.assertEquals(POST_AREA, a.getPostArea());
     }
 
+    @Test
+    public void userPersonNrIsChangeable() {
+        final String PERSON_NR = "123456-7890";
+        User a = getDefaultUser();
+
+        a.setPersonNr(PERSON_NR);
+
+        Assert.assertEquals(PERSON_NR, a.getPersonNr());
+    }
+
+    @Test
+    public void userPhoneNrIsChangeable() {
+        final String PHONE_NR = "0771 111 222 333";
+        User a = getDefaultUser();
+
+        a.setPhoneNr(PHONE_NR);
+
+        Assert.assertEquals(PHONE_NR, a.getPhoneNr());
+    }
+
+    @Test
+    public void userEqualsSelf() {
+        User a = getDefaultUser();
+
+        Assert.assertEquals(a, a);
+    }
+
+
+    @Test
+    public void userDoesNotEqualOtherUser() {
+        User a = getDefaultUser();
+        User b = getDefaultUser();
+
+        Assert.assertNotEquals("User a equals different User b", a, b);
+    }
 
 }
