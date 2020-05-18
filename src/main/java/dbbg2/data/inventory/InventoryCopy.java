@@ -8,7 +8,7 @@ import javax.persistence.*;
 public class InventoryCopy {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long cid;
 
     @Basic(optional = false)
@@ -17,8 +17,8 @@ public class InventoryCopy {
     private String location = "";
     private boolean onLoan = false;
     private boolean lendable = true;
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "Inventory_ID")
+    @ManyToOne(optional = false, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "invId")
     private InventoryItem item;
 
 
@@ -71,6 +71,10 @@ public class InventoryCopy {
 
     public InventoryItem getItem() {
         return item;
+    }
+
+    public long getCid() {
+        return cid;
     }
 
 }

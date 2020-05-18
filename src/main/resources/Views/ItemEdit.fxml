@@ -1,14 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dbbg2.view.item.Edit.EditItemController">
+   <children>
+      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Edit book">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tblBooksFound" layoutY="84.0" onMouseClicked="#handleMouseClicked" prefHeight="287.0" prefWidth="257.0">
+                          <columns>
+                            <TableColumn fx:id="clBookTitle" prefWidth="75.0" text="Book title" />
+                            <TableColumn fx:id="clBookId" prefWidth="75.0" text="Book ID" />
+                          </columns>
+                        </TableView>
+                        <TextField fx:id="txtSearchTitle" layoutX="14.0" layoutY="14.0" promptText="Book title" />
+                        <TextField fx:id="txtBookId" layoutX="14.0" layoutY="51.0" />
+                        <TextField fx:id="txtNewBookTitle" layoutX="328.0" layoutY="84.0" promptText="Book title" />
+                        <ChoiceBox fx:id="cbNewItemCategory" layoutX="328.0" layoutY="131.0" prefWidth="150.0" />
+                        <Text layoutX="328.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Item category" />
+                        <ChoiceBox fx:id="cbNewIsAvailable" layoutX="327.0" layoutY="178.0" prefWidth="150.0" />
+                        <Text layoutX="328.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available" />
+                        <TextField fx:id="txtNewIsbn" layoutX="327.0" layoutY="218.0" promptText="ISBN" />
+                        <TextField fx:id="txtNewAuthor" layoutX="328.0" layoutY="257.0" promptText="Author" />
+                        <Button fx:id="btnUpdateBook" layoutX="326.0" layoutY="300.0" mnemonicParsing="false" onAction="#handleMakeChanges" text="Update book" />
+                        <Button fx:id="btnFindBook" layoutX="179.0" layoutY="51.0" mnemonicParsing="false" onAction="#handleFindBook" text="Find book" />
+                        <TextArea fx:id="txtAreaAuthor" layoutX="478.0" layoutY="257.0" prefHeight="66.0" prefWidth="109.0" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Untitled Tab 2">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
 </AnchorPane>

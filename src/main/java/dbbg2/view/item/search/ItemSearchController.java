@@ -8,11 +8,9 @@ import dbbg2.data.inventory.itemCategory.ItemCategory;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -45,8 +43,6 @@ public class ItemSearchController implements Initializable {
 
 
     public void handleSearchBookClick(ActionEvent actionEvent) {
-        List<String> keywordList = Arrays.asList(txtKeyword.getText().toLowerCase().split(" "));
-
         tblBookList.setItems(FXCollections.observableArrayList(InventoryManager.getBooks(txtItemTitle.getText(), txtItemId.getText())));
     }
 
@@ -62,6 +58,23 @@ public class ItemSearchController implements Initializable {
         tcInventoryId.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("inventoryId"));
         tcAuthor.setCellValueFactory(new PropertyValueFactory<Book, String>("author"));
 
+
+        /*tcCategory.setCellValueFactory(new Callback<ListView<ItemCategory>, ListCell<ItemCategory>>(){
+            @Override
+            public ListCell<ItemCategory> call(ListView<ItemCategory> param) {
+                return new ListCell<ItemCategory>(){
+                    @Override
+                    protected void updateItem(ItemCategory item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item == null) {
+                            this.setGraphic(null);
+                        } else {
+                            this.setText(item.getItemCategoryTitle());
+                        }
+                    }
+                };
+            }
+        });*/
     }
 
     public void handleClearText(ActionEvent actionEvent) {
