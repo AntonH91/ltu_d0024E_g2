@@ -5,7 +5,7 @@ import dbbg2.controllers.user.VisitorController;
 import dbbg2.data.users.User;
 import dbbg2.data.users.Visitor;
 import dbbg2.data.users.visitorcategory.VisitorCategory;
-import dbbg2.utils.persistence.JpaPersistence;
+import dbbg2.data.users.visitorcategory.VisitorCategoryManager;
 import dbbg2.view.utils.GenericStyler;
 import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
@@ -15,7 +15,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;
 
-import javax.persistence.EntityManager;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -129,8 +128,7 @@ public class VisitorDetailController extends UserChildController implements Init
      * Loads the selectable visitor categories from the database
      */
     private void loadVisitorCategories() {
-        EntityManager em = JpaPersistence.getEntityManager();
-        List<VisitorCategory> categoryList = em.createQuery("SELECT vc FROM VisitorCategory vc", VisitorCategory.class).getResultList();
+        List<VisitorCategory> categoryList = VisitorCategoryManager.getVisitorCategories();
         cbxVisitorCategory.setItems(FXCollections.observableArrayList(categoryList));
     }
 
