@@ -16,6 +16,10 @@ import java.util.List;
 public class TestDataCreator {
 
     public static void main(String[] args) {
+        createAllTestData();
+    }
+
+    public static void createAllTestData() {
         EntityManager em = JpaPersistence.getEntityManager();
 
 
