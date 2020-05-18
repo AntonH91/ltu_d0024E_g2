@@ -131,35 +131,20 @@ public class LoanController {
             throw e;
         }
     }
+    //TODO
+    //TODO 1. Find Loan
+    //TODO 2. Find Loanedcopy
+    //TODO 3. VisitorLoanedItems reduce by 1
+    //TODO 4. Loanedcopy return as true
+    //TODO 5. InvCopy is on loan = false
 
     public void returnItem(String barcode) {
-        for (LoanCopies item : loan.getCopies()) {
-            if (item.getCopy().getBarcode() == barcode) {
-                EntityManager em = JpaPersistence.getEntityManager();
-                em.getTransaction().begin();
-
-                try {
-                    item.getCopy().setOnLoan(false);
-                    em.merge(item.getCopy());
+           EntityManager em = JpaPersistence.getEntityManager();
 
 
-                    client.setLoanedItems(client.getLoanedItems() + loan.getCopies().size());
 
-                    em.merge(client);
-                    em.persist(loan);
-
-                    em.getTransaction().commit();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    em.getTransaction().rollback();
-                    throw e;
-                }
-                return;
-            }
-        }
 
     }
-
     public LoanCopies getLoan(String barcode) {
         for(LoanCopies lc : loan.getCopies()) {
             if(lc.getCopy().getBarcode() == barcode) {

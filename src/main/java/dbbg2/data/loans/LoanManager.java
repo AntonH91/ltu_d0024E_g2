@@ -21,9 +21,27 @@ public class LoanManager {
         List<Loan>  loanList = lq.setParameter("userId",userId).getResultList();
 
         return loanList;
+
+
     }
 
+   public static Loan getLoanFromBarcode(String barcode) {
+       EntityManager em = JpaPersistence.getEntityManager();
+        TypedQuery<Loan> lq = em.createQuery("SELECT l FROM Loan l " +
+               "INNER JOIN LoanCopies lc ON l.Loan_id = lc.loan_id " +
+                "INNER JOIN inventorycopy ic ON ic.cid = lc.copy_cid " +
+                "WHERE ic.barcode =:barcode AND NOT lc.returned ", Loan.class);
+        return lq.setParameter("barcode",barcode).getSingleResult();
 
+
+
+
+
+
+
+
+
+}
 
 
 
