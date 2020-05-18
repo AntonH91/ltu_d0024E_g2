@@ -36,7 +36,7 @@ public abstract class User {
     private String password = "";
 
     @Transient
-    private boolean authenticated = false;
+    private final boolean authenticated = false;
 
     public User() {
     }
@@ -164,17 +164,33 @@ public abstract class User {
     }
 
     private void createUserId() {
-        String temp = firstName.substring(0,Math.min(1,firstName.length())) + lastName.substring(0,Math.min(3, lastName.length())) +
-                Long.toString(Math.round(Math.random() * 10000));
+        String temp = firstName.substring(0, Math.min(1, firstName.length())) + lastName.substring(0, Math.min(3, lastName.length())) +
+                this.uid;
         this.userId = temp.toLowerCase();
     }
 
-    @PrePersist
+    /*
+    //@PrePersist
     private void onPrePersist() {
         if (this.userId.equals("")) {
             createUserId();
         }
 
+    }
+    */
+
+    /**
+     * Triggers the creation of a new User ID, if necessary
+     * @return True if a new User ID was created
+     */
+    public boolean triggerUserIdCreation() {
+        boolean userIdCreationNeeded = false;
+        if (this.userId.isEmpty() && this.uid != 0) {
+            createUserId();
+            userIdCreationNeeded = true;
+        }
+
+        return userIdCreationNeeded;
     }
 
 }

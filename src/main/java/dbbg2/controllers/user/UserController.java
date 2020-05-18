@@ -1,6 +1,7 @@
 package dbbg2.controllers.user;
 
 import dbbg2.data.users.User;
+import dbbg2.data.users.UserManager;
 import dbbg2.utils.persistence.JpaPersistence;
 
 import javax.persistence.EntityManager;
@@ -79,13 +80,8 @@ public abstract class UserController {
      * Saves the changes to the user object
      */
     public void saveChanges() {
-        EntityManager em = JpaPersistence.getEntityManager();
 
-        em.getTransaction().begin();
-
-        this.setUser(em.merge(subjectToChange));
-
-        em.getTransaction().commit();
+        this.setUser(UserManager.persistUser(subjectToChange));
 
     }
 
