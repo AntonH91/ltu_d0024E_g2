@@ -4,14 +4,17 @@ import dbbg2.data.genericexceptions.LibraryEntityNotFoundException;
 import dbbg2.data.users.User;
 import dbbg2.data.users.UserManager;
 import dbbg2.utils.exceptions.LoginFailureException;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 
-public class AuthenticationManager {
+public class AuthenticationManager implements Observable {
     private static User currentlyLoggedInUser = null;
 
 
     /**
      * Gets the currently logged in user in the application
-     * @return
+     *
+     * @return The user who is currently logged in.
      */
     public static User getCurrentlyLoggedInUser() {
         return currentlyLoggedInUser;
@@ -43,4 +46,13 @@ public class AuthenticationManager {
     }
 
 
+    @Override
+    public void addListener(InvalidationListener listener) {
+        // TODO Implement this
+    }
+
+    @Override
+    public void removeListener(InvalidationListener listener) {
+        // TODO Implement this
+    }
 }
