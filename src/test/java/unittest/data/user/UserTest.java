@@ -90,6 +90,8 @@ public abstract class UserTest {
     public void userDoesNotEqualOtherUser() {
         User a = getDefaultUser();
         User b = getDefaultUser();
+        a.setFirstName("Jeff");
+        b.setFirstName("Goff");
 
         Assert.assertNotEquals("User a equals different User b", a, b);
     }
