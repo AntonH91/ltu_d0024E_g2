@@ -81,6 +81,9 @@ public class MainMenuView implements Initializable, ParentController {
 
     }
 
+    /**
+     * Triggered when the authenticationmanager changes state
+     */
     public void updateAuthenticatedAccess() {
 
         //Update the login label
@@ -108,6 +111,9 @@ public class MainMenuView implements Initializable, ParentController {
 
     }
 
+    /**
+     * Sets the tab panes to the right availability based on the logged in user.
+     */
     public void changeAccessBasedOnLogin() {
         tbpTabPane.getTabs().clear();
 
@@ -127,7 +133,7 @@ public class MainMenuView implements Initializable, ParentController {
             // No need for specific anonymous access
         }
         */
-        
+
         // General access
         tbpTabPane.getTabs().add(tbInventory);
 
