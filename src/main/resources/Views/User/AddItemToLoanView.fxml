@@ -13,10 +13,13 @@
       </TableView>
       <AnchorPane prefHeight="169.0" prefWidth="367.0">
          <children>
-            <TextField fx:id="txtBarcode" layoutX="24.0" layoutY="85.0" onAction="#handleAddButton" prefHeight="25.0" prefWidth="175.0" promptText="Barcode" />
+            <TextField fx:id="txtBarcode" layoutX="24.0" layoutY="85.0"  prefHeight="25.0" prefWidth="175.0" promptText="Barcode" />
             <Button fx:id="addBarcode" layoutX="24.0" layoutY="113.0" mnemonicParsing="false" onAction="#handleAddClick" prefHeight="25.0" prefWidth="47.0" text="Add" />
             <Button layoutX="73.0" layoutY="113.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="126.0" text="Finalize" />
-            <Text layoutX="36.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add barcode for item" wrappingWidth="136.13671875" />
+            <Text layoutX="24.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add barcode for item" wrappingWidth="175.00000503659248">
+               <font>
+                  <Font size="18.0" />
+               </font></Text>
          </children></AnchorPane>
    </children>
 </AnchorPane>

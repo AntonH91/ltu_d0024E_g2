@@ -11,6 +11,7 @@ import dbbg2.data.loans.LoanCopies;
 import dbbg2.data.users.User;
 import dbbg2.data.users.UserManager;
 import dbbg2.data.users.Visitor;
+import dbbg2.utils.AuthenticationManager;
 import dbbg2.utils.persistence.JpaPersistence;
 
 import dbbg2.view.user.details.ChildController;
@@ -25,24 +26,49 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
+
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
-public class LoanController  {
+public class LoanController   {
     private Visitor client;
     private Loan loan;
+    public static User user;
+    public static LoanController lc;
+
     public TextField txtBarcode;
     public Button addBarcode;
 
 
+
     public void handleAddClick(ActionEvent actionEvent) {
+        lc.startLoan();
+
+        if (client.isAuthenticated() == false) {
+            return;
+        }
+        //loan.setClient(user);
+
         try {
-               getBookWithRightBarCode(txtBarcode.getText());
+        InventoryCopy item = getBookWithRightBarCode(txtBarcode.getText());
+        }
+        catch (ItemNotLendableException e) {
+            e.printStackTrace();
+        }
+        try {
+            addItemToLoan(txtBarcode.getText());
         } catch (ItemNotLendableException e) {
+            e.printStackTrace();
+        } catch (TooManyItemsOnLoanException e) {
+            e.printStackTrace();
+        }
+        try {
+            finalizeLoan();
+        }
+        catch (Exception e){
             e.printStackTrace();
         }
     }
@@ -62,12 +88,13 @@ public class LoanController  {
         7. Finalize loan
      */
 
-    public static void main(String[] args) {
-        LoanController lc = new LoanController();
-        lc.startLoan();
+    public static void main (String[] args) {
+        lc = new LoanController();
+     /*  lc.startLoan();
 
-        try {
+       try {
             lc.getUser("aein3799", "pass");
+            user = AuthenticationManager.getCurrentlyLoggedInUser();
         } catch (LibraryEntityNotFoundException e) {
             e.printStackTrace();
         }
@@ -82,7 +109,7 @@ public class LoanController  {
 
         lc.finalizeLoan();
 
-
+*/
     }
 
     public void getUser(String userName, String pw) throws LibraryEntityNotFoundException, ClassCastException {
