@@ -75,17 +75,17 @@ public class MainMenuView implements Initializable, ParentController {
 
 
     @Override
-    public void notifyRequestReturn() {
+    public void notifyRequestReturn(ChildController theChild) {
         // We don't handle return requests from child forms
     }
 
     @Override
-    public void notifyResizeRequest() {
+    public void notifyResizeRequest(ChildController theChild) {
         autoSizeWindow();
     }
 
     @Override
-    public void notifyUpdate() {
+    public void notifyUpdate(ChildController theChild) {
         // We don't care about updates from the child
     }
 }

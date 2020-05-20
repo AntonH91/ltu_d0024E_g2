@@ -7,6 +7,7 @@ import dbbg2.data.users.Visitor;
 import dbbg2.data.users.visitorcategory.VisitorCategory;
 import dbbg2.view.user.details.UserDetailController;
 import dbbg2.view.user.exceptions.UnknownUserTypeException;
+import dbbg2.view.utils.nested.ChildController;
 import dbbg2.view.utils.nested.ParentController;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -25,7 +26,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class UserOverviewController implements Initializable, ParentController {
+public class UserOverviewController extends ChildController implements Initializable, ParentController {
     public TextField txtUserId;
     public TextField txtFirstName;
     public TextField txtLastName;
@@ -186,19 +187,28 @@ public class UserOverviewController implements Initializable, ParentController {
     }
 
     @Override
-    public void notifyRequestReturn() {
+    public void notifyRequestReturn(ChildController theChild) {
         vbSearchControls.setVisible(true);
 
         acUserDetail.setVisible(false);
         acUserDetail.getChildren().clear();
+        resizeTheView();
+    }
+
+    private void resizeTheView() {
         acUserDetail.autosize();
-        // TODO Make auto-sizing work correctly
         vbSearchControls.autosize();
         vbSearchControls.getScene().getWindow().sizeToScene();
+        triggerParentUpdate();
     }
 
     @Override
-    public void notifyUpdate() {
+    public void notifyResizeRequest(ChildController theChild) {
+        resizeTheView();
+    }
+
+    @Override
+    public void notifyUpdate(ChildController theChild) {
         // No need to handle updates from the child form
     }
 

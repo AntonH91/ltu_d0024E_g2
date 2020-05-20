@@ -162,17 +162,17 @@ public class UserDetailController extends ChildController implements Initializab
     }
 
     @Override
-    public void notifyRequestReturn() {
+    public void notifyRequestReturn(ChildController theChild) {
         // Do nothing - we will not return from the childform
     }
 
     @Override
-    public void notifyResizeRequest() {
+    public void notifyResizeRequest(ChildController theChild) {
         resizeSelf();
     }
 
     @Override
-    public void notifyUpdate() {
+    public void notifyUpdate(ChildController theChild) {
         // The child-form has changed - re-run validation
         handleValidationChanges();
     }
