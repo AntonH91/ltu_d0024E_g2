@@ -3,39 +3,29 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<TabPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-         minWidth="-Infinity" prefHeight="483.0" prefWidth="648.0" tabClosingPolicy="UNAVAILABLE"
-         xmlns="http://javafx.com/javafx/10.0.2-internal"
-         fx:controller="dbbg2.view.controllers.item.manage.ItemManageController">
-    <tabs>
-        <Tab closable="false" text="Manage Books">
-            <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                    <children>
-                        <SplitPane dividerPositions="0.49079754601226994" layoutX="-1.0" layoutY="-3.0"
-                                   prefHeight="459.0" prefWidth="654.0">
-                            <items>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                    <children>
-                                        <Text layoutX="22.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                                              text="Add books">
-                                            <font>
-                                                <Font size="18.0"/>
-                                            </font>
-                                        </Text>
-                                        <TextField fx:id="txtAbbBookTitle" layoutX="22.0" layoutY="80.0"
-                                                   promptText="Book title"/>
-                                        <TextField fx:id="txtBookIsbn" layoutX="22.0" layoutY="163.0"
-                                                   promptText="ISBN"/>
-                                        <TextField fx:id="txtBookAuthor" layoutX="22.0" layoutY="197.0"
-                                                   promptText="Author"/>
-                                        <ChoiceBox fx:id="ddBookCategory" layoutX="22.0" layoutY="127.0"
-                                                   prefWidth="150.0"/>
-                                        <Text layoutX="23.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0"
-                                              text="Book category"/>
-                                        <Button layoutX="183.0" layoutY="263.0" mnemonicParsing="false"
-                                                onAction="#handleAddBook" text="Add"/>
-                                    </children>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="483.0" prefWidth="648.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
+         fx:controller="dbbg2.view.controllers.item.item.manage.ItemManageController">
+  <tabs>
+    <Tab closable="false" text="Manage Books">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <SplitPane dividerPositions="0.49079754601226994" layoutX="-1.0" layoutY="-3.0" prefHeight="459.0" prefWidth="654.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                           <children>
+                              <Text layoutX="22.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add books">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font></Text>
+                              <TextField fx:id="txtAbbBookTitle" layoutX="22.0" layoutY="80.0" promptText="Book title" />
+                              <TextField fx:id="txtBookIsbn" layoutX="22.0" layoutY="163.0" promptText="ISBN" />
+                              <TextField fx:id="txtBookAuthor" layoutX="22.0" layoutY="197.0" promptText="Author" />
+                              <ComboBox fx:id="ddBookCategory" layoutX="22.0" layoutY="127.0" prefWidth="150.0" />
+                              <Text layoutX="23.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Book category" />
+                              <Button layoutX="183.0" layoutY="263.0" mnemonicParsing="false" onAction="#handleAddBook" text="Add" />
+                           </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                            <children>
@@ -76,10 +66,11 @@
                                             <Font size="18.0" />
                                         </font></Text>
                                     <TextField fx:id="txtAbbFilmTitle" layoutX="22.0" layoutY="76.0" promptText="Film title" />
-                                    <TextField fx:id="txtOriginCountry" layoutX="22.0" layoutY="178.0" promptText="Country of origin" />
+                                    <TextField fx:id="txtOriginCountry" layoutX="22.0" layoutY="192.0" promptText="Country of origin" />
                                     <TextField fx:id="txtFilmDirector" layoutX="22.0" layoutY="110.0" promptText="Director" />
                                     <Button layoutX="183.0" layoutY="263.0" mnemonicParsing="false" onAction="#handleAddFilm" text="Add" />
-                              <ComboBox fx:id="cbAgeLimit" layoutX="22.0" layoutY="143.0" prefWidth="150.0" promptText="Age limit" />
+                              <ChoiceBox fx:id="ccbAgeLimit" layoutX="22.0" layoutY="157.0" prefWidth="150.0" />
+                              <Text layoutX="22.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age limit" />
                                 </children>
                             </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
@@ -88,6 +79,19 @@
                                         <font>
                                             <Font size="18.0" />
                                         </font></Text>
+                              <TextField fx:id="txtFilmTitleRemove" layoutX="37.0" layoutY="81.0" promptText="Film title" />
+                              <TextField fx:id="txtFilmIdRemove" layoutX="37.0" layoutY="121.0" promptText="Inventory ID" />
+                              <TableView fx:id="tblFilmsFound" layoutY="257.0" onMouseClicked="#handleClickedFilmRemove" prefHeight="200.0" prefWidth="331.0">
+                                <columns>
+                                  <TableColumn fx:id="tcFilmTitle" prefWidth="75.0" text="Film title" />
+                                  <TableColumn fx:id="tcDirector" prefWidth="75.0" text="Director" />
+                                    <TableColumn fx:id="tcAgeLimit" prefWidth="75.0" text="Age limit" />
+                                    <TableColumn fx:id="tcOriginCountry" prefWidth="75.0" text="Country" />
+                                </columns>
+                              </TableView>
+                              <Button fx:id="btnSearchFilm" layoutX="37.0" layoutY="204.0" mnemonicParsing="false" onAction="#handleSearchFilm" text="Search" />
+                              <Button fx:id="btnRemoveFilm" layoutX="134.0" layoutY="204.0" mnemonicParsing="false" onAction="#handleRemoveFilm" text="Remove selected" />
+                              <TextField fx:id="txtIdFoundRemoveFilm" layoutX="218.0" layoutY="81.0" prefHeight="25.0" prefWidth="29.0" promptText="ID" />
                                 </children>
                             </AnchorPane>
                         </items>

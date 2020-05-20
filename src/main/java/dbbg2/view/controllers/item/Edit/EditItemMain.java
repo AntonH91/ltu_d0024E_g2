@@ -1,4 +1,4 @@
-package dbbg2.view.item.Edit;
+package dbbg2.view.controllers.item.Edit;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

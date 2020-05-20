@@ -108,7 +108,6 @@ public abstract class InventoryItem {
         this.category = category;
     }
 
-    //Tried changing from list to see if it works
     public List<Keyword> getKeyword() {
         return keywords;
     }

@@ -2,7 +2,6 @@ package dbbg2.controllers;
 
 import dbbg2.data.inventory.*;
 import dbbg2.data.inventory.itemCategory.ItemCategory;
-import dbbg2.data.inventory.itemCategory.ItemCategoryType;
 
 
 import java.net.URL;
@@ -16,16 +15,6 @@ public class InventoryController {
     private static final String URL = "";
     private static final String USERNAME = "";
     private static final String Password = "";
-
-    private InventoryItem subjectToChange;
-
-    public InventoryItem getInventoryItem(){
-        return subjectToChange;
-    }
-
-    public void setInventoryItem(InventoryItem iv){
-        subjectToChange = iv;
-    }
 
 
 

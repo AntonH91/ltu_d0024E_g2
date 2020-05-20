@@ -1,12 +1,8 @@
-package dbbg2.view.item.Edit;
+package dbbg2.view.controllers.item.Edit;
 
-import dbbg2.data.inventory.Book;
-import dbbg2.data.inventory.Film;
-import dbbg2.data.inventory.InventoryItem;
-import dbbg2.data.inventory.InventoryManager;
+import dbbg2.data.inventory.*;
 import dbbg2.data.inventory.itemCategory.ItemCategory;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -37,6 +33,8 @@ public class EditItemController implements Initializable {
     public TextArea txtAreaAuthor;
 
 
+    protected BookController bookController;
+
     @Override
 public void initialize(URL location, ResourceBundle resources) {
         clBookTitle.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("title"));
@@ -48,8 +46,9 @@ public void initialize(URL location, ResourceBundle resources) {
         }
 
     public void handleMakeChanges (ActionEvent actionEvent) {
-
+        saveBook();
     }
+
 
     public void handleFindBook(ActionEvent actionEvent) {
         tblBooksFound.setItems(FXCollections.observableArrayList(InventoryManager.getBooks(txtSearchTitle.getText(), txtBookId.getText())));
@@ -67,5 +66,16 @@ public void initialize(URL location, ResourceBundle resources) {
 
         }
 
+    }
+
+    public void saveBook(){
+        //TODO fix author split
+        //List<String> authors = new ArrayList<>(Arrays.asList(txtAreaAuthor.getText().split("\n")));
+
+        bookController.ammendInformationBook(txtNewBookTitle.getText(),
+                (ItemCategory) cbNewItemCategory.getSelectionModel().getSelectedItem(),
+                txtNewIsbn.getText());
+
+        bookController.saveChanges();
     }
 }

@@ -1,9 +1,6 @@
 package dbbg2.view.controllers.item.manage;
 
-import dbbg2.data.inventory.Book;
-import dbbg2.data.inventory.Film;
-import dbbg2.data.inventory.InventoryItem;
-import dbbg2.data.inventory.InventoryManager;
+import dbbg2.data.inventory.*;
 import dbbg2.data.inventory.itemCategory.ItemCategory;
 import dbbg2.utils.persistence.JpaPersistence;
 import javafx.collections.FXCollections;
@@ -62,7 +59,8 @@ public class ItemManageController implements Initializable {
         List<Book> books = new ArrayList<>();
 
 
-        books.add(new Book(txtAbbBookTitle.getText(), (ItemCategory) ddBookCategory.getSelectionModel().getSelectedItem(), true, txtBookIsbn.getText(), txtBookAuthor.getText()));
+        //TODO add two text fields for first and last name
+        books.add(new Book(txtAbbBookTitle.getText(), (ItemCategory) ddBookCategory.getSelectionModel().getSelectedItem(), true, txtBookIsbn.getText(), new Author (txtBookAuthor.getText(), "")));
 
         if(txtAbbBookTitle.getText().isEmpty() || ddBookCategory.getSelectionModel().isEmpty()){
 

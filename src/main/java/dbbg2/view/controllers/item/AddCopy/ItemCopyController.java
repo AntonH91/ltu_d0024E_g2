@@ -1,11 +1,8 @@
-package dbbg2.view.item.AddCopy;
+package dbbg2.view.controllers.item.AddCopy;
 
 import dbbg2.data.inventory.*;
-import dbbg2.data.inventory.itemCategory.ItemCategory;
 import dbbg2.utils.persistence.JpaPersistence;
-import javafx.beans.InvalidationListener;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -14,7 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
-import org.eclipse.persistence.internal.jpa.metadata.columns.PrimaryKeyMetadata;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -22,9 +18,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import static dbbg2.data.inventory.itemCategory.ItemCategoryType.FILM;
-import static dbbg2.data.inventory.itemCategory.ItemCategoryType.OTHER_BOOKS;
 
 public class ItemCopyController implements Initializable {
     public TextField txtCopyLocation;

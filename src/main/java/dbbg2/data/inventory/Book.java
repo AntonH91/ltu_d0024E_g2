@@ -3,20 +3,18 @@ package dbbg2.data.inventory;
 import dbbg2.data.inventory.itemCategory.ItemCategory;
 import dbbg2.data.inventory.itemCategory.ItemCategoryType;
 import dbbg2.utils.persistence.Database;
-import dbbg2.utils.persistence.JpaPersistence;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.EntityManager;
+import javax.persistence.*;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Entity(name = "Book")
 public class Book extends InventoryItem {
 
 
-    ArrayList<String> author = new ArrayList<String>();
+    @ManyToMany(mappedBy = "books", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private Set<Author> authors = new HashSet<>();
+
     @Basic(optional = false)
     String isbn;
 
@@ -24,36 +22,43 @@ public class Book extends InventoryItem {
         super();
     }
 
-    public Book(String title, ItemCategoryType category, boolean isAvailable, String isbn, String author){
-        this(title, ItemCategory.getDefaultItemCategory(category), isAvailable, isbn, author);
+    public Book(String title, ItemCategoryType category, boolean isAvailable, String isbn, Author authors){
+        this(title, ItemCategory.getDefaultItemCategory(category), isAvailable, isbn, authors);
     }
 
-    public Book(String title, ItemCategory category, boolean isAvailable, String isbn, String author) {
+    public Book(String title, ItemCategory category, boolean isAvailable, String isbn, Author authors) {
         super(title, category, isAvailable);
         this.isbn = isbn;
-        this.author.add(author);
+        addAuthor(authors);
     }
 
-    public void setAuthor(ArrayList<String> author) {
-        this.author = author;
+// Setters
+
+    public void addAuthor(Author author){
+        authors.add(author);
+        author.addBook(this);
     }
 
-    // Setters
+    public void removeAuthor(Author author){
+        authors.remove(author);
+        author.removeBook(this);
+    }
 
     public void setIsbn(String isbn){
         this.isbn = isbn;
 }
+
 // Getters
 
     public String getIsbn(){
         return isbn;
     }
 
-    public ArrayList<String> getAuthor() {
-        return author;
+
+    public Set<Author> getAuthors() {
+        Collections.unmodifiableSet(authors);
+        return Collections.unmodifiableSet(authors);
     }
-
-
 
 
     //Change availibility of book
@@ -74,30 +79,6 @@ public class Book extends InventoryItem {
 
     }
 
-
-
-    public static void addBook(String title, ItemCategory category, boolean isAvailable, String isbn, String author) {
-        List<Book> books = new ArrayList<>();
-
-
-        books.add(new Book());
-        books.add(new Book("Harry Potter",ItemCategoryType.OTHER_BOOKS, true,"123", "JK Rowling"));
-        books.add(new Book("Emil",ItemCategoryType.OTHER_BOOKS, true,"123", "Astrid Lindgren"));
-        books.add(new Book("Dexter",ItemCategoryType.OTHER_BOOKS, true,"123", "Jeff Lindsay"));
-
-        int index = 0;
-        EntityManager em = JpaPersistence.getEntityManager();
-
-        em.getTransaction().begin();
-        for(Book b : books) {
-            //b.addCopy(String.valueOf(index), "A Shelf");
-            index++;
-            em.merge(b);
-        }
-
-        em.getTransaction().commit();
-
-    }
 
 
 }

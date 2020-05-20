@@ -1,4 +1,4 @@
-package dbbg2.view.item.AddCopy;
+package dbbg2.view.controllers.item.AddCopy;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
