@@ -68,16 +68,24 @@ public class InventoryManager {
         return q.getResultList();
     }
 
+    public static List<Film> getFilmz(String title) {
+        EntityManager em = JpaPersistence.getEntityManager();
+        TypedQuery<Film> q = em.createQuery("select f from Film f " +
+                        "WHERE (f.title = :title or :title = '') "
+                , Film.class);
+
+        q.setParameter("title", title);
+        return q.getResultList();
+    }
+
     public static List<Film> getFilms(String title) {
         EntityManager em = JpaPersistence.getEntityManager();
         TypedQuery<Film> q = em.createQuery("select f from Film f " +
                         "WHERE (f.title = :title or :title = '') "
-                //"AND (f.invId = :invId or :invId = '') "
                 //"AND (b.category = :category or :category = '')"
                 , Film.class);
 
         q.setParameter("title", title);
-        //q.setParameter("invId", invId);
         //q.setParameter("category", ItemCategory.getDefaultItemCategory(category).getItemCategoryTitle());
 
         return q.getResultList();

@@ -103,7 +103,6 @@ public abstract class InventoryItem {
         return isAvailable;
     }
 
-
     public void setCategory(ItemCategory category) {
         this.category = category;
     }

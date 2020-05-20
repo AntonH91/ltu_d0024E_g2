@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -31,12 +32,6 @@ public class ItemManageController implements Initializable {
 
     public ChoiceBox ddBookCategory;
 
-    //Add film
-    public TextField txtAbbFilmTitle;
-    public TextField txtOriginCountry;
-    public TextField txtFilmDirector;
-
-    public ComboBox cbAgeLimit;
 
     //Remove book
     public TextField txtRemoveTitle;
@@ -52,6 +47,23 @@ public class ItemManageController implements Initializable {
     public Button btnRemove;
     public TextField txtPkId;
     public TableColumn tcInvId;
+
+    //Film info
+    public TextField txtFilmIdRemove;
+    public TextField txtIdFoundRemoveFilm;
+    public Button btnRemoveFilm;
+    public Button btnSearchFilm;
+    public TableColumn tcOriginCountry;
+    public TableColumn tcAgeLimit;
+    public TableColumn tcDirector;
+    public TableColumn tcFilmTitle;
+    public TextField txtFilmTitleRemove;
+    public TableView tblFilmsFound;
+    public TextField txtAbbFilmTitle;
+    public TextField txtOriginCountry;
+    public TextField txtFilmDirector;
+
+    public ComboBox cbAgeLimits;
 
 
     public void handleAddBook(javafx.event.ActionEvent actionEvent) {
@@ -105,9 +117,9 @@ public class ItemManageController implements Initializable {
         public void handleAddFilm(ActionEvent actionEvent) {
             List<Film> film = new ArrayList<>();
 
-            film.add(new Film(txtAbbFilmTitle.getText(), FILM, true, txtFilmDirector.getText(), cbAgeLimit.getSelectionModel().getSelectedIndex(), txtOriginCountry.getText()));
+            film.add(new Film(txtAbbFilmTitle.getText(), FILM, true, txtFilmDirector.getText(), cbAgeLimits.getSelectionModel().getSelectedIndex(), txtOriginCountry.getText()));
 
-            if(txtAbbFilmTitle.getText().isEmpty() || cbAgeLimit.getSelectionModel().isEmpty()){
+            if(txtAbbFilmTitle.getText().isEmpty() || cbAgeLimits.getSelectionModel().isEmpty()){
 
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setHeaderText(null);
@@ -135,7 +147,7 @@ public class ItemManageController implements Initializable {
                 alert.showAndWait();
 
                 txtAbbFilmTitle.clear();
-                cbAgeLimit.valueProperty().set(null);
+                cbAgeLimits.valueProperty().set(null);
                 txtOriginCountry.clear();
                 txtFilmDirector.clear();
 
@@ -153,11 +165,15 @@ public class ItemManageController implements Initializable {
         ddBookCategory.getItems().addAll(ItemCategory.getDefaultItemCategory(OTHER_BOOKS));
 
         //Set choices for age limits when adding film
-        cbAgeLimit.getItems().addAll(17, 18, 20);
+        cbAgeLimits.getItems().addAll(17, 18, 20);
 
 
         tcBookTitle.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("title"));
         tcInventoryId.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("inventoryId"));
+
+        tcFilmTitle.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("title"));
+        tcOriginCountry.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("title"));
+
 
     }
 
@@ -205,4 +221,21 @@ public class ItemManageController implements Initializable {
         }
     }
 
+    public void handleRemoveFilm(ActionEvent actionEvent) {
+    }
+
+    public void handleSearchFilm(ActionEvent actionEvent) {
+        tblFilmsFound.setItems(FXCollections.observableArrayList(InventoryManager.getFilms(txtFilmTitleRemove.getText())));
+
+    }
+
+    public void handleClickedFilmRemove(MouseEvent mouseEvent) {
+        if(tblFilmsFound.getSelectionModel().getSelectedItem() !=null){
+            Book selectedBook = (Book) tblFilmsFound.getSelectionModel().getSelectedItem();
+            txtFilmTitleRemove.setText(selectedBook.getTitle());
+            txtIdFoundRemoveFilm.setText(String.valueOf(selectedBook.getInvId()));
+        }
+
+
+    }
 }

@@ -4,8 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="483.0" prefWidth="648.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
-         fx:controller="dbbg2.view.controllers.item.item.manage.ItemManageController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="483.0" prefWidth="648.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dbbg2.view.controllers.item.manage.ItemManageController">
   <tabs>
     <Tab closable="false" text="Manage Books">
       <content>
@@ -22,7 +21,7 @@
                               <TextField fx:id="txtAbbBookTitle" layoutX="22.0" layoutY="80.0" promptText="Book title" />
                               <TextField fx:id="txtBookIsbn" layoutX="22.0" layoutY="163.0" promptText="ISBN" />
                               <TextField fx:id="txtBookAuthor" layoutX="22.0" layoutY="197.0" promptText="Author" />
-                              <ComboBox fx:id="ddBookCategory" layoutX="22.0" layoutY="127.0" prefWidth="150.0" />
+                              <ChoiceBox fx:id="ddBookCategory" layoutX="22.0" layoutY="127.0" prefWidth="150.0" />
                               <Text layoutX="23.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Book category" />
                               <Button layoutX="183.0" layoutY="263.0" mnemonicParsing="false" onAction="#handleAddBook" text="Add" />
                            </children>
@@ -69,7 +68,7 @@
                                     <TextField fx:id="txtOriginCountry" layoutX="22.0" layoutY="192.0" promptText="Country of origin" />
                                     <TextField fx:id="txtFilmDirector" layoutX="22.0" layoutY="110.0" promptText="Director" />
                                     <Button layoutX="183.0" layoutY="263.0" mnemonicParsing="false" onAction="#handleAddFilm" text="Add" />
-                              <ChoiceBox fx:id="ccbAgeLimit" layoutX="22.0" layoutY="157.0" prefWidth="150.0" />
+                              <ComboBox fx:id="cbAgeLimits" layoutX="22.0" layoutY="157.0" prefWidth="150.0" />
                               <Text layoutX="22.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age limit" />
                                 </children>
                             </AnchorPane>
