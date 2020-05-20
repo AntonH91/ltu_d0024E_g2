@@ -4,6 +4,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.eclipse.persistence.annotations.Index;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity(name = "Users")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -36,9 +37,14 @@ public abstract class User {
     private String password = "";
 
     @Transient
-    private boolean authenticated = false;
+    private final boolean authenticated = false;
 
     public User() {
+    }
+
+    public User(String userNameOverride) {
+        super();
+        this.userId = userNameOverride;
     }
 
     /* ---------------------------
@@ -131,6 +137,7 @@ public abstract class User {
         return "User";
     }
 
+    /*
     @Override
     public boolean equals(Object obj) {
         boolean equals = false;
@@ -140,7 +147,29 @@ public abstract class User {
         }
         return equals;
     }
+    */
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return uid == user.uid &&
+                Objects.equals(userId, user.userId) &&
+                personNr.equals(user.personNr) &&
+                firstName.equals(user.firstName) &&
+                lastName.equals(user.lastName) &&
+                Objects.equals(streetAddress, user.streetAddress) &&
+                Objects.equals(postCode, user.postCode) &&
+                Objects.equals(postArea, user.postArea) &&
+                Objects.equals(phoneNr, user.phoneNr) &&
+                email.equals(user.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(uid, userId, personNr, firstName, lastName, streetAddress, postCode, postArea, phoneNr, email);
+    }
 
     /* ---------------------------
             Private helpers
@@ -164,17 +193,23 @@ public abstract class User {
     }
 
     private void createUserId() {
-        String temp = firstName.substring(0,Math.min(1,firstName.length())) + lastName.substring(0,Math.min(3, lastName.length())) +
-                Long.toString(Math.round(Math.random() * 10000));
+        String temp = firstName.substring(0, Math.min(1, firstName.length())) + lastName.substring(0, Math.min(3, lastName.length())) +
+                this.uid;
         this.userId = temp.toLowerCase();
     }
 
-    @PrePersist
-    private void onPrePersist() {
-        if (this.userId.equals("")) {
+    /**
+     * Triggers the creation of a new User ID, if necessary
+     * @return True if a new User ID was created
+     */
+    public boolean triggerUserIdCreation() {
+        boolean userIdCreationNeeded = false;
+        if (this.userId.isEmpty() && this.uid != 0) {
             createUserId();
+            userIdCreationNeeded = true;
         }
 
+        return userIdCreationNeeded;
     }
 
 }

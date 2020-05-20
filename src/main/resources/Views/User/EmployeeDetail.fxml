@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.*?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.2-internal"
-            fx:controller="dbbg2.view.user.details.EmployeeDetailController">
+            fx:controller="dbbg2.view.controllers.user.details.EmployeeDetailController">
     <children>
         <GridPane>
             <columnConstraints>

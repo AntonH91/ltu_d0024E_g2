@@ -9,11 +9,17 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class VisitorCategory {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long uid;
+
     @Basic(optional = false)
     private String categoryTitle = "";
 
     @Basic(optional = false)
     private int maxLoanedAmount = 0;
+
+    @Basic(optional = false)
+    private boolean defaultNewUser = false;
 
     public VisitorCategory() {
 
@@ -35,26 +41,9 @@ public class VisitorCategory {
         this.maxLoanedAmount = maxLoanedAmount;
     }
 
-    public static VisitorCategory getDefaultCategory(VisitorCategoryType category) {
-        VisitorCategory vc;
-        switch (category) {
-            case GENERAL_PUBLIC:
-                vc = new VisitorCategory("General Public", 3);
-                break;
-            case STUDENT:
-                vc = new VisitorCategory("Student", 5);
-                break;
-            case UNIVERSITY_STAFF:
-                vc = new VisitorCategory("University Staff", 20);
-                break;
-            case RESEARCHER:
-                vc = new VisitorCategory("Researcher", 10);
-                break;
-            default:
-                throw new IllegalArgumentException("This is not a valid category type");
-        }
-
-        return vc;
+    public VisitorCategory(String categoryTitle, int maxLoanedAmount, boolean defaultNewUser) {
+        this(categoryTitle, maxLoanedAmount);
+        this.defaultNewUser = defaultNewUser;
     }
 
     @Override
@@ -71,6 +60,10 @@ public class VisitorCategory {
 
     public int getMaxLoanedAmount() {
         return maxLoanedAmount;
+    }
+
+    public boolean isDefaultNewUser() {
+        return defaultNewUser;
     }
 
     @Override

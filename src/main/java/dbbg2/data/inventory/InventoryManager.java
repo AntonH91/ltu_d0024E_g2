@@ -4,7 +4,7 @@ import dbbg2.data.inventory.itemCategory.ItemCategory;
 import dbbg2.data.inventory.itemCategory.ItemCategoryType;
 import dbbg2.data.users.User;
 import dbbg2.utils.persistence.JpaPersistence;
-import jdk.jfr.Category;
+
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;

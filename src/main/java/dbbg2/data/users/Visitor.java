@@ -1,10 +1,10 @@
 package dbbg2.data.users;
 
 import dbbg2.data.users.visitorcategory.VisitorCategory;
-import dbbg2.data.users.visitorcategory.VisitorCategoryType;
 
-import javax.persistence.*;
-import java.sql.SQLException;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 
 /**
  * @Author Anton Högelin (anthge-7)
@@ -13,7 +13,7 @@ import java.sql.SQLException;
 @Entity
 public class Visitor extends User {
 
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @OneToOne(optional = false, cascade = {CascadeType.REFRESH, CascadeType.DETACH})
     private VisitorCategory category;
     private int loanedItems = 0;
 
@@ -24,14 +24,6 @@ public class Visitor extends User {
     public Visitor(VisitorCategory category) {
         super();
         this.category = category;
-    }
-
-    /**
-     * Creates a new user with a given category type constant
-     * @param category
-     */
-    public Visitor(VisitorCategoryType category) {
-        this(VisitorCategory.getDefaultCategory(category));
     }
 
     public VisitorCategory getCategory() {

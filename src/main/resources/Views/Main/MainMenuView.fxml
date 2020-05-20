@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="achMainMenuRoot" maxHeight="1.7976931348623157E308"
+            maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/10.0.2-internal"
+            fx:controller="dbbg2.view.controllers.MainMenuView">
+    <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <FlowPane alignment="TOP_RIGHT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="40.0"
+                  prefHeight="40.0">
+            <padding>
+                <Insets top="10.0"/>
+            </padding>
+            <Label fx:id="lblLoggedInAs" text="Not Logged In">
+                <FlowPane.margin>
+                    <Insets right="50.0"/>
+                </FlowPane.margin>
+            </Label>
+            <Button fx:id="btnLoginLogout" mnemonicParsing="false" onAction="#handleLoginButtonClick" text="Log In">
+                <FlowPane.margin>
+                    <Insets right="10.0"/>
+                </FlowPane.margin>
+            </Button>
+            <Button fx:id="btnRegisterNewAccount" mnemonicParsing="false" onAction="#handleRegisterButtonClick"
+                    text="Register">
+                <FlowPane.margin>
+                    <Insets right="10.0"/>
+                </FlowPane.margin>
+            </Button>
+        </FlowPane>
+        <TabPane fx:id="tbpTabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                 tabClosingPolicy="UNAVAILABLE">
+            <Tab fx:id="tbUsers" text="Users">
+                <AnchorPane fx:id="achUsersPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            minHeight="0.0" minWidth="0.0"/>
+            </Tab>
+            <Tab fx:id="tbInventory" text="Inventory">
+                <AnchorPane fx:id="achInventoryPane" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"/>
+            </Tab>
+            <Tab fx:id="tbLoans" text="Loans">
+                <AnchorPane fx:id="achLoanPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                            minHeight="0.0" minWidth="0.0"/>
+            </Tab>
+        </TabPane>
+    </VBox>
+</AnchorPane>

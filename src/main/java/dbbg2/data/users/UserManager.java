@@ -90,5 +90,32 @@ public class UserManager {
         return q.getResultList();
     }
 
+    /**
+     * Persist the provided user and return a reference to the managed object. The user will get a new userID if needed
+     * @param theUser The user that is to be persisted
+     * @return A reference to a user managed by the EntityManager
+     */
+    public static User persistUser(User theUser) {
+        EntityManager em = JpaPersistence.getEntityManager();
+        em.getTransaction().begin();
+
+        User u =  persistUser(theUser, em);
+        em.getTransaction().commit();
+
+        return u;
+    }
+
+    public static User persistUser(User theUser, EntityManager em) {
+        theUser = em.merge(theUser);
+        em.flush();
+        em.refresh(theUser);
+        if(theUser.triggerUserIdCreation()) {
+            theUser = em.merge(theUser);
+            em.flush();
+        }
+
+        return theUser;
+    }
+
 
 }
