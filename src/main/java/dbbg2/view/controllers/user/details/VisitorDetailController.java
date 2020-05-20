@@ -6,7 +6,7 @@ import dbbg2.data.users.User;
 import dbbg2.data.users.Visitor;
 import dbbg2.data.users.visitorcategory.VisitorCategory;
 import dbbg2.data.users.visitorcategory.VisitorCategoryManager;
-import dbbg2.view.controllers.utils.GenericStyler;
+import dbbg2.view.utils.GenericStyler;
 import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;

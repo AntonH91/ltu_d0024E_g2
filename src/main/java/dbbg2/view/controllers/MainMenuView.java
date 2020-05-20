@@ -2,10 +2,10 @@ package dbbg2.view.controllers;
 
 import dbbg2.data.users.User;
 import dbbg2.utils.AuthenticationManager;
-import dbbg2.view.controllers.utils.GenericStyler;
-import dbbg2.view.controllers.utils.nested.ChildController;
-import dbbg2.view.controllers.utils.nested.ParentController;
 import dbbg2.view.dialogs.LoginDialog;
+import dbbg2.view.utils.GenericStyler;
+import dbbg2.view.utils.nested.ChildController;
+import dbbg2.view.utils.nested.ParentController;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -67,9 +67,7 @@ public class MainMenuView implements Initializable, ParentController {
         }
 
         // Subscribe to AuthenticationManager updates
-        AuthenticationManager.getAuthManager().addListener(observable -> {
-            this.updateAuthenticatedAccess();
-        });
+        AuthenticationManager.getAuthManager().addListener(observable -> this.updateAuthenticatedAccess());
 
     }
 

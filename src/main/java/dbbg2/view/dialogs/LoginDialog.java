@@ -10,7 +10,7 @@ public class LoginDialog extends Dialog<Boolean> {
     public LoginDialog() {
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/UserLogInView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/User/UserLogInView.fxml"));
 
             getDialogPane().setContent(loader.load());
 

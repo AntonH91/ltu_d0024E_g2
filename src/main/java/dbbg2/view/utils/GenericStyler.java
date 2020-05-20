@@ -1,6 +1,6 @@
-package dbbg2.view.controllers.utils;
+package dbbg2.view.utils;
 
-import dbbg2.view.controllers.utils.nested.ChildController;
+import dbbg2.view.utils.nested.ChildController;
 import javafx.css.Styleable;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

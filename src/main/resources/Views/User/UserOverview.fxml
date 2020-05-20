@@ -6,9 +6,7 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="userOverviewAnchor" maxHeight="1.7976931348623157E308"
             maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/10.0.2-internal"
             fx:controller="dbbg2.view.controllers.user.UserOverviewController">
-    <VBox fx:id="vbSearchControls" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-          AnchorPane.topAnchor="0.0">
+    <VBox fx:id="vbSearchControls" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
         <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
             <VBox.margin>
                 <Insets bottom="20.0"/>
@@ -63,6 +61,5 @@
         </TableView>
     </VBox>
     <AnchorPane fx:id="acUserDetail" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                AnchorPane.topAnchor="0.0"/>
+                visible="false"/>
 </AnchorPane>
