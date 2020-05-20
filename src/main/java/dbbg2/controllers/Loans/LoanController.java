@@ -2,22 +2,49 @@ package dbbg2.controllers.Loans;
 
 import dbbg2.controllers.Loans.Exceptions.ItemNotLendableException;
 import dbbg2.controllers.Loans.Exceptions.TooManyItemsOnLoanException;
+import dbbg2.controllers.user.UserController;
 import dbbg2.data.genericexceptions.LibraryEntityNotFoundException;
 import dbbg2.data.inventory.InventoryCopy;
 import dbbg2.data.inventory.InventoryManager;
 import dbbg2.data.loans.Loan;
 import dbbg2.data.loans.LoanCopies;
+import dbbg2.data.users.User;
 import dbbg2.data.users.UserManager;
 import dbbg2.data.users.Visitor;
 import dbbg2.utils.persistence.JpaPersistence;
 
+import dbbg2.view.user.details.ChildController;
+import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.stage.Stage;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import java.awt.*;
 import java.util.List;
 
-public class LoanController {
+public class LoanController extends ChildController implements EventHandler<ActionEvent>,  {
     private Visitor client;
     private Loan loan;
+    public TextField txtBarcode;
+
+
+    public void handleAddButton(ActionEvent actionEvent){
+       try {
+           addItemToLoan(txtBarcode)
+       }
+
+
+    }
+
     
 
     /*
@@ -32,9 +59,7 @@ public class LoanController {
 
     public static void main(String[] args) {
         LoanController lc = new LoanController();
-
         lc.startLoan();
-
 
         try {
             lc.getUser("aein3799", "pass");
@@ -153,8 +178,43 @@ public class LoanController {
         }
         return null;
     }
-    
+
     public List<LoanCopies> getLoans() {
         return loan.getCopies();
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+
+    }
+
+    @Override
+    public void initializeUserController(User u) {
+
+    }
+
+    @Override
+    public UserController getDataController() {
+        return null;
+    }
+
+    @Override
+    public void updateUserData() {
+
+    }
+
+    @Override
+    public void refreshInterface() {
+
+    }
+
+    @Override
+    public boolean isInputValid() {
+        return false;
+    }
+
+    @Override
+    public void handle(ActionEvent event) {
+
     }
 }
