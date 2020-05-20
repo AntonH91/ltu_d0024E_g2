@@ -30,16 +30,17 @@
                 </FlowPane.margin>
             </Button>
         </FlowPane>
-        <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE">
-            <Tab text="Users">
+        <TabPane fx:id="tbpTabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                 tabClosingPolicy="UNAVAILABLE">
+            <Tab fx:id="tbUsers" text="Users">
                 <AnchorPane fx:id="achUsersPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                             minHeight="0.0" minWidth="0.0"/>
             </Tab>
-            <Tab text="Inventory">
+            <Tab fx:id="tbInventory" text="Inventory">
                 <AnchorPane fx:id="achInventoryPane" maxHeight="1.7976931348623157E308"
                             maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"/>
             </Tab>
-            <Tab text="Loans">
+            <Tab fx:id="tbLoans" text="Loans">
                 <AnchorPane fx:id="achLoanPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                             minHeight="0.0" minWidth="0.0"/>
             </Tab>

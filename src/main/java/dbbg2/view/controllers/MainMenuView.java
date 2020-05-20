@@ -9,10 +9,7 @@ import dbbg2.view.utils.nested.ChildController;
 import dbbg2.view.utils.nested.ParentController;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -29,6 +26,10 @@ public class MainMenuView implements Initializable, ParentController {
     public Button btnRegisterNewAccount;
 
     public AnchorPane achUsersPane;
+    public Tab tbUsers;
+    public Tab tbInventory;
+    public Tab tbLoans;
+    public TabPane tbpTabPane;
     private ChildController ccUserController;
 
     public AnchorPane achInventoryPane;
@@ -69,6 +70,9 @@ public class MainMenuView implements Initializable, ParentController {
         // Subscribe to AuthenticationManager updates
         AuthenticationManager.getAuthManager().addListener(observable -> this.updateAuthenticatedAccess());
 
+        // Update controls to match current access level.
+        updateAuthenticatedAccess();
+
     }
 
     public void updateAuthenticatedAccess() {
@@ -86,7 +90,7 @@ public class MainMenuView implements Initializable, ParentController {
             btnRegisterNewAccount.setVisible(false);
 
             // Do stuff based on the user's access role
-            changeAccessBasedOnLogin();
+
 
         } else {
             btnLoginLogout.setText("Log In");
@@ -94,9 +98,32 @@ public class MainMenuView implements Initializable, ParentController {
             lblLoggedInAs.setText("Not Logged In");
         }
 
+        changeAccessBasedOnLogin();
+
     }
 
     public void changeAccessBasedOnLogin() {
+        tbpTabPane.getTabs().clear();
+
+
+        // General access
+        tbpTabPane.getTabs().add(tbInventory);
+
+        // Anonymous access
+        if (AuthenticationManager.getAuthManager().getCurrentlyLoggedInUser() == null) {
+            // No need for specific anonymous access
+        }
+
+        // Visitor access
+        if (AuthenticationManager.getAuthManager().userCanLoanBooks()) {
+            tbpTabPane.getTabs().add(tbLoans);
+        }
+
+        // Employee access
+        if (AuthenticationManager.getAuthManager().userHasEmployeeAccess()) {
+            tbpTabPane.getTabs().add(tbUsers);
+        }
+
 
     }
 
