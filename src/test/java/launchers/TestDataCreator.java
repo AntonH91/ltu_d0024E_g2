@@ -25,22 +25,20 @@ public class TestDataCreator {
 
 
         em.getTransaction().begin();
-
         clearDatabase(em);
-
-
         createVisitorCategories(em);
         createItemCategories(em);
         createUsers(em);
         createInventory(em);
-
         em.getTransaction().commit();
+
+
         JpaPersistence.disconnect();
     }
 
     private static void createVisitorCategories(EntityManager em) {
 
-        em.persist(new VisitorCategory("General Public", 3));
+        em.persist(new VisitorCategory("General Public", 3, true));
         em.persist(new VisitorCategory("Student", 5));
         em.persist(new VisitorCategory("University Staff", 20));
         em.persist(new VisitorCategory("Researcher", 10));
@@ -81,7 +79,7 @@ public class TestDataCreator {
         v.setPersonNr("321");
         v.setEmail("aeinstein@example.com");
         v.setPassword("password3");
-        UserManager.persistUser( v, em);
+        UserManager.persistUser(v, em);
 
 
         v = new Visitor(categories.get(3));
