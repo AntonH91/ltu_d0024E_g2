@@ -2,6 +2,7 @@ package dbbg2.view.controllers.item.Edit;
 
 import dbbg2.data.inventory.*;
 import dbbg2.data.inventory.itemCategory.ItemCategory;
+import dbbg2.data.users.visitorcategory.VisitorCategory;
 import dbbg2.utils.persistence.JpaPersistence;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -37,31 +38,25 @@ public class EditItemController implements Initializable {
     public TextField newAuthorLastName;
     public TextField txtNewAuthorFirstName;
     public TableColumn clAuthorLastName;
-
+    
+    
+    //Edit films
+    public TableView tvFilmsFound;
+    public TableColumn tcFilmTitle;
+    public TableColumn tcFilmId;
+    public TextField txtFilmSearch;
+    public TextField txtNewFilmTitle;
+    public ComboBox cbNewAgeLimit;
+    public Button btnFindFilm;
+    public TextField txtNewDirector;
+    public TextField txtNewOriginCountry;
+    public TextField txtFilmId;
 
 
     protected BookController bookController;
 
     @Override
 public void initialize(URL location, ResourceBundle resources) {
-        clBookTitle.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("title"));
-        clBookId.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("invId"));
-
-
-
-
-
-
-
-        clAuthorLastName.setCellValueFactory(new PropertyValueFactory<Book, String>("lastName"));
-        clAuthorLastName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
-            @Override
-            public ObservableValue call(TableColumn.CellDataFeatures param) {
-                return null;
-            }
-        });
-
-
         cbNewItemCategory.setCellFactory(new Callback<ListView<ItemCategory>, ListCell<ItemCategory>>() {
             @Override
             public ListCell<ItemCategory> call(ListView<ItemCategory> param) {
@@ -79,16 +74,41 @@ public void initialize(URL location, ResourceBundle resources) {
             }
         });
 
+        //related to books
+        clBookTitle.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("title"));
+        clBookId.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("invId"));
+
+
+
+        clAuthorLastName.setCellValueFactory(new PropertyValueFactory<Book, String>("lastName"));
+        clAuthorLastName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
+            @Override
+            public ObservableValue call(TableColumn.CellDataFeatures param) {
+                return null;
+            }
+        });
+
         cbNewItemCategory.setButtonCell(cbNewItemCategory.getCellFactory().call(null));
 
         ArrayList<ItemCategory> catArray = new ArrayList<>();
         catArray.add(ItemCategory.getDefaultItemCategory(OTHER_BOOKS));
         catArray.add(ItemCategory.getDefaultItemCategory(JOURNAL));
+        catArray.add(ItemCategory.getDefaultItemCategory(REFERENCE_LITERATURE));
+
 
 
         cbNewItemCategory.setItems(FXCollections.observableList(catArray));
         //cbNewItemCategory.getItems().addAll(ItemCategory.getDefaultItemCategory(OTHER_BOOKS), ItemCategory.getDefaultItemCategory(FILM), ItemCategory.getDefaultItemCategory(REFERENCE_LITERATURE));
-        }
+
+        //Related to films
+        tcFilmTitle.setCellValueFactory(new PropertyValueFactory<Film, String>("title"));
+
+    }
+
+
+
+
+
 
     public void handleMakeChanges (ActionEvent actionEvent) {
 
@@ -109,7 +129,7 @@ public void initialize(URL location, ResourceBundle resources) {
             Book book = em.find(Book.class, Integer.parseInt(txtNewIsbn.getText()));
             BookController bc = new BookController();
             bc.setBook(book);
-            bc.amendInformationBook(txtNewBookTitle.getText(), txtNewIsbn.getText(), newAuthorLastName.getText());
+            bc.amendInformationBook(txtNewBookTitle.getText(), txtNewIsbn.getText(), newAuthorLastName.getText(), cbNewItemCategory.getValue());
 
             entityTransaction.commit();
 
@@ -152,13 +172,18 @@ public void initialize(URL location, ResourceBundle resources) {
 
 
 
-
+            selectCategory(selectedBook.getCategory());
 
             txtNewBookTitle.setText(selectedBook.getTitle());
             txtNewIsbn.setText(String.valueOf(selectedBook.getInvId()));
-            cbNewItemCategory.setValue(selectedBook.getCategory());
+            //Selectedbookg getCategory as parameter
+
+
+            //cbNewItemCategory.setValue(selectedBook.getCategory());
             //txtNewAuthorFirstName.setText(selectedBook.getAuthors());
             newAuthorLastName.setText(selectedBook.getAuthors());
+
+
 
         }
 
@@ -190,5 +215,27 @@ public void initialize(URL location, ResourceBundle resources) {
 
 
     }*/
+
+    private void selectCategory(ItemCategory targetCategory) {
+        if (targetCategory != null) {
+            for (ItemCategory ic : cbNewItemCategory.getItems()) {
+                if (targetCategory.equals(ic)) {
+                    cbNewItemCategory.setValue(ic);
+                    break;
+                }
+            }
+        }
+
+    }
+
+
+    public void handleFindFilm(ActionEvent actionEvent) {
+        tvFilmsFound.setItems(FXCollections.observableArrayList(InventoryManager.getFilms(txtFilmSearch.getText())));
+
+    }
+
+    public void handleUpdateFilm(ActionEvent actionEvent) {
+    }
+
 
 }

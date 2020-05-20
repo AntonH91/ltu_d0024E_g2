@@ -36,7 +36,23 @@
           </Tab>
           <Tab text="Untitled Tab 2">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="tvFilmsFound" layoutY="86.0" prefHeight="285.0" prefWidth="252.0">
+                          <columns>
+                            <TableColumn fx:id="tcFilmTitle" prefWidth="75.0" text="Film title" />
+                            <TableColumn fx:id="tcFilmId" prefWidth="75.0" text="Book ID" />
+                          </columns>
+                        </TableView>
+                        <TextField fx:id="txtFilmSearch" layoutX="14.0" layoutY="23.0" promptText="Film title" />
+                        <TextField fx:id="txtNewFilmTitle" layoutX="325.0" layoutY="74.0" promptText="New film title" />
+                        <Button fx:id="btnFindFilm" layoutX="182.0" layoutY="48.0" mnemonicParsing="false" onAction="#handleFindFilm" text="Find film" />
+                        <ComboBox fx:id="cbNewAgeLimit" layoutX="325.0" layoutY="108.0" prefWidth="150.0" promptText="Age limit" />
+                        <TextField fx:id="txtNewDirector" layoutX="326.0" layoutY="142.0" promptText="New director" />
+                        <TextField fx:id="txtNewOriginCountry" layoutX="326.0" layoutY="173.0" promptText="New origin country" />
+                        <Button fx:id="btnUpdateFilm" layoutX="325.0" layoutY="235.0" mnemonicParsing="false" onAction="#handleUpdateFilm" text="Update film" />
+                        <TextField fx:id="txtFilmId" editable="false" layoutX="325.0" layoutY="204.0" promptText="Book ID" />
+                     </children></AnchorPane>
             </content>
           </Tab>
         </tabs>

@@ -155,4 +155,7 @@ public class ItemCopyController implements Initializable {
             txtCfCid.setText(String.valueOf(selectedCopy.getCid()));
         }
     }
+
+
+
 }
