@@ -6,9 +6,9 @@ import dbbg2.data.users.User;
 import dbbg2.data.users.UserManager;
 import dbbg2.data.users.Visitor;
 import dbbg2.view.controllers.user.exceptions.UnknownUserTypeException;
-import dbbg2.view.controllers.utils.GenericStyler;
-import dbbg2.view.controllers.utils.nested.ChildController;
-import dbbg2.view.controllers.utils.nested.ParentController;
+import dbbg2.view.utils.GenericStyler;
+import dbbg2.view.utils.nested.ChildController;
+import dbbg2.view.utils.nested.ParentController;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -259,8 +259,8 @@ public class UserDetailController extends ChildController implements Initializab
         isValid = isValid && validatePassword() == PasswordStatus.OK;
 
 
-        if (isValid && childController != null) {
-            isValid = childController.isInputValid();
+        if (childController != null) {
+            isValid = childController.isInputValid() && isValid;
         }
         return isValid;
     }
@@ -365,6 +365,10 @@ public class UserDetailController extends ChildController implements Initializab
         childPane.autosize();
         childPane.getScene().getWindow().sizeToScene();
         triggerResizeRequest();
+    }
+
+    public UserChildController getChildController() {
+        return childController;
     }
 
     /**

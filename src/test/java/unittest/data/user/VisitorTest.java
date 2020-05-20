@@ -3,7 +3,6 @@ package unittest.data.user;
 import dbbg2.data.users.User;
 import dbbg2.data.users.Visitor;
 import dbbg2.data.users.visitorcategory.VisitorCategory;
-import dbbg2.data.users.visitorcategory.VisitorCategoryType;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,7 +10,8 @@ public class VisitorTest extends UserTest {
 
     @Override
     public User getDefaultUser() {
-        return new Visitor(VisitorCategory.getDefaultCategory(VisitorCategoryType.GENERAL_PUBLIC));
+        VisitorCategory vc = new VisitorCategory("General Public", 3);
+        return new Visitor(vc);
     }
 
     private Visitor getDefaultVisitor() {

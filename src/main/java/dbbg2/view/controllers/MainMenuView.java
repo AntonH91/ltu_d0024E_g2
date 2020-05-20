@@ -2,10 +2,11 @@ package dbbg2.view.controllers;
 
 import dbbg2.data.users.User;
 import dbbg2.utils.AuthenticationManager;
-import dbbg2.view.controllers.utils.GenericStyler;
-import dbbg2.view.controllers.utils.nested.ChildController;
-import dbbg2.view.controllers.utils.nested.ParentController;
 import dbbg2.view.dialogs.LoginDialog;
+import dbbg2.view.dialogs.RegisterNewUserDialog;
+import dbbg2.view.utils.GenericStyler;
+import dbbg2.view.utils.nested.ChildController;
+import dbbg2.view.utils.nested.ParentController;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -54,11 +55,12 @@ public class MainMenuView implements Initializable, ParentController {
 
     public void handleRegisterButtonClick(ActionEvent actionEvent) {
         // TODO Bring up window to allow user to register themselves as a Visitor
+        RegisterNewUserDialog d = new RegisterNewUserDialog();
+        d.showAndWait();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // TODO Add loader code for various sub-menus under the main menu
 
         try {
             loadSubMenus();
@@ -67,9 +69,7 @@ public class MainMenuView implements Initializable, ParentController {
         }
 
         // Subscribe to AuthenticationManager updates
-        AuthenticationManager.getAuthManager().addListener(observable -> {
-            this.updateAuthenticatedAccess();
-        });
+        AuthenticationManager.getAuthManager().addListener(observable -> this.updateAuthenticatedAccess());
 
     }
 
@@ -88,13 +88,17 @@ public class MainMenuView implements Initializable, ParentController {
             btnRegisterNewAccount.setVisible(false);
 
             // Do stuff based on the user's access role
-
+            changeAccessBasedOnLogin();
 
         } else {
             btnLoginLogout.setText("Log In");
             btnRegisterNewAccount.setVisible(true);
             lblLoggedInAs.setText("Not Logged In");
         }
+
+    }
+
+    public void changeAccessBasedOnLogin() {
 
     }
 

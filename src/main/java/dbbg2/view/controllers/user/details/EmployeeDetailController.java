@@ -4,7 +4,7 @@ import dbbg2.controllers.user.EmployeeController;
 import dbbg2.controllers.user.UserController;
 import dbbg2.data.users.Employee;
 import dbbg2.data.users.User;
-import dbbg2.view.controllers.utils.GenericStyler;
+import dbbg2.view.utils.GenericStyler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;

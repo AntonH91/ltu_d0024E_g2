@@ -7,8 +7,8 @@ import dbbg2.data.users.Visitor;
 import dbbg2.data.users.visitorcategory.VisitorCategory;
 import dbbg2.view.controllers.user.details.UserDetailController;
 import dbbg2.view.controllers.user.exceptions.UnknownUserTypeException;
-import dbbg2.view.controllers.utils.nested.ChildController;
-import dbbg2.view.controllers.utils.nested.ParentController;
+import dbbg2.view.utils.nested.ChildController;
+import dbbg2.view.utils.nested.ParentController;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -37,6 +37,7 @@ public class UserOverviewController extends ChildController implements Initializ
     public TableColumn<User, String> tcFirstName;
     public TableColumn<User, String> tcLastName;
     public TableColumn<User, String> tcEmail;
+    public TableColumn<User, String> tcUserType;
 
     public Button btnClearSearch;
     public Button btnEditUser;
@@ -44,6 +45,7 @@ public class UserOverviewController extends ChildController implements Initializ
     public AnchorPane acUserDetail;
     public VBox vbSearchControls;
     public ChoiceBox<VisitorCategory> cboCategoryFilter;
+
 
     public void handleSearchButtonClick(ActionEvent actionEvent) {
         // TODO Make it so that only Employees can search users
@@ -55,6 +57,7 @@ public class UserOverviewController extends ChildController implements Initializ
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        tcUserType.setCellValueFactory(new PropertyValueFactory<>("userType"));
         tcUserId.setCellValueFactory(new PropertyValueFactory<>("userId"));
         tcFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         tcLastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
@@ -140,8 +143,6 @@ public class UserOverviewController extends ChildController implements Initializ
             } catch (IOException | UnknownUserTypeException e) {
                 Logger.getLogger("").log(Level.SEVERE, "Exception during User loading during User Creation.", e);
             }
-        } else {
-            Logger.getLogger("").log(Level.SEVERE, "Could not select a new user type during User Creation");
         }
 
     }
