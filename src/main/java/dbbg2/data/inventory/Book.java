@@ -34,9 +34,13 @@ public class Book extends InventoryItem {
         this.author.add(author);
     }
 
-// Setters
+    public void setAuthor(ArrayList<String> author) {
+        this.author = author;
+    }
 
-    public void setIsbn(){
+    // Setters
+
+    public void setIsbn(String isbn){
         this.isbn = isbn;
 }
 // Getters
@@ -48,6 +52,8 @@ public class Book extends InventoryItem {
     public ArrayList<String> getAuthor() {
         return author;
     }
+
+
 
 
     //Change availibility of book
