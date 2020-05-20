@@ -140,14 +140,15 @@ public class UserOverviewController extends ChildController implements Initializ
      */
     public void handleNewUserButtonClick(ActionEvent actionEvent) {
 
-        // TODO Make it so that only Employees can create new users
-        User newUser = getUserFromDialog();
-        if (newUser != null) {
+        if (AuthenticationManager.getAuthManager().userHasEmployeeAccess()) {
+            User newUser = getUserFromDialog();
+            if (newUser != null) {
 
-            try {
-                showUserDetail(newUser);
-            } catch (IOException | UnknownUserTypeException e) {
-                Logger.getLogger("").log(Level.SEVERE, "Exception during User loading during User Creation.", e);
+                try {
+                    showUserDetail(newUser);
+                } catch (IOException | UnknownUserTypeException e) {
+                    Logger.getLogger("").log(Level.SEVERE, "Exception during User loading during User Creation.", e);
+                }
             }
         }
 
@@ -159,25 +160,39 @@ public class UserOverviewController extends ChildController implements Initializ
      * @return The newly created User object, or null if none created.
      */
     private User getUserFromDialog() {
-        // TODO Make it so that only Manager-level employees can create new Employees
-        String[] choices = {"Visitor", "Employee"};
-
-        ChoiceDialog<String> cd = new ChoiceDialog<>(choices[0], Arrays.asList(choices));
-
-        Optional<String> o = cd.showAndWait();
         User newUser = null;
-        if (o.isPresent()) {
-            switch (o.get()) {
-                case "Visitor":
-                    newUser = new Visitor();
-                    break;
-                case "Employee":
-                    newUser = new Employee();
-                    break;
+
+
+        if (AuthenticationManager.getAuthManager().userHasManagerAccess()) {
+            // Present the manager with a choice
+            String[] choices = {"Visitor", "Employee"};
+            ChoiceDialog<String> cd = new ChoiceDialog<>(choices[0], Arrays.asList(choices));
+            cd.setTitle("Create new user?");
+            Optional<String> o = cd.showAndWait();
+
+            // Handle the response
+            if (o.isPresent()) {
+                switch (o.get()) {
+                    case "Visitor":
+                        newUser = new Visitor();
+                        break;
+                    case "Employee":
+                        newUser = new Employee();
+                        break;
+                }
             }
 
+        } else if (AuthenticationManager.getAuthManager().userHasEmployeeAccess()) {
+            Alert a = new Alert(Alert.AlertType.CONFIRMATION, "Create a new Visitor?", ButtonType.YES, ButtonType.NO);
+            a.setTitle("Create new visitor?");
 
+            Optional<ButtonType> result = a.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.YES) {
+                newUser = new Visitor();
+            }
         }
+
+
         return newUser;
     }
 
