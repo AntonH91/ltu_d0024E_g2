@@ -37,7 +37,6 @@ public class MainMenuView implements Initializable, ParentController {
     public AnchorPane achMainMenuRoot;
 
     public void handleLoginButtonClick(ActionEvent actionEvent) {
-        // TODO Bring up password prompt to log in a new user
 
         if (AuthenticationManager.getAuthManager().getCurrentlyLoggedInUser() == null) {
             LoginDialog d = new LoginDialog();
@@ -54,7 +53,6 @@ public class MainMenuView implements Initializable, ParentController {
     }
 
     public void handleRegisterButtonClick(ActionEvent actionEvent) {
-        // TODO Bring up window to allow user to register themselves as a Visitor
         RegisterNewUserDialog d = new RegisterNewUserDialog();
         d.showAndWait();
     }
