@@ -63,6 +63,7 @@ public class TestDataCreator {
         admin.setPersonNr("007");
         admin.setEmail("admin@example.com");
         admin.setPassword("admin");
+        admin.setManagerAccess(true);
         UserManager.persistUser(admin, em);
 
 
