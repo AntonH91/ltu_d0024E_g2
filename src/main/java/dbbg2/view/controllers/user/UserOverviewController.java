@@ -1,14 +1,14 @@
-package dbbg2.view.user;
+package dbbg2.view.controllers.user;
 
 import dbbg2.data.users.Employee;
 import dbbg2.data.users.User;
 import dbbg2.data.users.UserManager;
 import dbbg2.data.users.Visitor;
 import dbbg2.data.users.visitorcategory.VisitorCategory;
-import dbbg2.view.user.details.UserDetailController;
-import dbbg2.view.user.exceptions.UnknownUserTypeException;
-import dbbg2.view.utils.nested.ChildController;
-import dbbg2.view.utils.nested.ParentController;
+import dbbg2.view.controllers.user.details.UserDetailController;
+import dbbg2.view.controllers.user.exceptions.UnknownUserTypeException;
+import dbbg2.view.controllers.utils.nested.ChildController;
+import dbbg2.view.controllers.utils.nested.ParentController;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;

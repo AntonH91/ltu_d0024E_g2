@@ -1,5 +1,5 @@
 
-package dbbg2.view.item.search;
+package dbbg2.view.controllers.item.search;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

@@ -1,4 +1,4 @@
-package dbbg2.view.item.manage;
+package dbbg2.view.controllers.item.manage;
 
 import dbbg2.data.inventory.Book;
 import dbbg2.data.inventory.Film;

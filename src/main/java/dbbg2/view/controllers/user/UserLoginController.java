@@ -1,12 +1,9 @@
-package dbbg2.controllers.user;
+package dbbg2.view.controllers.user;
 
 import dbbg2.utils.AuthenticationManager;
 import dbbg2.utils.exceptions.LoginFailureException;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,6 +11,8 @@ import java.util.logging.Logger;
 public class UserLoginController {
     public TextField txtUserName;
     public PasswordField pwdPassword;
+    public Button btnLogin;
+    public Button btnCancel;
 
     public void handleLoginClick(ActionEvent actionEvent) {
         attemptLogin(txtUserName.getText(), pwdPassword.getText());
@@ -22,7 +21,8 @@ public class UserLoginController {
     private void attemptLogin(String userName, String password) {
         try {
 
-            AuthenticationManager.logIn(userName, password);
+            AuthenticationManager.getAuthManager().logIn(userName, password);
+            txtUserName.getScene().getWindow().hide();
         } catch (LoginFailureException e) {
             Logger.getLogger("").log(Level.INFO, "Failed login attempt for user: " + userName);
             showAlert("Invalid username / password combination.");
@@ -33,6 +33,7 @@ public class UserLoginController {
     }
 
     public void handleCancelClick(ActionEvent actionEvent) {
+        txtUserName.getScene().getWindow().hide();
     }
 
     private void showAlert(String message) {

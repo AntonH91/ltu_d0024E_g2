@@ -1,15 +1,11 @@
-package dbbg2.view.user;
+package dbbg2.view.controllers.user;
 
 import dbbg2.controllers.Loans.LoanController;
 import dbbg2.data.users.User;
-import dbbg2.data.users.UserManager;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;

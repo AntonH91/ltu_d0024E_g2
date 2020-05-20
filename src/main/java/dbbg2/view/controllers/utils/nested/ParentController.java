@@ -1,4 +1,4 @@
-package dbbg2.view.utils.nested;
+package dbbg2.view.controllers.utils.nested;
 
 public interface ParentController {
 

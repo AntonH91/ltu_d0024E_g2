@@ -1,8 +1,8 @@
-package dbbg2.view.user.details;
+package dbbg2.view.controllers.user.details;
 
 import dbbg2.controllers.user.UserController;
 import dbbg2.data.users.User;
-import dbbg2.view.utils.nested.ChildController;
+import dbbg2.view.controllers.utils.nested.ChildController;
 
 public abstract class UserChildController extends ChildController {
 
