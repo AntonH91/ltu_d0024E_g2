@@ -3,7 +3,8 @@ package dbbg2.view.utils;
 import dbbg2.view.utils.nested.ChildController;
 import javafx.css.Styleable;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
@@ -27,20 +28,34 @@ public class GenericStyler {
     }
 
     /**
-     * <p>Loads an XML file into the given anchor element and returns the controller object for the resource</p>
+     * <p>Loads an XML file into the given Pane element and returns the controller object for the resource</p>
      * <p>Note that the controller must implement the ChildController interface.</p>
      *
-     * @param anchor         The AnchorPane element that the new XML should be loaded into.
+     * @param thePane        The Pane element that the new XML should be loaded into.
      * @param resourceToLoad The FXML resource to be loaded.
      * @return The controller for the newly loaded FXML file
      * @throws IOException        Thrown if the FXMLLoader fails to load the FXML file
      * @throws ClassCastException Thrown if the controller in the loaded code does not implement the ChildController interface.
      */
-    public static ChildController loadSinglePane(AnchorPane anchor, String resourceToLoad) throws IOException, ClassCastException {
+    public static ChildController loadSinglePane(Pane thePane, String resourceToLoad) throws IOException, ClassCastException {
         ChildController controller;
-
         FXMLLoader loader = new FXMLLoader(GenericStyler.class.getResource(resourceToLoad));
-        anchor.getChildren().setAll((AnchorPane) loader.load());
+
+
+        Object rootElement = loader.load();
+        Pane content;
+
+        // If the root element is a pane, insert it directly
+        // Otherwise, wrap the content in a pane, then insert
+        if (rootElement instanceof Pane) {
+            content = (Pane) rootElement;
+        } else {
+            content = new Pane();
+            content.getChildren().setAll((Node) rootElement);
+            content.autosize();
+        }
+
+        thePane.getChildren().setAll(content);
 
         return loader.getController();
 
@@ -49,15 +64,15 @@ public class GenericStyler {
     /**
      * Loads a single pane into an anchor without returning the controller
      *
-     * @param anchor         The AnchorPane to be loaded
+     * @param thePane        The Pane to be loaded into
      * @param resourceToLoad The string reference to the FXML resource to be loaded.
      * @throws IOException Thrown if loading fails.
      */
-    public static void loadSinglePaneWithoutController(AnchorPane anchor, String resourceToLoad) throws IOException {
+    public static void loadSinglePaneWithoutController(Pane thePane, String resourceToLoad) throws IOException {
         try {
-            loadSinglePane(anchor, resourceToLoad);
+            loadSinglePane(thePane, resourceToLoad);
         } catch (ClassCastException ignored) {
-
+            //Logger.getLogger("").log(Level.WARNING, "ClassCastException when fetching FXML.", ignored);
         }
     }
 
