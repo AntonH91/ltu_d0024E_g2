@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dbbg2.view.item.AddCopy.ItemCopyController">
+   <children>
+      <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Add item copy">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="405.0" prefWidth="600.0">
+                     <children>
+                        <TextField fx:id="txtCopyLocation" layoutX="354.0" layoutY="198.0" promptText="Copy location" />
+                        <TextField fx:id="txtBarcode" layoutX="354.0" layoutY="235.0" promptText="Copy barcode" />
+                        <TableView fx:id="tblItemView" layoutY="165.0" onMouseClicked="#handleTableViewMouseClickedAction" prefHeight="206.0" prefWidth="268.0">
+                          <columns>
+                            <TableColumn fx:id="clItemName" prefWidth="75.0" text="Item Name" />
+                            <TableColumn fx:id="clItemId" prefWidth="75.0" text="Item ID" />
+                          </columns>
+                        </TableView>
+                        <TextField fx:id="txtItemNameSearch" layoutX="24.0" layoutY="53.0" promptText="Item name" />
+                        <TextField fx:id="txtItemIdSearch" layoutX="24.0" layoutY="90.0" promptText="Item ID (optional)" />
+                        <Button fx:id="btnFindItem" layoutX="24.0" layoutY="129.0" mnemonicParsing="false" onAction="#handleFindItem" text="Find item" />
+                        <Button fx:id="btnAddCopy" layoutX="354.0" layoutY="278.0" mnemonicParsing="false" onAction="#handleAddCopy" text="Add copy" />
+                        <TextField fx:id="txtItemNameFound" editable="false" layoutX="354.0" layoutY="165.0" promptText="Item name" />
+                        <TextField fx:id="txtItemIdFound" layoutX="354.0" layoutY="129.0" promptText="Item ID" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Remove item copy">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="txtRmItemTitle" layoutX="14.0" layoutY="36.0" promptText="Item title" />
+                        <TextField fx:id="txtRmItemId" layoutX="14.0" layoutY="73.0" promptText="Item ID (optional)" />
+                        <TableView fx:id="tbItemFound" layoutY="171.0" onMouseClicked="#handleRemoveMouseClick" prefHeight="200.0" prefWidth="233.0">
+                          <columns>
+                            <TableColumn fx:id="tcItemName" prefWidth="89.0" text="Item name" />
+                            <TableColumn fx:id="txItemId" prefWidth="67.0" text="Item ID" />
+                              <TableColumn fx:id="tcBarcode" prefWidth="79.0" text="Barcode" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="btnFindCopy" layoutX="14.0" layoutY="134.0" mnemonicParsing="false" onAction="#handleFindCopy" text="Find copy" />
+                        <Button layoutX="290.0" layoutY="284.0" mnemonicParsing="false" onAction="#handleRemoveCopy" text="Remove selected copy" />
+                        <TextField fx:id="txtCfItemTitle" layoutX="290.0" layoutY="171.0" promptText="Item title" />
+                        <TextField fx:id="txtCfItemId" layoutX="290.0" layoutY="208.0" promptText="Item ID" />
+                        <TextField fx:id="txtCfCid" layoutX="290.0" layoutY="246.0" promptText="Copy ID" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

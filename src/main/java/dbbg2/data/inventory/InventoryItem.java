@@ -37,17 +37,17 @@ public abstract class InventoryItem {
     @SuppressWarnings("JpaAttributeTypeInspection")
     @ManyToMany(mappedBy = "items", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     //@Basic(optional = false)
-    private List<Keyword> keyword = new ArrayList<>();
+    private List<Keyword> keywords = new ArrayList<>();
 
     // Tried to fix the many to many table being created
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "item")
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "item")
     private Set<InventoryCopy> copies = new HashSet<>();
 
     //Tried fixing keyword relation
     //@OneToOne(optional = false, cascade = CascadeType.ALL)
     //private ItemCategory category;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "Item_Category")
     private ItemCategory category;
 
@@ -110,7 +110,7 @@ public abstract class InventoryItem {
 
     //Tried changing from list to see if it works
     public List<Keyword> getKeyword() {
-        return keyword;
+        return keywords;
     }
 
 
