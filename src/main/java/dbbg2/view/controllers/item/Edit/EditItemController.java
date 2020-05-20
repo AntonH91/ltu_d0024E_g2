@@ -173,10 +173,6 @@ public void initialize(URL location, ResourceBundle resources) {
         bookController.saveChangesBook();*/
     }
 
-    public void saveAuthor(){
-        bookController.ammendAuthorInformation(txtNewAuthorFirstName.getText(), txtNewAuthorFirstName.getText());
-        bookController.saveChangesAuthor();
-    }
 
     /*public void updateBook(String title, String isbn){
 

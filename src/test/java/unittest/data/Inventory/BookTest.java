@@ -11,7 +11,7 @@ public class BookTest {
     public void authorIsSetCorrectlyByConstructor(){
         final String AUTHOR_NAME = "Astrid Lindgren";
         Book book = new Book("Emil", ItemCategoryType.OTHER_BOOKS, true, "4489456", (""));
-        Assert.assertEquals(AUTHOR_NAME, book.getAuthors().iterator());
+        Assert.assertEquals(AUTHOR_NAME, book.getAuthors());
     }
 
 

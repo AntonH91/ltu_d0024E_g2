@@ -143,8 +143,6 @@ public class TestDataCreator {
                 "DELETE FROM LOAN;",
                 "DELETE FROM Inventory_keyword;",
                 "DELETE FROM INVENTORYCOPY;",
-                "DELETE FROM book_author",
-                "DELETE FROM AUTHOR",
                 "DELETE FROM BOOK;",
                 "DELETE FROM FILM;",
                 "DELETE FROM INVENTORY;",

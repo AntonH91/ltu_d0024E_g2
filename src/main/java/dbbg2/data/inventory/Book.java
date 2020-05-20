@@ -11,8 +11,6 @@ import java.util.*;
 @Entity(name = "Book")
 public class Book extends InventoryItem {
 
-
-    @ManyToMany(mappedBy = "books", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private String authors = "";
 
     @Basic(optional = false)
