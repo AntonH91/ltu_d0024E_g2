@@ -1,7 +1,6 @@
 package dbbg2;
 
 
-import dbbg2.view.user.details.UserDetailController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,11 +22,6 @@ public class ApplicationMain extends Application {
 
 
         Parent root = loader.load();
-        /*
-        UserDetailController udc = loader.getController();
-        udc.loadUser("jgeo7710");
-        //udc.loadUser(new Visitor());
-        */
         Scene scene = new Scene(root);
 
         primaryStage.setTitle("Library DBB");
