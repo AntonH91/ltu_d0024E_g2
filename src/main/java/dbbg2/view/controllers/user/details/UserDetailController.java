@@ -5,6 +5,7 @@ import dbbg2.data.users.Employee;
 import dbbg2.data.users.User;
 import dbbg2.data.users.UserManager;
 import dbbg2.data.users.Visitor;
+import dbbg2.utils.AuthenticationManager;
 import dbbg2.view.controllers.user.exceptions.UnknownUserTypeException;
 import dbbg2.view.utils.GenericStyler;
 import dbbg2.view.utils.nested.ChildController;
@@ -46,8 +47,9 @@ public class UserDetailController extends ChildController implements Initializab
     public Button btnDeleteUser;
 
     protected UserController userController;
+    boolean deleteButtonEnabled = false;
+    boolean editAccessEnabled = false;
     private UserChildController childController;
-
     private TextField[] fieldsToValidate;
 
     /**
@@ -135,7 +137,9 @@ public class UserDetailController extends ChildController implements Initializab
         refreshFields();
         resizeSelf();
 
+        updateAuthenticationSettings();
         handleValidationChanges();
+        triggerResizeRequest();
     }
 
     /**
@@ -198,7 +202,7 @@ public class UserDetailController extends ChildController implements Initializab
         boolean validInput = hasValidInput();
 
         // Lock the save button if the input is not valid
-        btnSaveButton.setDisable(!validInput);
+        btnSaveButton.setDisable(!validInput || !editAccessEnabled);
 
 
         if (validInput) {
@@ -305,8 +309,11 @@ public class UserDetailController extends ChildController implements Initializab
     }
 
     public void handleSaveButtonClick(ActionEvent actionEvent) {
-        childController.updateUserData();
-        saveUser();
+        if (editAccessEnabled) {
+            childController.updateUserData();
+            saveUser();
+
+        }
     }
 
     public void handleReturnButtonClick(ActionEvent actionEvent) {
@@ -317,18 +324,18 @@ public class UserDetailController extends ChildController implements Initializab
      * Called when the delete button is pressed.
      */
     public void handleDeleteButtonClick(ActionEvent actionEvent) {
-        // TODO Make this button only show for Employees
-        // TODO Make managers the only Employees that can delete other Employees
-        Optional<ButtonType> o = new Alert(Alert.AlertType.CONFIRMATION, "Delete the current user?", ButtonType.YES, ButtonType.NO).showAndWait();
+        if (deleteButtonEnabled) {
+            Optional<ButtonType> o = new Alert(Alert.AlertType.CONFIRMATION, "Delete the current user?", ButtonType.YES, ButtonType.NO).showAndWait();
 
-        if (o.isPresent() && o.get() == ButtonType.YES) {
+            if (o.isPresent() && o.get() == ButtonType.YES) {
 
-            try {
-                userController.deleteUser();
-                this.triggerReturnRequest();
-                new Alert(Alert.AlertType.INFORMATION, "Deletion successful!");
-            } catch (IllegalArgumentException e) {
-                new Alert(Alert.AlertType.INFORMATION, "It's not possible to delete this user. They may be involved in loans or other items.");
+                try {
+                    userController.deleteUser();
+                    this.triggerReturnRequest();
+                    new Alert(Alert.AlertType.INFORMATION, "Deletion successful!");
+                } catch (IllegalArgumentException e) {
+                    new Alert(Alert.AlertType.INFORMATION, "It's not possible to delete this user. They may be involved in loans or other items.");
+                }
             }
         }
     }
@@ -339,6 +346,7 @@ public class UserDetailController extends ChildController implements Initializab
 
         bindListeners();
 
+        AuthenticationManager.getAuthManager().addListener(observable -> updateAuthenticationSettings());
     }
 
     /**
@@ -370,6 +378,39 @@ public class UserDetailController extends ChildController implements Initializab
     public UserChildController getChildController() {
         return childController;
     }
+
+    public void updateAuthenticationSettings() {
+        // It should NOT be possible for a user to delete themselves
+        // ONLY Employees should be able to delete users
+        // ONLY Managers should be able to delete Employees
+
+
+        if (userController != null && userController.getUser() != null) {
+            deleteButtonEnabled = userController.getUser() != null
+                    && !userController.getUser().equals(AuthenticationManager.getAuthManager().getCurrentlyLoggedInUser())
+                    && AuthenticationManager.getAuthManager().userHasEmployeeAccess()
+                    && (!(userController.getUser() instanceof Employee) || AuthenticationManager.getAuthManager().userHasManagerAccess());
+
+
+            editAccessEnabled = userController.getUser().equals(AuthenticationManager.getAuthManager().getCurrentlyLoggedInUser())
+                    || userController.getUser() instanceof Employee && AuthenticationManager.getAuthManager().userHasManagerAccess()
+                    || userController.getUser() instanceof Visitor && AuthenticationManager.getAuthManager().userHasEmployeeAccess();
+
+
+        } else {
+            deleteButtonEnabled = false;
+            editAccessEnabled = false;
+        }
+
+        // Everyone can edit themselves
+        // Only Managers can edit Employees
+        // Employees can edit Visitors
+
+
+        btnSaveButton.setDisable(!editAccessEnabled);
+        btnDeleteUser.setVisible(deleteButtonEnabled);
+    }
+
 
     /**
      * Enum that defines how password validation should behave
