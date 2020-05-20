@@ -367,6 +367,10 @@ public class UserDetailController extends ChildController implements Initializab
         triggerResizeRequest();
     }
 
+    public UserChildController getChildController() {
+        return childController;
+    }
+
     /**
      * Enum that defines how password validation should behave
      */

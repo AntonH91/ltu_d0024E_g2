@@ -15,9 +15,12 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;
 
+import javax.persistence.NoResultException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class VisitorDetailController extends UserChildController implements Initializable {
     public ComboBox<VisitorCategory> cbxVisitorCategory;
@@ -130,6 +133,11 @@ public class VisitorDetailController extends UserChildController implements Init
     private void loadVisitorCategories() {
         List<VisitorCategory> categoryList = VisitorCategoryManager.getVisitorCategories();
         cbxVisitorCategory.setItems(FXCollections.observableArrayList(categoryList));
+        try {
+            cbxVisitorCategory.setValue(VisitorCategoryManager.getDefaultCategory());
+        } catch (NoResultException e) {
+            Logger.getLogger("").log(Level.WARNING, "No default visitor category specified!");
+        }
     }
 
 }
