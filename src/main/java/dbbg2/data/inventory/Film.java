@@ -37,17 +37,20 @@ public class Film extends InventoryItem {
 
 
 
-    public void setDirector(){
+    public void setDirector(String director){
         this.director = director;
     }
 
-    public void setAgeLimit(){
+    public void setAgeLimit(int ageLimit){
         this.ageLimit = ageLimit;
     }
 
-    public void setOriginCountry(){
+    public void setOriginCountry(String originCountry){
         this.originCountry = originCountry;
     }
+
+
+
 
 
 

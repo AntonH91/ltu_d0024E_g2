@@ -63,7 +63,7 @@ public class ItemManageController implements Initializable {
     public TextField txtOriginCountry;
     public TextField txtFilmDirector;
 
-    public ComboBox cbAgeLimits;
+    public ComboBox<Integer> cbAgeLimits;
     public ChoiceBox cbTestAgeLimit;
 
 
@@ -118,7 +118,7 @@ public class ItemManageController implements Initializable {
         public void handleAddFilm(ActionEvent actionEvent) {
             List<Film> film = new ArrayList<>();
 
-            film.add(new Film(txtAbbFilmTitle.getText(), ItemCategory.getDefaultItemCategory(FILM), true, txtFilmDirector.getText(), cbAgeLimits.getSelectionModel().getSelectedIndex(), txtOriginCountry.getText()));
+            film.add(new Film(txtAbbFilmTitle.getText(), ItemCategory.getDefaultItemCategory(FILM), true, txtFilmDirector.getText(), cbAgeLimits.getValue(), txtOriginCountry.getText()));
 
             if(txtAbbFilmTitle.getText().isEmpty() || cbAgeLimits.getSelectionModel().isEmpty()){
 

@@ -34,11 +34,11 @@
                      </children></AnchorPane>
             </content>
           </Tab>
-          <Tab text="Untitled Tab 2">
+          <Tab text="Edit film">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="tvFilmsFound" layoutY="86.0" prefHeight="285.0" prefWidth="252.0">
+                        <TableView fx:id="tvFilmsFound" layoutY="86.0" onMouseClicked="#handleClickedFilm" prefHeight="285.0" prefWidth="252.0">
                           <columns>
                             <TableColumn fx:id="tcFilmTitle" prefWidth="75.0" text="Film title" />
                             <TableColumn fx:id="tcFilmId" prefWidth="75.0" text="Book ID" />

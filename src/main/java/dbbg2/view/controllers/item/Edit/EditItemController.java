@@ -46,7 +46,7 @@ public class EditItemController implements Initializable {
     public TableColumn tcFilmId;
     public TextField txtFilmSearch;
     public TextField txtNewFilmTitle;
-    public ComboBox cbNewAgeLimit;
+    public ComboBox<Integer> cbNewAgeLimit;
     public Button btnFindFilm;
     public TextField txtNewDirector;
     public TextField txtNewOriginCountry;
@@ -102,6 +102,9 @@ public void initialize(URL location, ResourceBundle resources) {
 
         //Related to films
         tcFilmTitle.setCellValueFactory(new PropertyValueFactory<Film, String>("title"));
+
+        cbNewAgeLimit.getItems().addAll(17, 18, 20);
+
 
     }
 
@@ -235,7 +238,60 @@ public void initialize(URL location, ResourceBundle resources) {
     }
 
     public void handleUpdateFilm(ActionEvent actionEvent) {
+        EntityManager em = JpaPersistence.getEntityManager();
+
+        EntityTransaction entityTransaction = null;
+
+        try {
+            entityTransaction = em.getTransaction();
+            entityTransaction.begin();
+
+            Film film = em.find(Film.class, Integer.parseInt(txtFilmId.getText()));
+            FilmController fc = new FilmController();
+            fc.setFilm(film);
+            fc.ammendInformationFilm(txtNewFilmTitle.getText(), cbNewAgeLimit.getValue(), txtNewDirector.getText(), txtNewOriginCountry.getText());
+
+            entityTransaction.commit();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("The book has been updated");
+            alert.showAndWait();
+
+
+
+            return;
+
+
+        } catch (RuntimeException e) {
+            if(entityTransaction.isActive())
+                entityTransaction.rollback();
+            throw e;
+        }
+
     }
 
 
+    public void handleClickedFilm(MouseEvent mouseEvent) {
+
+        if (tvFilmsFound.getSelectionModel().getSelectedItem() != null) {
+            Film selectedFilm = (Film) tvFilmsFound.getSelectionModel().getSelectedItem();
+
+
+            txtNewFilmTitle.setText(selectedFilm.getTitle());
+            txtFilmId.setText(String.valueOf(selectedFilm.getInvId()));
+            txtNewDirector.setText(selectedFilm.getDirector());
+            txtNewOriginCountry.setText(selectedFilm.getOriginCountry());
+
+
+            //Selectedbookg getCategory as parameter
+
+
+            //cbNewItemCategory.setValue(selectedFilm.getCategory());
+            //txtNewAuthorFirstName.setText(selectedFilm.getAuthors());
+            //newAuthorLastName.setText(selectedFilm.getAuthors());
+
+        }
+
+    }
 }
