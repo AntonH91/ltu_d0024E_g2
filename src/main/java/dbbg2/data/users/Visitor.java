@@ -1,7 +1,6 @@
 package dbbg2.data.users;
 
 import dbbg2.data.users.visitorcategory.VisitorCategory;
-import dbbg2.data.users.visitorcategory.VisitorCategoryType;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -25,15 +24,6 @@ public class Visitor extends User {
     public Visitor(VisitorCategory category) {
         super();
         this.category = category;
-    }
-
-    /**
-     * Creates a new user with a given category type constant
-     *
-     * @param category The new visitor category to provide the Visitor with
-     */
-    public Visitor(VisitorCategoryType category) {
-        this(VisitorCategory.getDefaultCategory(category));
     }
 
     public VisitorCategory getCategory() {
