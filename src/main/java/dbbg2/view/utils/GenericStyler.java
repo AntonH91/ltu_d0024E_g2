@@ -36,7 +36,7 @@ public class GenericStyler {
      * @throws IOException        Thrown if the FXMLLoader fails to load the FXML file
      * @throws ClassCastException Thrown if the controller in the loaded code does not implement the ChildController interface.
      */
-    public static ChildController loadSinglePane(AnchorPane anchor, String resourceToLoad) throws IOException {
+    public static ChildController loadSinglePane(AnchorPane anchor, String resourceToLoad) throws IOException, ClassCastException {
         ChildController controller;
 
         FXMLLoader loader = new FXMLLoader(GenericStyler.class.getResource(resourceToLoad));
@@ -45,5 +45,21 @@ public class GenericStyler {
         return loader.getController();
 
     }
+
+    /**
+     * Loads a single pane into an anchor without returning the controller
+     *
+     * @param anchor         The AnchorPane to be loaded
+     * @param resourceToLoad The string reference to the FXML resource to be loaded.
+     * @throws IOException Thrown if loading fails.
+     */
+    public static void loadSinglePaneWithoutController(AnchorPane anchor, String resourceToLoad) throws IOException {
+        try {
+            loadSinglePane(anchor, resourceToLoad);
+        } catch (ClassCastException ignored) {
+
+        }
+    }
+
 
 }
