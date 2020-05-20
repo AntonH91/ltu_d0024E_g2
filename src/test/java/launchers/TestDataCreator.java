@@ -1,6 +1,5 @@
 package launchers;
 
-import dbbg2.data.inventory.Author;
 import dbbg2.data.inventory.Book;
 import dbbg2.data.inventory.InventoryItem;
 import dbbg2.data.inventory.itemCategory.ItemCategory;
@@ -99,10 +98,10 @@ public class TestDataCreator {
 
         String[] keywords = {"Action", "Adventure", "Studying", "Science", "Weird", "Story", "Fantasy", "Egg", "Thriller"};
 
-        books.add(new Book("The Hobbit", categories.get(1), true, "123", new Author("JRR", "Tolkien")));
-        books.add(new Book("Harry Potter", categories.get(1), true, "123", new Author("JK", "Rowling")));
-        books.add(new Book("Emil", categories.get(1), true, "123", new Author ("Astrid", "Lindgren")));
-        books.add(new Book("Dexter", categories.get(3), true, "123", new Author ("Jeff", "Lindsay")));
+        books.add(new Book("The Hobbit", categories.get(1), true, "123", ("JRR Tolkien")));
+        books.add(new Book("Harry Potter", categories.get(1), true, "123", ("JK Rowling")));
+        books.add(new Book("Emil", categories.get(1), true, "123", ("Astrid Lindgren")));
+        books.add(new Book("Dexter", categories.get(3), true, "123", ("Jeff Lindsay")));
 
         int index = 0;
 

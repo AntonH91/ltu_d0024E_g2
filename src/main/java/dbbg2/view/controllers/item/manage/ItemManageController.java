@@ -64,6 +64,7 @@ public class ItemManageController implements Initializable {
     public TextField txtFilmDirector;
 
     public ComboBox cbAgeLimits;
+    public ChoiceBox cbTestAgeLimit;
 
 
     public void handleAddBook(javafx.event.ActionEvent actionEvent) {
@@ -72,7 +73,7 @@ public class ItemManageController implements Initializable {
 
 
         //TODO add two text fields for first and last name
-        books.add(new Book(txtAbbBookTitle.getText(), (ItemCategory) ddBookCategory.getSelectionModel().getSelectedItem(), true, txtBookIsbn.getText(), new Author (txtBookAuthor.getText(), "")));
+        books.add(new Book(txtAbbBookTitle.getText(), (ItemCategory) ddBookCategory.getSelectionModel().getSelectedItem(), true, txtBookIsbn.getText(), txtBookAuthor.getText()));
 
         if(txtAbbBookTitle.getText().isEmpty() || ddBookCategory.getSelectionModel().isEmpty()){
 
@@ -117,7 +118,7 @@ public class ItemManageController implements Initializable {
         public void handleAddFilm(ActionEvent actionEvent) {
             List<Film> film = new ArrayList<>();
 
-            film.add(new Film(txtAbbFilmTitle.getText(), FILM, true, txtFilmDirector.getText(), cbAgeLimits.getSelectionModel().getSelectedIndex(), txtOriginCountry.getText()));
+            film.add(new Film(txtAbbFilmTitle.getText(), ItemCategory.getDefaultItemCategory(FILM), true, txtFilmDirector.getText(), cbAgeLimits.getSelectionModel().getSelectedIndex(), txtOriginCountry.getText()));
 
             if(txtAbbFilmTitle.getText().isEmpty() || cbAgeLimits.getSelectionModel().isEmpty()){
 
@@ -167,12 +168,14 @@ public class ItemManageController implements Initializable {
         //Set choices for age limits when adding film
         cbAgeLimits.getItems().addAll(17, 18, 20);
 
-
         tcBookTitle.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("title"));
         tcInventoryId.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("inventoryId"));
 
         tcFilmTitle.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("title"));
-        tcOriginCountry.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("title"));
+        tcOriginCountry.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("originCountry"));
+        tcAgeLimit.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("ageLimit"));
+
+
 
 
     }
@@ -180,6 +183,11 @@ public class ItemManageController implements Initializable {
 
     public void handleFindBook(ActionEvent actionEvent) {
         tblListBooks.setItems(FXCollections.observableArrayList(InventoryManager.getBooks(txtRemoveTitle.getText(), txtRemoveInventoryId.getText())));
+
+    }
+
+    public void handleSearchFilm(ActionEvent actionEvent) {
+        tblFilmsFound.setItems(FXCollections.observableArrayList(InventoryManager.getFilms(txtFilmTitleRemove.getText())));
 
     }
 
@@ -224,10 +232,7 @@ public class ItemManageController implements Initializable {
     public void handleRemoveFilm(ActionEvent actionEvent) {
     }
 
-    public void handleSearchFilm(ActionEvent actionEvent) {
-        tblFilmsFound.setItems(FXCollections.observableArrayList(InventoryManager.getFilms(txtFilmTitleRemove.getText())));
 
-    }
 
     public void handleClickedFilmRemove(MouseEvent mouseEvent) {
         if(tblFilmsFound.getSelectionModel().getSelectedItem() !=null){

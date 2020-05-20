@@ -16,7 +16,7 @@
                           <columns>
                             <TableColumn fx:id="clBookTitle" prefWidth="75.0" text="Book title" />
                             <TableColumn fx:id="clBookId" prefWidth="75.0" text="Book ID" />
-                              <TableColumn fx:id="clAuthorLastName" prefWidth="75.0" text="Author last name" />
+                              <TableColumn fx:id="clAuthorLastName" prefWidth="106.0" text="Author last name" />
                           </columns>
                         </TableView>
                         <TextField fx:id="txtSearchTitle" layoutX="14.0" layoutY="14.0" promptText="Book title" />

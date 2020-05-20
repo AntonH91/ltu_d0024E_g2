@@ -2,7 +2,8 @@ package dbbg2.view.controllers.item.Edit;
 
 import dbbg2.data.inventory.*;
 import dbbg2.data.inventory.itemCategory.ItemCategory;
-import dbbg2.data.users.visitorcategory.VisitorCategory;
+import dbbg2.utils.persistence.JpaPersistence;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,7 +13,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.util.*;
 
 import static dbbg2.data.inventory.itemCategory.ItemCategoryType.*;
@@ -35,6 +39,7 @@ public class EditItemController implements Initializable {
     public TableColumn clAuthorLastName;
 
 
+
     protected BookController bookController;
 
     @Override
@@ -48,7 +53,13 @@ public void initialize(URL location, ResourceBundle resources) {
         cbNewItemCategory.getItems().addAll(ItemCategory.getDefaultItemCategory(OTHER_BOOKS), ItemCategory.getDefaultItemCategory(FILM), ItemCategory.getDefaultItemCategory(REFERENCE_LITERATURE));
 
 
-        clAuthorLastName.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("lastName"));
+        clAuthorLastName.setCellValueFactory(new PropertyValueFactory<Book, String>("lastName"));
+        clAuthorLastName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
+            @Override
+            public ObservableValue call(TableColumn.CellDataFeatures param) {
+                return null;
+            }
+        });
 
 
         cbNewItemCategory.setCellFactory(new Callback<ListView<ItemCategory>, ListCell<ItemCategory>>() {
@@ -73,8 +84,51 @@ public void initialize(URL location, ResourceBundle resources) {
         }
 
     public void handleMakeChanges (ActionEvent actionEvent) {
-        saveBook();
+
+        //bookController.ammendInformationBook(txtNewBookTitle.getText(), txtNewIsbn.getText());
+
+        //saveBook();
+
+        //updateBook(txtNewBookTitle.getText(), txtNewIsbn.getText());
+
+        EntityManager em = JpaPersistence.getEntityManager();
+
+        EntityTransaction entityTransaction = null;
+
+        try {
+            entityTransaction = em.getTransaction();
+            entityTransaction.begin();
+
+            Book book = em.find(Book.class, Integer.parseInt(txtNewIsbn.getText()));
+            BookController bc = new BookController();
+            bc.setBook(book);
+            bc.amendInformationBook(txtNewBookTitle.getText(), txtNewIsbn.getText());
+
+            entityTransaction.commit();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("The book has been updated");
+            alert.showAndWait();
+
+
+            return;
+
+
+        } catch (RuntimeException e) {
+            if(entityTransaction.isActive())
+                entityTransaction.rollback();
+            throw e;
+        }
+
     }
+
+
+
+
+        //updateBook(txtNewBookTitle.getText(), txtNewIsbn.getText());
+
+
 
 
     public void handleFindBook(ActionEvent actionEvent) {
@@ -106,17 +160,31 @@ public void initialize(URL location, ResourceBundle resources) {
         //TODO fix author split
         //List<String> authors = new ArrayList<>(Arrays.asList(txtAreaAuthor.getText().split("\n")));
 
-        List<Book> book = new ArrayList<>();
+        //bookController.amendInformationBook(txtNewBookTitle.getText(), txtNewIsbn.getText());
+
+        //updateBook();
+
+        /*Set<Book> book = new HashSet<>();
+
         bookController.ammendInformationBook(txtNewBookTitle.getText(),
-                (ItemCategory) cbNewItemCategory.getSelectionModel().getSelectedItem(),
+                //(ItemCategory) cbNewItemCategory.getSelectionModel().getSelectedItem(),
                 txtNewIsbn.getText());
 
-        bookController.saveChangesBook();
+        bookController.saveChangesBook();*/
     }
 
     public void saveAuthor(){
         bookController.ammendAuthorInformation(txtNewAuthorFirstName.getText(), txtNewAuthorFirstName.getText());
         bookController.saveChangesAuthor();
     }
+
+    /*public void updateBook(String title, String isbn){
+
+        //bookController.amendInformationBook(title, isbn);
+        bookController.saveChanges();
+
+
+
+    }*/
 
 }

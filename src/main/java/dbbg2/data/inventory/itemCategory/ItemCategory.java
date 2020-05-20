@@ -47,7 +47,7 @@ public class ItemCategory {
         ItemCategory ic;
         switch (category) {
             case FILM:
-                ic = new ItemCategory("film", 7, true);
+                ic = new ItemCategory("Film", 7, true);
                 break;
             case JOURNAL:
                 ic = new ItemCategory("Journal", 0, false);

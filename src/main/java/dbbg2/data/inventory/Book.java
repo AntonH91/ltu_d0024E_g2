@@ -13,7 +13,7 @@ public class Book extends InventoryItem {
 
 
     @ManyToMany(mappedBy = "books", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    private Set<Author> authors = new HashSet<>();
+    private String authors = "";
 
     @Basic(optional = false)
     String isbn;
@@ -22,26 +22,24 @@ public class Book extends InventoryItem {
         super();
     }
 
-    public Book(String title, ItemCategoryType category, boolean isAvailable, String isbn, Author authors){
+    public Book(String title, ItemCategoryType category, boolean isAvailable, String isbn, String authors){
         this(title, ItemCategory.getDefaultItemCategory(category), isAvailable, isbn, authors);
     }
 
-    public Book(String title, ItemCategory category, boolean isAvailable, String isbn, Author authors) {
+    public Book(String title, ItemCategory category, boolean isAvailable, String isbn, String authors) {
         super(title, category, isAvailable);
         this.isbn = isbn;
-        addAuthor(authors);
     }
 
 // Setters
 
-    public void addAuthor(Author author){
-        authors.add(author);
-        author.addBook(this);
+
+    public String getAuthors() {
+        return authors;
     }
 
-    public void removeAuthor(Author author){
-        authors.remove(author);
-        author.removeBook(this);
+    public void setAuthors(String authors) {
+        this.authors = authors;
     }
 
     public void setIsbn(String isbn){
@@ -54,11 +52,6 @@ public class Book extends InventoryItem {
         return isbn;
     }
 
-
-    public Set<Author> getAuthors() {
-        Collections.unmodifiableSet(authors);
-        return Collections.unmodifiableSet(authors);
-    }
 
 
     //Change availibility of book
@@ -78,7 +71,6 @@ public class Book extends InventoryItem {
     public void addBookToDb(String title, ItemCategoryType category, boolean isAvailable, String isbn, String author){
 
     }
-
 
 
 }

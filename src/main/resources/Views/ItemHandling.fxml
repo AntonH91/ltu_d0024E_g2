@@ -70,6 +70,7 @@
                                     <Button layoutX="183.0" layoutY="263.0" mnemonicParsing="false" onAction="#handleAddFilm" text="Add" />
                               <ComboBox fx:id="cbAgeLimits" layoutX="22.0" layoutY="157.0" prefWidth="150.0" />
                               <Text layoutX="22.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age limit" />
+                              <ChoiceBox fx:id="cbTestAgeLimit" layoutX="22.0" layoutY="229.0" prefWidth="150.0" />
                                 </children>
                             </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">

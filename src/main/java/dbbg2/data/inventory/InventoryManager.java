@@ -1,5 +1,6 @@
 package dbbg2.data.inventory;
 
+import dbbg2.data.users.User;
 import dbbg2.utils.persistence.JpaPersistence;
 
 import javax.persistence.EntityManager;
@@ -65,16 +66,6 @@ public class InventoryManager {
         q.setParameter("inventoryId", inventoryId);
         //q.setParameter("category", ItemCategory.getDefaultItemCategory(category).getItemCategoryTitle());
 
-        return q.getResultList();
-    }
-
-    public static List<Film> getFilmz(String title) {
-        EntityManager em = JpaPersistence.getEntityManager();
-        TypedQuery<Film> q = em.createQuery("select f from Film f " +
-                        "WHERE (f.title = :title or :title = '') "
-                , Film.class);
-
-        q.setParameter("title", title);
         return q.getResultList();
     }
 
@@ -184,6 +175,5 @@ public class InventoryManager {
         q.executeUpdate();
 
     }*/
-
 
 }

@@ -18,7 +18,6 @@
         <class>dbbg2.data.loans.LoanCopies</class>
         <class>dbbg2.data.loans.Loan</class>
         <class>dbbg2.data.inventory.Keyword</class>
-        <class>dbbg2.data.inventory.Author</class>
 
         <class>dbbg2.data.users.visitorcategory.VisitorCategory</class>
         <properties>
