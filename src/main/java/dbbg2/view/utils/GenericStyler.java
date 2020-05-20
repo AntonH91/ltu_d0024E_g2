@@ -52,11 +52,11 @@ public class GenericStyler {
         } else {
             content = new Pane();
             content.getChildren().setAll((Node) rootElement);
-            content.autosize();
+
         }
-
+        content.autosize();
         thePane.getChildren().setAll(content);
-
+        thePane.autosize();
         return loader.getController();
 
     }
