@@ -5,6 +5,7 @@ import dbbg2.data.users.User;
 import dbbg2.data.users.UserManager;
 import dbbg2.data.users.Visitor;
 import dbbg2.data.users.visitorcategory.VisitorCategory;
+import dbbg2.utils.AuthenticationManager;
 import dbbg2.view.controllers.user.details.UserDetailController;
 import dbbg2.view.controllers.user.exceptions.UnknownUserTypeException;
 import dbbg2.view.utils.nested.ChildController;
@@ -48,8 +49,13 @@ public class UserOverviewController extends ChildController implements Initializ
 
 
     public void handleSearchButtonClick(ActionEvent actionEvent) {
-        // TODO Make it so that only Employees can search users
-        tblUserList.setItems(FXCollections.observableArrayList(UserManager.getUsers(txtUserId.getText(), txtFirstName.getText(), txtLastName.getText(), txtEmail.getText())));
+
+        if (AuthenticationManager.getAuthManager().userHasEmployeeAccess()) {
+            tblUserList.setItems(FXCollections.observableArrayList(UserManager.getUsers(txtUserId.getText(), txtFirstName.getText(), txtLastName.getText(), txtEmail.getText())));
+
+        } else {
+            new Alert(Alert.AlertType.WARNING, "You do not have sufficient access to search for users!", ButtonType.OK).showAndWait();
+        }
 
 
     }
