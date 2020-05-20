@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../Stylesheets/GenericStyles.css"
             xmlns="http://javafx.com/javafx/10.0.2-internal"
-            fx:controller="dbbg2.view.user.details.UserDetailController">
+            fx:controller="dbbg2.view.controllers.user.details.UserDetailController">
     <BorderPane layoutX="300.0" layoutY="57.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                 AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <bottom>

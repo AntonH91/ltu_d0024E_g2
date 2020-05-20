@@ -1,17 +1,16 @@
-package dbbg2.view.user.details;
+package dbbg2.view.controllers.user.details;
 
 import dbbg2.controllers.user.UserController;
 import dbbg2.data.users.Employee;
 import dbbg2.data.users.User;
 import dbbg2.data.users.UserManager;
 import dbbg2.data.users.Visitor;
-import dbbg2.view.user.exceptions.UnknownUserTypeException;
-import dbbg2.view.utils.GenericStyler;
-import dbbg2.view.utils.nested.ChildController;
-import dbbg2.view.utils.nested.ParentController;
+import dbbg2.view.controllers.user.exceptions.UnknownUserTypeException;
+import dbbg2.view.controllers.utils.GenericStyler;
+import dbbg2.view.controllers.utils.nested.ChildController;
+import dbbg2.view.controllers.utils.nested.ParentController;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -58,10 +57,9 @@ public class UserDetailController extends ChildController implements Initializab
      */
     public void loadChildPane(String resourceUrl) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(resourceUrl));
-            childPane.getChildren().setAll((AnchorPane) loader.load());
 
-            childController = loader.getController();
+            childController = (UserChildController) GenericStyler.loadSinglePane(childPane, resourceUrl);
+
             childController.setParentController(this);
         } catch (IOException e) {
             Logger.getLogger("").log(Level.SEVERE, "IOException triggered when loading Child Pane", e);
@@ -135,7 +133,7 @@ public class UserDetailController extends ChildController implements Initializab
         childController.initializeUserController(user);
         userController = childController.getDataController();
         refreshFields();
-        childPane.getScene().getWindow().sizeToScene();
+        resizeSelf();
 
         handleValidationChanges();
     }
@@ -164,12 +162,17 @@ public class UserDetailController extends ChildController implements Initializab
     }
 
     @Override
-    public void notifyRequestReturn() {
+    public void notifyRequestReturn(ChildController theChild) {
         // Do nothing - we will not return from the childform
     }
 
     @Override
-    public void notifyUpdate() {
+    public void notifyResizeRequest(ChildController theChild) {
+        resizeSelf();
+    }
+
+    @Override
+    public void notifyUpdate(ChildController theChild) {
         // The child-form has changed - re-run validation
         handleValidationChanges();
     }
@@ -292,6 +295,11 @@ public class UserDetailController extends ChildController implements Initializab
         return pst;
     }
 
+    /**
+     * Cancels the edit and returns the values to what is stored on the User object
+     *
+     * @param actionEvent the triggering event
+     */
     public void handleCancelButtonClick(ActionEvent actionEvent) {
         refreshFields();
     }
@@ -309,6 +317,8 @@ public class UserDetailController extends ChildController implements Initializab
      * Called when the delete button is pressed.
      */
     public void handleDeleteButtonClick(ActionEvent actionEvent) {
+        // TODO Make this button only show for Employees
+        // TODO Make managers the only Employees that can delete other Employees
         Optional<ButtonType> o = new Alert(Alert.AlertType.CONFIRMATION, "Delete the current user?", ButtonType.YES, ButtonType.NO).showAndWait();
 
         if (o.isPresent() && o.get() == ButtonType.YES) {
@@ -331,6 +341,9 @@ public class UserDetailController extends ChildController implements Initializab
 
     }
 
+    /**
+     * Binds listeners to fields that are subject to dynamic validation
+     */
     private void bindListeners() {
 
         // Define the new change listener for the text fields
@@ -347,6 +360,16 @@ public class UserDetailController extends ChildController implements Initializab
 
     }
 
+
+    public void resizeSelf() {
+        childPane.autosize();
+        childPane.getScene().getWindow().sizeToScene();
+        triggerResizeRequest();
+    }
+
+    /**
+     * Enum that defines how password validation should behave
+     */
     public enum PasswordStatus {
         OK,
         PASSWORD_REQUIRED,

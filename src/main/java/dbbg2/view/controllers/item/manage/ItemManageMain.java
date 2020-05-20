@@ -1,5 +1,5 @@
 
-package dbbg2.view.item.manage;
+package dbbg2.view.controllers.item.manage;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

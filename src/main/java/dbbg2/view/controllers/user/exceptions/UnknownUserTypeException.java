@@ -1,4 +1,4 @@
-package dbbg2.view.user.exceptions;
+package dbbg2.view.controllers.user.exceptions;
 
 public class UnknownUserTypeException extends Exception {
     public UnknownUserTypeException(String message) {

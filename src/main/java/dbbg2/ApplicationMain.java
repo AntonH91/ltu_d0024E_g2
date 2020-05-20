@@ -1,7 +1,6 @@
 package dbbg2;
 
 
-import dbbg2.view.user.details.UserDetailController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,15 +18,10 @@ public class ApplicationMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/User/UserOverview.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/Main/MainMenuView.fxml"));
 
 
         Parent root = loader.load();
-        /*
-        UserDetailController udc = loader.getController();
-        udc.loadUser("jgeo7710");
-        //udc.loadUser(new Visitor());
-        */
         Scene scene = new Scene(root);
 
         primaryStage.setTitle("Library DBB");

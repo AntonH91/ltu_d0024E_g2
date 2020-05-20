@@ -1,4 +1,4 @@
-package dbbg2.view.utils.nested;
+package dbbg2.view.controllers.utils.nested;
 
 public class ChildController {
     private ParentController parentController;
@@ -26,13 +26,20 @@ public class ChildController {
      */
     protected void triggerParentUpdate() {
         if (parentController != null) {
-            parentController.notifyUpdate();
+            parentController.notifyUpdate(this);
         }
     }
 
     protected void triggerReturnRequest() {
         if (parentController != null) {
-            parentController.notifyRequestReturn();
+            parentController.notifyRequestReturn(this);
         }
     }
+
+    protected void triggerResizeRequest() {
+        if (parentController != null) {
+            parentController.notifyResizeRequest(this);
+        }
+    }
+
 }

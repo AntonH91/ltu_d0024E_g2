@@ -1,13 +1,14 @@
-package dbbg2.view.user;
+package dbbg2.view.controllers.user;
 
 import dbbg2.data.users.Employee;
 import dbbg2.data.users.User;
 import dbbg2.data.users.UserManager;
 import dbbg2.data.users.Visitor;
 import dbbg2.data.users.visitorcategory.VisitorCategory;
-import dbbg2.view.user.details.UserDetailController;
-import dbbg2.view.user.exceptions.UnknownUserTypeException;
-import dbbg2.view.utils.nested.ParentController;
+import dbbg2.view.controllers.user.details.UserDetailController;
+import dbbg2.view.controllers.user.exceptions.UnknownUserTypeException;
+import dbbg2.view.controllers.utils.nested.ChildController;
+import dbbg2.view.controllers.utils.nested.ParentController;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -25,7 +26,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class UserOverviewController implements Initializable, ParentController {
+public class UserOverviewController extends ChildController implements Initializable, ParentController {
     public TextField txtUserId;
     public TextField txtFirstName;
     public TextField txtLastName;
@@ -45,6 +46,7 @@ public class UserOverviewController implements Initializable, ParentController {
     public ChoiceBox<VisitorCategory> cboCategoryFilter;
 
     public void handleSearchButtonClick(ActionEvent actionEvent) {
+        // TODO Make it so that only Employees can search users
         tblUserList.setItems(FXCollections.observableArrayList(UserManager.getUsers(txtUserId.getText(), txtFirstName.getText(), txtLastName.getText(), txtEmail.getText())));
 
 
@@ -129,6 +131,7 @@ public class UserOverviewController implements Initializable, ParentController {
      */
     public void handleNewUserButtonClick(ActionEvent actionEvent) {
 
+        // TODO Make it so that only Employees can create new users
         User newUser = getUserFromDialog();
         if (newUser != null) {
 
@@ -149,6 +152,7 @@ public class UserOverviewController implements Initializable, ParentController {
      * @return The newly created User object, or null if none created.
      */
     private User getUserFromDialog() {
+        // TODO Make it so that only Manager-level employees can create new Employees
         String[] choices = {"Visitor", "Employee"};
 
         ChoiceDialog<String> cd = new ChoiceDialog<>(choices[0], Arrays.asList(choices));
@@ -171,6 +175,9 @@ public class UserOverviewController implements Initializable, ParentController {
     }
 
 
+    /**
+     * Binds the change listeners in this controller
+     */
     private void bindListeners() {
         tblUserList.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> btnEditUser.setDisable(newValue == null)
@@ -180,19 +187,31 @@ public class UserOverviewController implements Initializable, ParentController {
     }
 
     @Override
-    public void notifyRequestReturn() {
+    public void notifyRequestReturn(ChildController theChild) {
         vbSearchControls.setVisible(true);
 
         acUserDetail.setVisible(false);
         acUserDetail.getChildren().clear();
+        resizeTheView();
+    }
+
+    /**
+     * Resizes the window and notifies the parent to do the same
+     */
+    private void resizeTheView() {
         acUserDetail.autosize();
-        // TODO Make auto-sizing work correctly
         vbSearchControls.autosize();
         vbSearchControls.getScene().getWindow().sizeToScene();
+        triggerParentUpdate();
     }
 
     @Override
-    public void notifyUpdate() {
+    public void notifyResizeRequest(ChildController theChild) {
+        resizeTheView();
+    }
+
+    @Override
+    public void notifyUpdate(ChildController theChild) {
         // No need to handle updates from the child form
     }
 
