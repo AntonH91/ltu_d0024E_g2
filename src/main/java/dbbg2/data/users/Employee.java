@@ -2,8 +2,6 @@ package dbbg2.data.users;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 
 /**
  * @author Anton Högelin (anthge-7)
@@ -37,7 +35,16 @@ public class Employee extends User {
         return salary;
     }
 
-    public void setSalary(double salary) {
+    /**
+     * Sets the new salary for the employee
+     *
+     * @param salary The new salary
+     * @throws IllegalArgumentException Thrown if the new salary is < 0
+     */
+    public void setSalary(double salary) throws IllegalArgumentException {
+        if (salary < 0) {
+            throw new IllegalArgumentException("Salary cannot be < 0");
+        }
         this.salary = salary;
     }
 

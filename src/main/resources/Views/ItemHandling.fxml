@@ -3,28 +3,39 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="483.0" prefWidth="648.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dbbg2.view.item.manage.ItemManageController">
-  <tabs>
-    <Tab closable="false" text="Manage Books">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <SplitPane dividerPositions="0.49079754601226994" layoutX="-1.0" layoutY="-3.0" prefHeight="459.0" prefWidth="654.0">
-                    <items>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                           <children>
-                              <Text layoutX="22.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add books">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font></Text>
-                              <TextField fx:id="txtAbbBookTitle" layoutX="22.0" layoutY="80.0" promptText="Book title" />
-                              <TextField fx:id="txtBookIsbn" layoutX="22.0" layoutY="163.0" promptText="ISBN" />
-                              <TextField fx:id="txtBookAuthor" layoutX="22.0" layoutY="197.0" promptText="Author" />
-                              <ChoiceBox fx:id="ddBookCategory" layoutX="22.0" layoutY="127.0" prefWidth="150.0" />
-                              <Text layoutX="23.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Book category" />
-                              <Button layoutX="183.0" layoutY="263.0" mnemonicParsing="false" onAction="#handleAddBook" text="Add" />
-                           </children>
+<TabPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+         minWidth="-Infinity" prefHeight="483.0" prefWidth="648.0" tabClosingPolicy="UNAVAILABLE"
+         xmlns="http://javafx.com/javafx/10.0.2-internal"
+         fx:controller="dbbg2.view.controllers.item.manage.ItemManageController">
+    <tabs>
+        <Tab closable="false" text="Manage Books">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <SplitPane dividerPositions="0.49079754601226994" layoutX="-1.0" layoutY="-3.0"
+                                   prefHeight="459.0" prefWidth="654.0">
+                            <items>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                    <children>
+                                        <Text layoutX="22.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="Add books">
+                                            <font>
+                                                <Font size="18.0"/>
+                                            </font>
+                                        </Text>
+                                        <TextField fx:id="txtAbbBookTitle" layoutX="22.0" layoutY="80.0"
+                                                   promptText="Book title"/>
+                                        <TextField fx:id="txtBookIsbn" layoutX="22.0" layoutY="163.0"
+                                                   promptText="ISBN"/>
+                                        <TextField fx:id="txtBookAuthor" layoutX="22.0" layoutY="197.0"
+                                                   promptText="Author"/>
+                                        <ChoiceBox fx:id="ddBookCategory" layoutX="22.0" layoutY="127.0"
+                                                   prefWidth="150.0"/>
+                                        <Text layoutX="23.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="Book category"/>
+                                        <Button layoutX="183.0" layoutY="263.0" mnemonicParsing="false"
+                                                onAction="#handleAddBook" text="Add"/>
+                                    </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                            <children>

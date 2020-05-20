@@ -9,6 +9,9 @@ import javax.persistence.*;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class VisitorCategory {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long uid;
+
     @Basic(optional = false)
     private String categoryTitle = "";
 
