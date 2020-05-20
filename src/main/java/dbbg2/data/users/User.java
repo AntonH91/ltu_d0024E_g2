@@ -169,16 +169,6 @@ public abstract class User {
         this.userId = temp.toLowerCase();
     }
 
-    /*
-    //@PrePersist
-    private void onPrePersist() {
-        if (this.userId.equals("")) {
-            createUserId();
-        }
-
-    }
-    */
-
     /**
      * Triggers the creation of a new User ID, if necessary
      * @return True if a new User ID was created
