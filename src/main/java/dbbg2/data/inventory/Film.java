@@ -16,7 +16,9 @@ public class Film extends InventoryItem {
     @Basic(optional = false)
     int ageLimit;
     String originCountry;
-    ArrayList<String> actors = new ArrayList<String>();
+
+    private String actors = "";
+    //ArrayList<String> actors = new ArrayList<String>();
 
 
     public Film() {
@@ -34,6 +36,14 @@ public class Film extends InventoryItem {
         this.originCountry = originCountry;
     }
 
+    public Film(String title, ItemCategory category, boolean isAvailable, String director, int ageLimit, String originCountry, String actors){
+        super (title, category, isAvailable);
+        this.director = director;
+        this.ageLimit = ageLimit;
+        this.originCountry = originCountry;
+        this.actors = actors;
+    }
+
 
 
 
@@ -49,9 +59,9 @@ public class Film extends InventoryItem {
         this.originCountry = originCountry;
     }
 
-
-
-
+    public void setActors(String actors) {
+        this.actors = actors;
+    }
 
 
 // Getters
@@ -68,7 +78,7 @@ public class Film extends InventoryItem {
         return originCountry;
     }
 
-    public ArrayList<String> getActors() {
+    public String getActors() {
         return actors;
     }
 
