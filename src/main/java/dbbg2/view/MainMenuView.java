@@ -23,6 +23,8 @@ public class MainMenuView implements Initializable {
     public AnchorPane achInventoryPane;
     public AnchorPane achLoanPane;
 
+    public AnchorPane achMainMenuRoot;
+
     public void handleLoginButtonClick(ActionEvent actionEvent) {
         // TODO Bring up password prompt to log in a new user
     }
@@ -53,11 +55,15 @@ public class MainMenuView implements Initializable {
      * @throws IOException Thrown if the loading fails for any reason.
      */
     private void loadSubMenus() throws IOException {
-        GenericStyler.loadSinglePane(achUsersPane, "/Views/User/UserOverview.fxml");
-        GenericStyler.loadSinglePane(achInventoryPane, "/Views/ItemHandling.fxml");
-        GenericStyler.loadSinglePane(achLoanPane, "/Views/Overviewloansview.fxml");
+        GenericStyler.loadSinglePaneWithoutController(achUsersPane, "/Views/User/UserOverview.fxml");
+        GenericStyler.loadSinglePaneWithoutController(achInventoryPane, "/Views/ItemHandling.fxml");
+        GenericStyler.loadSinglePaneWithoutController(achLoanPane, "/Views/Overviewloansview.fxml");
 
 
+    }
+
+    private void autoSizeWindow() {
+        achMainMenuRoot.getScene().getWindow().sizeToScene();
     }
 
 

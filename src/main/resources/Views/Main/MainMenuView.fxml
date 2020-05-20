@@ -3,11 +3,11 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="400.0" prefWidth="600.0"
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="achMainMenuRoot" prefHeight="400.0" prefWidth="600.0"
             xmlns="http://javafx.com/javafx/10.0.2-internal" fx:controller="dbbg2.view.MainMenuView">
-    <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <FlowPane alignment="TOP_RIGHT" prefHeight="200.0" prefWidth="200.0">
+    <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+          AnchorPane.topAnchor="0.0">
+        <FlowPane alignment="TOP_RIGHT" maxHeight="-Infinity" minHeight="40.0" prefHeight="40.0">
             <padding>
                 <Insets top="10.0"/>
             </padding>
@@ -30,14 +30,13 @@
         </FlowPane>
         <TabPane prefHeight="493.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
             <Tab text="Users">
-                <AnchorPane fx:id="achUsersPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                <AnchorPane fx:id="achUsersPane" minHeight="0.0" minWidth="0.0"/>
             </Tab>
             <Tab text="Inventory">
-                <AnchorPane fx:id="achInventoryPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0"
-                            prefWidth="200.0"/>
+                <AnchorPane fx:id="achInventoryPane" minHeight="0.0" minWidth="0.0"/>
             </Tab>
             <Tab text="Loans">
-                <AnchorPane fx:id="achLoanPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                <AnchorPane fx:id="achLoanPane" minHeight="0.0" minWidth="0.0"/>
             </Tab>
         </TabPane>
     </VBox>
