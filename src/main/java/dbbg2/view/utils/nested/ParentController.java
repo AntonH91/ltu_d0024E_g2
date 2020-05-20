@@ -7,6 +7,12 @@ public interface ParentController {
      */
     void notifyRequestReturn();
 
+
+    /**
+     * <p>Called by the child when it needs to change size, so that the parent can resize as well.</p>
+     */
+    void notifyResizeRequest();
+
     /**
      * <p>Called by the child controller to notify the parent of an update.</p>
      */

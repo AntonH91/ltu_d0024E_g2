@@ -35,4 +35,11 @@ public class ChildController {
             parentController.notifyRequestReturn();
         }
     }
+
+    protected void triggerResizeRequest() {
+        if (parentController != null) {
+            parentController.notifyResizeRequest();
+        }
+    }
+
 }
