@@ -4,6 +4,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.eclipse.persistence.annotations.Index;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity(name = "Users")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -131,6 +132,7 @@ public abstract class User {
         return "User";
     }
 
+    /*
     @Override
     public boolean equals(Object obj) {
         boolean equals = false;
@@ -140,7 +142,29 @@ public abstract class User {
         }
         return equals;
     }
+    */
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return uid == user.uid &&
+                Objects.equals(userId, user.userId) &&
+                personNr.equals(user.personNr) &&
+                firstName.equals(user.firstName) &&
+                lastName.equals(user.lastName) &&
+                Objects.equals(streetAddress, user.streetAddress) &&
+                Objects.equals(postCode, user.postCode) &&
+                Objects.equals(postArea, user.postArea) &&
+                Objects.equals(phoneNr, user.phoneNr) &&
+                email.equals(user.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(uid, userId, personNr, firstName, lastName, streetAddress, postCode, postArea, phoneNr, email);
+    }
 
     /* ---------------------------
             Private helpers
