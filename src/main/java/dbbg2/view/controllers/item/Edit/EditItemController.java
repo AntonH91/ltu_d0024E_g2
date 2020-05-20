@@ -50,7 +50,7 @@ public void initialize(URL location, ResourceBundle resources) {
 
 
 
-        cbNewItemCategory.getItems().addAll(ItemCategory.getDefaultItemCategory(OTHER_BOOKS), ItemCategory.getDefaultItemCategory(FILM), ItemCategory.getDefaultItemCategory(REFERENCE_LITERATURE));
+
 
 
         clAuthorLastName.setCellValueFactory(new PropertyValueFactory<Book, String>("lastName"));
@@ -81,6 +81,13 @@ public void initialize(URL location, ResourceBundle resources) {
 
         cbNewItemCategory.setButtonCell(cbNewItemCategory.getCellFactory().call(null));
 
+        ArrayList<ItemCategory> catArray = new ArrayList<>();
+        catArray.add(ItemCategory.getDefaultItemCategory(OTHER_BOOKS));
+        catArray.add(ItemCategory.getDefaultItemCategory(JOURNAL));
+
+
+        cbNewItemCategory.setItems(FXCollections.observableList(catArray));
+        //cbNewItemCategory.getItems().addAll(ItemCategory.getDefaultItemCategory(OTHER_BOOKS), ItemCategory.getDefaultItemCategory(FILM), ItemCategory.getDefaultItemCategory(REFERENCE_LITERATURE));
         }
 
     public void handleMakeChanges (ActionEvent actionEvent) {
@@ -102,7 +109,7 @@ public void initialize(URL location, ResourceBundle resources) {
             Book book = em.find(Book.class, Integer.parseInt(txtNewIsbn.getText()));
             BookController bc = new BookController();
             bc.setBook(book);
-            bc.amendInformationBook(txtNewBookTitle.getText(), txtNewIsbn.getText());
+            bc.amendInformationBook(txtNewBookTitle.getText(), txtNewIsbn.getText(), newAuthorLastName.getText());
 
             entityTransaction.commit();
 
@@ -151,6 +158,7 @@ public void initialize(URL location, ResourceBundle resources) {
             txtNewIsbn.setText(String.valueOf(selectedBook.getInvId()));
             cbNewItemCategory.setValue(selectedBook.getCategory());
             //txtNewAuthorFirstName.setText(selectedBook.getAuthors());
+            newAuthorLastName.setText(selectedBook.getAuthors());
 
         }
 

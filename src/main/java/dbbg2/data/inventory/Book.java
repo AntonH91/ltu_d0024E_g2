@@ -27,6 +27,7 @@ public class Book extends InventoryItem {
     public Book(String title, ItemCategory category, boolean isAvailable, String isbn, String authors) {
         super(title, category, isAvailable);
         this.isbn = isbn;
+        this.authors = authors;
     }
 
 // Setters

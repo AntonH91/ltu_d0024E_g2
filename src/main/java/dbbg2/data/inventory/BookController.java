@@ -20,10 +20,11 @@ public class BookController extends Book {
     }
 
 
-    public void amendInformationBook(String title, String isbn){
+    public void amendInformationBook(String title, String isbn, String authors){
         changeBook.setTitle(title);
         //subjectToChange.setCategory(category);
         changeBook.setIsbn(isbn);
+        changeBook.setAuthors(authors);
 
         //saveChangesBook();
 
