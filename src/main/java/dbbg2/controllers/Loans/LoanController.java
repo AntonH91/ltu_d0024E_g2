@@ -32,17 +32,23 @@ import javax.persistence.NoResultException;
 import java.awt.*;
 import java.util.List;
 
-public class LoanController implements EventHandler<ActionEvent> {
+public class LoanController  {
     private Visitor client;
     private Loan loan;
     public TextField txtBarcode;
     public Button addBarcode;
 
 
-    public void handleAddClick() {
-
-
+    public void handleAddClick(ActionEvent actionEvent) {
+        try {
+               getBookWithRightBarCode(txtBarcode.getText());
+        } catch (ItemNotLendableException e) {
+            e.printStackTrace();
+        }
     }
+
+
+
 
 
 
