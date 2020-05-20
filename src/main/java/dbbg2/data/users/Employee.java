@@ -18,6 +18,11 @@ public class Employee extends User {
         super();
     }
 
+    public Employee(String userNameOverride) {
+        super(userNameOverride);
+    }
+
+
     @Override
     public String getUserType() {
         return "Employee";

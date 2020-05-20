@@ -57,6 +57,15 @@ public class TestDataCreator {
 
         List<VisitorCategory> categories = em.createQuery("SELECT vc FROM VisitorCategory vc", VisitorCategory.class).getResultList();
 
+        Employee admin = new Employee("admin");
+        admin.setFirstName("Admin");
+        admin.setLastName("Adminsson");
+        admin.setPersonNr("007");
+        admin.setEmail("admin@example.com");
+        admin.setPassword("admin");
+        UserManager.persistUser(admin, em);
+
+
         Employee e = new Employee();
         e.setFirstName("Jeff");
         e.setLastName("Geofferson");

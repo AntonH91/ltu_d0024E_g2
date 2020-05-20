@@ -42,6 +42,11 @@ public abstract class User {
     public User() {
     }
 
+    public User(String userNameOverride) {
+        super();
+        this.userId = userNameOverride;
+    }
+
     /* ---------------------------
         GETTERS / SETTERS
       --------------------------- */
