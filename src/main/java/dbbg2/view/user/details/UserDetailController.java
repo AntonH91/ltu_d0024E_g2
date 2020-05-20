@@ -11,7 +11,6 @@ import dbbg2.view.utils.nested.ChildController;
 import dbbg2.view.utils.nested.ParentController;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -58,10 +57,9 @@ public class UserDetailController extends ChildController implements Initializab
      */
     public void loadChildPane(String resourceUrl) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(resourceUrl));
-            childPane.getChildren().setAll((AnchorPane) loader.load());
 
-            childController = loader.getController();
+            childController = (UserChildController) GenericStyler.loadSinglePane(childPane, resourceUrl);
+
             childController.setParentController(this);
         } catch (IOException e) {
             Logger.getLogger("").log(Level.SEVERE, "IOException triggered when loading Child Pane", e);
@@ -135,7 +133,7 @@ public class UserDetailController extends ChildController implements Initializab
         childController.initializeUserController(user);
         userController = childController.getDataController();
         refreshFields();
-        childPane.getScene().getWindow().sizeToScene();
+        resizeSelf();
 
         handleValidationChanges();
     }
@@ -166,6 +164,11 @@ public class UserDetailController extends ChildController implements Initializab
     @Override
     public void notifyRequestReturn() {
         // Do nothing - we will not return from the childform
+    }
+
+    @Override
+    public void notifyResizeRequest() {
+        resizeSelf();
     }
 
     @Override
@@ -292,6 +295,11 @@ public class UserDetailController extends ChildController implements Initializab
         return pst;
     }
 
+    /**
+     * Cancels the edit and returns the values to what is stored on the User object
+     *
+     * @param actionEvent the triggering event
+     */
     public void handleCancelButtonClick(ActionEvent actionEvent) {
         refreshFields();
     }
@@ -333,6 +341,9 @@ public class UserDetailController extends ChildController implements Initializab
 
     }
 
+    /**
+     * Binds listeners to fields that are subject to dynamic validation
+     */
     private void bindListeners() {
 
         // Define the new change listener for the text fields
@@ -349,6 +360,15 @@ public class UserDetailController extends ChildController implements Initializab
 
     }
 
+
+    public void resizeSelf() {
+        childPane.getScene().getWindow().sizeToScene();
+        triggerResizeRequest();
+    }
+
+    /**
+     * Enum that defines how password validation should behave
+     */
     public enum PasswordStatus {
         OK,
         PASSWORD_REQUIRED,

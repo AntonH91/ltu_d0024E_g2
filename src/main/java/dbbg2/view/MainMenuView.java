@@ -1,6 +1,8 @@
 package dbbg2.view;
 
 import dbbg2.view.utils.GenericStyler;
+import dbbg2.view.utils.nested.ChildController;
+import dbbg2.view.utils.nested.ParentController;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -13,13 +15,15 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class MainMenuView implements Initializable {
+public class MainMenuView implements Initializable, ParentController {
 
     public Label lblLoggedInAs;
     public Button btnLoginLogout;
     public Button btnRegisterNewAccount;
 
     public AnchorPane achUsersPane;
+    private ChildController ccUserController;
+
     public AnchorPane achInventoryPane;
     public AnchorPane achLoanPane;
 
@@ -27,6 +31,7 @@ public class MainMenuView implements Initializable {
 
     public void handleLoginButtonClick(ActionEvent actionEvent) {
         // TODO Bring up password prompt to log in a new user
+        autoSizeWindow();
     }
 
     public void handleRegisterButtonClick(ActionEvent actionEvent) {
@@ -55,7 +60,9 @@ public class MainMenuView implements Initializable {
      * @throws IOException Thrown if the loading fails for any reason.
      */
     private void loadSubMenus() throws IOException {
-        GenericStyler.loadSinglePaneWithoutController(achUsersPane, "/Views/User/UserOverview.fxml");
+        ccUserController = GenericStyler.loadSinglePane(achUsersPane, "/Views/User/UserOverview.fxml");
+        ccUserController.setParentController(this);
+
         GenericStyler.loadSinglePaneWithoutController(achInventoryPane, "/Views/ItemHandling.fxml");
         GenericStyler.loadSinglePaneWithoutController(achLoanPane, "/Views/Overviewloansview.fxml");
 
@@ -67,4 +74,18 @@ public class MainMenuView implements Initializable {
     }
 
 
+    @Override
+    public void notifyRequestReturn() {
+        // We don't handle return requests from child forms
+    }
+
+    @Override
+    public void notifyResizeRequest() {
+        autoSizeWindow();
+    }
+
+    @Override
+    public void notifyUpdate() {
+        // We don't care about updates from the child
+    }
 }
