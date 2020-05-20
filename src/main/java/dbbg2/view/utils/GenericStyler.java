@@ -4,6 +4,7 @@ import dbbg2.view.utils.nested.ChildController;
 import javafx.css.Styleable;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
@@ -54,7 +55,11 @@ public class GenericStyler {
             content.getChildren().setAll((Node) rootElement);
 
         }
-        content.autosize();
+
+        AnchorPane.setTopAnchor(content, 0.0);
+        AnchorPane.setBottomAnchor(content, 0.0);
+        AnchorPane.setLeftAnchor(content, 0.0);
+        AnchorPane.setRightAnchor(content, 0.0);
 
         thePane.getChildren().setAll(content);
         thePane.autosize();
