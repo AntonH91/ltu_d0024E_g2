@@ -14,7 +14,10 @@ public class MainMenuView implements Initializable {
     public Label lblLoggedInAs;
     public Button btnLoginLogout;
     public Button btnRegisterNewAccount;
-    public AnchorPane achUsers;
+
+    public AnchorPane achUsersPane;
+    public AnchorPane achInventoryPane;
+    public AnchorPane achLoanPane;
 
     public void handleLoginButtonClick(ActionEvent actionEvent) {
         // TODO Bring up password prompt to log in a new user
@@ -31,6 +34,11 @@ public class MainMenuView implements Initializable {
 
     public void updateAuthenticatedAccess() {
         // TODO Add code that only permits access to the menu items the logged-in user should be able to access.
+    }
+
+
+    private void loadSubMenus() {
+
     }
 
 

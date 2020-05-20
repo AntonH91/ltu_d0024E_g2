@@ -30,13 +30,14 @@
         </FlowPane>
         <TabPane prefHeight="493.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
             <Tab text="Users">
-                <AnchorPane fx:id="achUsers" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                <AnchorPane fx:id="achUsersPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
             </Tab>
             <Tab text="Inventory">
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                <AnchorPane fx:id="achInventoryPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0"
+                            prefWidth="200.0"/>
             </Tab>
             <Tab text="Loans">
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                <AnchorPane fx:id="achLoanPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
             </Tab>
         </TabPane>
     </VBox>
