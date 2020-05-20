@@ -259,8 +259,8 @@ public class UserDetailController extends ChildController implements Initializab
         isValid = isValid && validatePassword() == PasswordStatus.OK;
 
 
-        if (isValid && childController != null) {
-            isValid = childController.isInputValid();
+        if (childController != null) {
+            isValid = childController.isInputValid() && isValid;
         }
         return isValid;
     }

@@ -13,6 +13,7 @@ public class LoginDialog extends Dialog<Boolean> {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/User/UserLogInView.fxml"));
 
             getDialogPane().setContent(loader.load());
+            getDialogPane().getScene().getWindow().setOnCloseRequest(event -> getDialogPane().getScene().getWindow().hide());
 
         } catch (IOException e) {
             e.printStackTrace();

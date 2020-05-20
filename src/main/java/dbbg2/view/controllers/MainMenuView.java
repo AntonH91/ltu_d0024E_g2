@@ -3,6 +3,7 @@ package dbbg2.view.controllers;
 import dbbg2.data.users.User;
 import dbbg2.utils.AuthenticationManager;
 import dbbg2.view.dialogs.LoginDialog;
+import dbbg2.view.dialogs.RegisterNewUserDialog;
 import dbbg2.view.utils.GenericStyler;
 import dbbg2.view.utils.nested.ChildController;
 import dbbg2.view.utils.nested.ParentController;
@@ -54,6 +55,8 @@ public class MainMenuView implements Initializable, ParentController {
 
     public void handleRegisterButtonClick(ActionEvent actionEvent) {
         // TODO Bring up window to allow user to register themselves as a Visitor
+        RegisterNewUserDialog d = new RegisterNewUserDialog();
+        d.showAndWait();
     }
 
     @Override

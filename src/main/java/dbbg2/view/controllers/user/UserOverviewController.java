@@ -140,8 +140,6 @@ public class UserOverviewController extends ChildController implements Initializ
             } catch (IOException | UnknownUserTypeException e) {
                 Logger.getLogger("").log(Level.SEVERE, "Exception during User loading during User Creation.", e);
             }
-        } else {
-            Logger.getLogger("").log(Level.SEVERE, "Could not select a new user type during User Creation");
         }
 
     }
