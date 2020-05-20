@@ -58,7 +58,6 @@ public class MainMenuView implements Initializable, ParentController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // TODO Add loader code for various sub-menus under the main menu
 
         try {
             loadSubMenus();
@@ -86,13 +85,17 @@ public class MainMenuView implements Initializable, ParentController {
             btnRegisterNewAccount.setVisible(false);
 
             // Do stuff based on the user's access role
-
+            changeAccessBasedOnLogin();
 
         } else {
             btnLoginLogout.setText("Log In");
             btnRegisterNewAccount.setVisible(true);
             lblLoggedInAs.setText("Not Logged In");
         }
+
+    }
+
+    public void changeAccessBasedOnLogin() {
 
     }
 
