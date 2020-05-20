@@ -15,6 +15,7 @@ import dbbg2.utils.persistence.JpaPersistence;
 
 import dbbg2.view.user.details.ChildController;
 import javafx.application.Application;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.collections.FXCollections;
@@ -31,21 +32,19 @@ import javax.persistence.NoResultException;
 import java.awt.*;
 import java.util.List;
 
-public class LoanController extends ChildController implements EventHandler<ActionEvent>,  {
+public class LoanController implements EventHandler<ActionEvent> {
     private Visitor client;
     private Loan loan;
     public TextField txtBarcode;
+    public Button addBarcode;
 
 
-    public void handleAddButton(ActionEvent actionEvent){
-       try {
-           addItemToLoan(txtBarcode)
-       }
+    public void handleAddClick() {
 
 
     }
 
-    
+
 
     /*
         1. Get user
@@ -164,15 +163,14 @@ public class LoanController extends ChildController implements EventHandler<Acti
     //TODO 5. InvCopy is on loan = false
 
     public void returnItem(String barcode) {
-           EntityManager em = JpaPersistence.getEntityManager();
-
-
+        EntityManager em = JpaPersistence.getEntityManager();
 
 
     }
+
     public LoanCopies getLoan(String barcode) {
-        for(LoanCopies lc : loan.getCopies()) {
-            if(lc.getCopy().getBarcode() == barcode) {
+        for (LoanCopies lc : loan.getCopies()) {
+            if (lc.getCopy().getBarcode() == barcode) {
                 return lc;
             }
         }
@@ -181,40 +179,5 @@ public class LoanController extends ChildController implements EventHandler<Acti
 
     public List<LoanCopies> getLoans() {
         return loan.getCopies();
-    }
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-
-    }
-
-    @Override
-    public void initializeUserController(User u) {
-
-    }
-
-    @Override
-    public UserController getDataController() {
-        return null;
-    }
-
-    @Override
-    public void updateUserData() {
-
-    }
-
-    @Override
-    public void refreshInterface() {
-
-    }
-
-    @Override
-    public boolean isInputValid() {
-        return false;
-    }
-
-    @Override
-    public void handle(ActionEvent event) {
-
     }
 }
