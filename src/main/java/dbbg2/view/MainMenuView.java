@@ -1,13 +1,17 @@
 package dbbg2.view;
 
+import dbbg2.view.utils.GenericStyler;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MainMenuView implements Initializable {
 
@@ -30,6 +34,12 @@ public class MainMenuView implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO Add loader code for various sub-menus under the main menu
+
+        try {
+            loadSubMenus();
+        } catch (Exception e) {
+            Logger.getLogger("").log(Level.SEVERE, "Failed to load the submenus!", e);
+        }
     }
 
     public void updateAuthenticatedAccess() {
@@ -37,7 +47,16 @@ public class MainMenuView implements Initializable {
     }
 
 
-    private void loadSubMenus() {
+    /**
+     * <p>Loads the various tabs in the main menu</p>
+     *
+     * @throws IOException Thrown if the loading fails for any reason.
+     */
+    private void loadSubMenus() throws IOException {
+        GenericStyler.loadSinglePane(achUsersPane, "/Views/User/UserOverview.fxml");
+        GenericStyler.loadSinglePane(achInventoryPane, "/Views/ItemHandling.fxml");
+        GenericStyler.loadSinglePane(achLoanPane, "/Views/Overviewloansview.fxml");
+
 
     }
 
