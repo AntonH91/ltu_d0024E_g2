@@ -362,6 +362,7 @@ public class UserDetailController extends ChildController implements Initializab
 
 
     public void resizeSelf() {
+        childPane.autosize();
         childPane.getScene().getWindow().sizeToScene();
         triggerResizeRequest();
     }

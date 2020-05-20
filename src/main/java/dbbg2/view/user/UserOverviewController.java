@@ -195,6 +195,9 @@ public class UserOverviewController extends ChildController implements Initializ
         resizeTheView();
     }
 
+    /**
+     * Resizes the window and notifies the parent to do the same
+     */
     private void resizeTheView() {
         acUserDetail.autosize();
         vbSearchControls.autosize();
