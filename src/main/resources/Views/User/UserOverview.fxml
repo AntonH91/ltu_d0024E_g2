@@ -41,8 +41,6 @@
                         GridPane.columnIndex="3" GridPane.rowIndex="3"/>
                 <Button fx:id="btnClearSearch" mnemonicParsing="false" onAction="#handleClearButtonClick" text="Clear"
                         GridPane.columnIndex="4" GridPane.rowIndex="3"/>
-                <Label text="Category" GridPane.columnIndex="3"/>
-                <ChoiceBox fx:id="cboCategoryFilter" prefWidth="150.0" GridPane.columnIndex="4"/>
             </GridPane>
         </AnchorPane>
         <ToolBar maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="40.0">
@@ -53,6 +51,7 @@
         <TableView fx:id="tblUserList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                    tableMenuButtonVisible="true">
             <columns>
+                <TableColumn fx:id="tcUserType" prefWidth="75.0" text="Type"/>
                 <TableColumn fx:id="tcUserId" editable="false" prefWidth="-1.0" text="User ID"/>
                 <TableColumn fx:id="tcFirstName" editable="false" prefWidth="-1.0" text="First Name"/>
                 <TableColumn fx:id="tcLastName" editable="false" prefWidth="-1.0" text="Last Name"/>

@@ -37,6 +37,7 @@ public class UserOverviewController extends ChildController implements Initializ
     public TableColumn<User, String> tcFirstName;
     public TableColumn<User, String> tcLastName;
     public TableColumn<User, String> tcEmail;
+    public TableColumn<User, String> tcUserType;
 
     public Button btnClearSearch;
     public Button btnEditUser;
@@ -44,6 +45,7 @@ public class UserOverviewController extends ChildController implements Initializ
     public AnchorPane acUserDetail;
     public VBox vbSearchControls;
     public ChoiceBox<VisitorCategory> cboCategoryFilter;
+
 
     public void handleSearchButtonClick(ActionEvent actionEvent) {
         // TODO Make it so that only Employees can search users
@@ -55,6 +57,7 @@ public class UserOverviewController extends ChildController implements Initializ
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        tcUserType.setCellValueFactory(new PropertyValueFactory<>("userType"));
         tcUserId.setCellValueFactory(new PropertyValueFactory<>("userId"));
         tcFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         tcLastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
