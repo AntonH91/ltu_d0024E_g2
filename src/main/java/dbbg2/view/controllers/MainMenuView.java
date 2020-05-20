@@ -76,7 +76,6 @@ public class MainMenuView implements Initializable, ParentController {
     }
 
     public void updateAuthenticatedAccess() {
-        // TODO Add code that only permits access to the menu items the logged-in user should be able to access.
 
         //Update the login label
         User loggedIn = AuthenticationManager.getAuthManager().getCurrentlyLoggedInUser();
@@ -105,13 +104,9 @@ public class MainMenuView implements Initializable, ParentController {
     public void changeAccessBasedOnLogin() {
         tbpTabPane.getTabs().clear();
 
-
-        // General access
-        tbpTabPane.getTabs().add(tbInventory);
-
-        // Anonymous access
-        if (AuthenticationManager.getAuthManager().getCurrentlyLoggedInUser() == null) {
-            // No need for specific anonymous access
+        // Employee access
+        if (AuthenticationManager.getAuthManager().userHasEmployeeAccess()) {
+            tbpTabPane.getTabs().add(tbUsers);
         }
 
         // Visitor access
@@ -119,10 +114,13 @@ public class MainMenuView implements Initializable, ParentController {
             tbpTabPane.getTabs().add(tbLoans);
         }
 
-        // Employee access
-        if (AuthenticationManager.getAuthManager().userHasEmployeeAccess()) {
-            tbpTabPane.getTabs().add(tbUsers);
+        // Anonymous access
+        if (AuthenticationManager.getAuthManager().getCurrentlyLoggedInUser() == null) {
+            // No need for specific anonymous access
         }
+
+        // General access
+        tbpTabPane.getTabs().add(tbInventory);
 
 
     }
