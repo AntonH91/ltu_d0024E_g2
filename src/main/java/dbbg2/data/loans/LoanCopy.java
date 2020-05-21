@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class LoanCopies {
+public class LoanCopy {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -112,8 +112,8 @@ public class TestDataCreator {
         String[] keywords = {"Action", "Adventure", "Studying", "Science", "Weird", "Story", "Fantasy", "Egg", "Thriller"};
 
         books.add(new Book("The Hobbit", categories.get(1), true, "123", ("JRR Tolkien")));
-        books.add(new Book("Harry Potter", categories.get(1), true, "123", ("JK Rowling")));
-        books.add(new Book("Emil", categories.get(1), true, "123", ("Astrid Lindgren")));
+        books.add(new Book("Harry Potter", categories.get(2), true, "123", ("JK Rowling")));
+        books.add(new Book("Emil", categories.get(2), true, "123", ("Astrid Lindgren")));
         books.add(new Book("Dexter", categories.get(3), true, "123", ("Jeff Lindsay")));
 
         films.add(new Film("The Irishman", ItemCategoryType.FILM, true, "Martin Scorsese", 17, "USA"));

@@ -3,7 +3,7 @@ package dbbg2.view.controllers.loans;
 import dbbg2.controllers.Loans.Exceptions.ItemNotLendableException;
 import dbbg2.controllers.Loans.Exceptions.TooManyItemsOnLoanException;
 import dbbg2.controllers.Loans.LoanController;
-import dbbg2.data.loans.LoanCopies;
+import dbbg2.data.loans.LoanCopy;
 import dbbg2.data.users.User;
 import dbbg2.data.users.Visitor;
 import dbbg2.utils.AuthenticationManager;
@@ -22,9 +22,9 @@ public class LoanAddView implements Initializable {
     public Button btnFinalize;
     public TextField txtBarcode;
     public Button btnAddBarcode;
-    public TableView<LoanCopies> tblLoanItems;
-    public TableColumn<LoanCopies, String> tcItemTitle;
-    public TableColumn<LoanCopies, String> tcReturnDate;
+    public TableView<LoanCopy> tblLoanItems;
+    public TableColumn<LoanCopy, String> tcItemTitle;
+    public TableColumn<LoanCopy, String> tcReturnDate;
 
 
     LoanController controller;

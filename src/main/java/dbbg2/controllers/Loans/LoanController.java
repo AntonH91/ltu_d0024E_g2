@@ -3,15 +3,15 @@ package dbbg2.controllers.Loans;
 import dbbg2.controllers.Loans.Exceptions.EmptyLoanException;
 import dbbg2.controllers.Loans.Exceptions.ItemNotLendableException;
 import dbbg2.controllers.Loans.Exceptions.TooManyItemsOnLoanException;
+import dbbg2.data.genericexceptions.LibraryEntityNotFoundException;
 import dbbg2.data.inventory.InventoryCopy;
 import dbbg2.data.inventory.InventoryManager;
 import dbbg2.data.loans.Loan;
-import dbbg2.data.loans.LoanCopies;
+import dbbg2.data.loans.LoanCopy;
 import dbbg2.data.users.Visitor;
 import dbbg2.utils.persistence.JpaPersistence;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,12 +24,12 @@ public class LoanController {
     // Accessors
 
     /**
-     * Gets the current list of LoanCopies registered on the loan
+     * Gets the current list of LoanCopy registered on the loan
      *
-     * @return Null if there is no Loan on the object, otherwise an unmodifiable list of LoanCopies
+     * @return Null if there is no Loan on the object, otherwise an unmodifiable list of LoanCopy
      */
-    public List<LoanCopies> getLoanCopies() {
-        List<LoanCopies> result = new ArrayList<>();
+    public List<LoanCopy> getLoanCopies() {
+        List<LoanCopy> result = new ArrayList<>();
 
         if (loan != null) {
             result = loan.getCopies();
@@ -130,16 +130,17 @@ public class LoanController {
      * Adds an item to the loan with the given barcode.
      *
      * @param barcode The barcode of the item to lend
-     * @throws IllegalStateException       Thrown if there is no active loan or user on the controller
-     * @throws ItemNotLendableException    Thrown if the item cannot be loaned because of the settings.
-     * @throws TooManyItemsOnLoanException Thrown if the user is attempting to loan too many items.
+     * @throws IllegalStateException          Thrown if there is no active loan or user on the controller
+     * @throws ItemNotLendableException       Thrown if the item cannot be loaned because of the settings.
+     * @throws TooManyItemsOnLoanException    Thrown if the user is attempting to loan too many items.
+     * @throws LibraryEntityNotFoundException Thrown if the barcode does not exist in the library.
      */
-    public void addItemToLoan(String barcode) throws ItemNotLendableException, TooManyItemsOnLoanException {
+    public void addItemToLoan(String barcode) throws ItemNotLendableException, TooManyItemsOnLoanException, LibraryEntityNotFoundException {
         verifyControllerState();
         if (client.getLoanedItems() + loan.getCopies().size() >= client.getCategory().getMaxLoanedAmount()) {
             throw new TooManyItemsOnLoanException("There are too many items on loan. You cannot borrow more at this time");
         }
-        InventoryCopy invItem = getBookWithRightBarCode(barcode);
+        InventoryCopy invItem = getLendableItemCopy(barcode);
         loan.addCopy(invItem);
     }
 
@@ -165,7 +166,7 @@ public class LoanController {
         //TODO mark item "isAvailable"
 
         try {
-            for (LoanCopies ic : loan.getCopies()) {
+            for (LoanCopy ic : loan.getCopies()) {
                 ic.getCopy().setOnLoan(true);
                 em.merge(ic.getCopy());
             }
@@ -196,16 +197,16 @@ public class LoanController {
     }
 
     /**
-     * Checks if book is available
+     * Checks if a lendable item copy is available
      *
      * @param barcode The barcode of the potentially available book
      * @return Returns lenable inventorycopy
-     * @throws ItemNotLendableException throws exception if item is not lendable
-     * @throws NoResultException        throws if item cannot be found
+     * @throws ItemNotLendableException       throws exception if item is not lendable
+     * @throws LibraryEntityNotFoundException throws if item cannot be found
      */
-    private InventoryCopy getBookWithRightBarCode(String barcode) throws ItemNotLendableException, NoResultException {
+    private InventoryCopy getLendableItemCopy(String barcode) throws ItemNotLendableException, LibraryEntityNotFoundException {
         InventoryCopy copy = InventoryManager.getInventoryCopy(barcode);
-        if (copy.getLendable() && !copy.getOnLoan()) {
+        if (copy.getLendable() && !copy.getOnLoan() && !copy.getItem().getCategory().isLendable()) {
             return copy;
         } else {
             throw new ItemNotLendableException("Item is not lendable");

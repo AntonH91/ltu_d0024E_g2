@@ -20,26 +20,33 @@ public class Loan {
 
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "loan_id")
-    private final List<LoanCopies> loanedCopies = new ArrayList<>();
+    private final List<LoanCopy> loanedCopies = new ArrayList<>();
 
-    public void addCopy(LoanCopies copy) {
+    /**
+     * Adds an already created loancopy to this loan
+     *
+     * @param copy
+     */
+    public void addCopy(LoanCopy copy) {
         // This needs to be on the Loan Controller
         //client.increaseLoanedItems(1);
         loanedCopies.add(copy);
 
     }
 
-    public void addCopy(InventoryCopy invCopy){
-        LoanCopies lc = new LoanCopies();
+    public void addCopy(InventoryCopy invCopy) {
+        LoanCopy lc = new LoanCopy();
         lc.setCopy(invCopy);
 
 
         // Calculate return date for item
         int lendingDays = invCopy.getItem().getCategory().getLendingDays();
+
         Date returnDate = new Date();
         Calendar c = Calendar.getInstance();
         c.setTime(returnDate);
         c.add(Calendar.DATE, lendingDays);
+
         returnDate = c.getTime();
 
 
@@ -48,7 +55,7 @@ public class Loan {
         this.addCopy(lc);
     }
 
-    public List<LoanCopies> getCopies(){
+    public List<LoanCopy> getCopies() {
         return Collections.unmodifiableList(this.loanedCopies);
     }
 
