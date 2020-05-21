@@ -16,7 +16,7 @@ public class ItemMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/Views/ItemSearch.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Views/Items/ItemSearch.fxml"));
 
         Scene scene = new Scene(root);
 
