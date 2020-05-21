@@ -5,54 +5,17 @@ import dbbg2.data.users.visitorcategory.VisitorCategory;
 import dbbg2.data.users.visitorcategory.VisitorCategoryManager;
 import dbbg2.view.controllers.user.details.UserDetailController;
 import dbbg2.view.controllers.user.details.VisitorDetailController;
-import dbbg2.view.controllers.user.exceptions.UnknownUserTypeException;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Dialog;
 
-import java.io.IOException;
-
-public class RegisterNewUserDialog extends Dialog<Boolean> {
+public class RegisterNewUserDialog extends UserDialog {
 
     public RegisterNewUserDialog() {
-
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/User/UserDetail.fxml"));
-
-            this.getDialogPane().setContent(loader.load());
-            UserDetailController uc = loader.getController();
-
-            uc.loadUser(new Visitor());
-
-
-            bindDialogListeners(uc);
-
-            setForcedCategory((VisitorDetailController) uc.getChildController());
-
-        } catch (IOException | UnknownUserTypeException e) {
-            e.printStackTrace();
-        }
+        super(new Visitor());
 
     }
 
-
-    private void bindDialogListeners(UserDetailController udc) {
-        udc.btnDeleteUser.setVisible(false);
-
-        // Hook the button action events to close the dialog when done
-        udc.btnCancelButton.setOnAction(event -> {
-            udc.handleCancelButtonClick(event);
-            getDialogPane().getScene().getWindow().hide();
-        });
-
-        udc.btnSaveButton.setOnAction(event -> {
-            udc.handleSaveButtonClick(event);
-            getDialogPane().getScene().getWindow().hide();
-        });
-
-
-        getDialogPane().getScene().getWindow().setOnCloseRequest(event -> getDialogPane().getScene().getWindow().hide());
-
-
+    @Override
+    protected void setRestrictions(UserDetailController udc) {
+        setForcedCategory((VisitorDetailController) udc.getChildController());
     }
 
     private void setForcedCategory(VisitorDetailController vdc) {

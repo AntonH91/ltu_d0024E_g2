@@ -4,15 +4,13 @@ import dbbg2.data.users.User;
 import dbbg2.utils.AuthenticationManager;
 import dbbg2.view.dialogs.LoginDialog;
 import dbbg2.view.dialogs.RegisterNewUserDialog;
+import dbbg2.view.dialogs.UserDialog;
 import dbbg2.view.utils.GenericStyler;
 import dbbg2.view.utils.nested.ChildController;
 import dbbg2.view.utils.nested.ParentController;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -29,6 +27,10 @@ public class MainMenuView implements Initializable, ParentController {
     public Button btnRegisterNewAccount;
 
     public AnchorPane achUsersPane;
+    public Tab tbUsers;
+    public Tab tbInventory;
+    public Tab tbLoans;
+    public TabPane tbpTabPane;
     private ChildController ccUserController;
 
     public AnchorPane achInventoryPane;
@@ -37,8 +39,7 @@ public class MainMenuView implements Initializable, ParentController {
     public AnchorPane achMainMenuRoot;
 
     public void handleLoginButtonClick(ActionEvent actionEvent) {
-        // TODO Bring up password prompt to log in a new user
-
+        // Altering behaviour of the login button depending on what the current login state is, so that the layout is kept consistent.
         if (AuthenticationManager.getAuthManager().getCurrentlyLoggedInUser() == null) {
             LoginDialog d = new LoginDialog();
             d.showAndWait();
@@ -54,9 +55,13 @@ public class MainMenuView implements Initializable, ParentController {
     }
 
     public void handleRegisterButtonClick(ActionEvent actionEvent) {
-        // TODO Bring up window to allow user to register themselves as a Visitor
-        RegisterNewUserDialog d = new RegisterNewUserDialog();
-        d.showAndWait();
+        if (AuthenticationManager.getAuthManager().getCurrentlyLoggedInUser() == null) {
+            RegisterNewUserDialog d = new RegisterNewUserDialog();
+            d.showAndWait();
+        } else {
+            // TODO Add a user profile dialog here
+            new UserDialog(AuthenticationManager.getAuthManager().getCurrentlyLoggedInUser()).showAndWait();
+        }
     }
 
     @Override
@@ -71,10 +76,15 @@ public class MainMenuView implements Initializable, ParentController {
         // Subscribe to AuthenticationManager updates
         AuthenticationManager.getAuthManager().addListener(observable -> this.updateAuthenticatedAccess());
 
+        // Update controls to match current access level.
+        updateAuthenticatedAccess();
+
     }
 
+    /**
+     * Triggered when the authenticationmanager changes state
+     */
     public void updateAuthenticatedAccess() {
-        // TODO Add code that only permits access to the menu items the logged-in user should be able to access.
 
         //Update the login label
         User loggedIn = AuthenticationManager.getAuthManager().getCurrentlyLoggedInUser();
@@ -85,20 +95,48 @@ public class MainMenuView implements Initializable, ParentController {
 
             // Set up the controls
             btnLoginLogout.setText("Logout");
-            btnRegisterNewAccount.setVisible(false);
+            btnRegisterNewAccount.setText("Profile");
+
 
             // Do stuff based on the user's access role
-            changeAccessBasedOnLogin();
+
 
         } else {
             btnLoginLogout.setText("Log In");
-            btnRegisterNewAccount.setVisible(true);
+            btnRegisterNewAccount.setText("Register");
             lblLoggedInAs.setText("Not Logged In");
         }
 
+        changeAccessBasedOnLogin();
+
     }
 
+    /**
+     * Sets the tab panes to the right availability based on the logged in user.
+     */
     public void changeAccessBasedOnLogin() {
+        tbpTabPane.getTabs().clear();
+
+        // Employee access
+        if (AuthenticationManager.getAuthManager().userHasEmployeeAccess()) {
+            tbpTabPane.getTabs().add(tbUsers);
+        }
+
+        // Visitor access
+        if (AuthenticationManager.getAuthManager().userCanLoanBooks()) {
+            tbpTabPane.getTabs().add(tbLoans);
+        }
+
+        // Anonymous access
+        /*
+        if (AuthenticationManager.getAuthManager().getCurrentlyLoggedInUser() == null) {
+            // No need for specific anonymous access
+        }
+        */
+
+        // General access
+        tbpTabPane.getTabs().add(tbInventory);
+
 
     }
 

@@ -4,6 +4,7 @@ import dbbg2.controllers.user.EmployeeController;
 import dbbg2.controllers.user.UserController;
 import dbbg2.data.users.Employee;
 import dbbg2.data.users.User;
+import dbbg2.utils.AuthenticationManager;
 import dbbg2.view.utils.GenericStyler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -31,6 +32,7 @@ public class EmployeeDetailController extends UserChildController implements Ini
             throw new ClassCastException("Cannot initialize EmployeeDetailController with non-Employee User");
         }
 
+        updateAuthenticationSettings();
     }
 
     @Override
@@ -47,9 +49,6 @@ public class EmployeeDetailController extends UserChildController implements Ini
 
     @Override
     public void refreshInterface() {
-        // TODO Make it so that only Managers can see employee salaries
-        // TODO Make it so that only Managers can change the Manager Access checkbox
-        // TODO Make it so that it's not possible for a Manager to revoke their own Manager access
 
         Employee e = (Employee) employeeController.getUser();
         txtSalary.setText(String.valueOf(e.getSalary()));
@@ -79,6 +78,8 @@ public class EmployeeDetailController extends UserChildController implements Ini
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         bindListeners();
+
+        AuthenticationManager.getAuthManager().addListener(event -> updateAuthenticationSettings());
     }
 
     private void bindListeners() {
@@ -96,6 +97,26 @@ public class EmployeeDetailController extends UserChildController implements Ini
         });
 
         chkManagerAccess.selectedProperty().addListener((observable, oldValue, newValue) -> triggerParentUpdate());
+
+    }
+
+    public void updateAuthenticationSettings() {
+        // Validate that managers can't change their own manager status
+        boolean showSalary = false;
+        boolean enableEditingManagerAccess = false;
+
+        if (AuthenticationManager.getAuthManager().userHasManagerAccess()) {
+            showSalary = true;
+
+            // Managers should not be allowed to edit their own access
+            if (employeeController != null && !AuthenticationManager.getAuthManager().getCurrentlyLoggedInUser().equals(employeeController.getUser())) {
+                enableEditingManagerAccess = true;
+            }
+
+        }
+
+        txtSalary.setVisible(showSalary);
+        chkManagerAccess.setDisable(!enableEditingManagerAccess);
 
     }
 
