@@ -5,6 +5,7 @@ import dbbg2.utils.persistence.JpaPersistence;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class InventoryManager {
 
         try {
             return q.setParameter("barcode", barCode).getSingleResult();
-        } catch {
+        } catch (NoResultException e) {
             throw new LibraryEntityNotFoundException(String.format("Could not find Inventory Copy with barcode: %s", barCode));
         }
 
