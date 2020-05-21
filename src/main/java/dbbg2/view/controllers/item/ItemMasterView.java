@@ -23,7 +23,7 @@ public class ItemMasterView implements Initializable {
     public AnchorPane anchSearch;
     public AnchorPane anchManage;
     public AnchorPane anchEdit;
-    public AnchorPane anchAdd;
+    public AnchorPane anchAddCopies;
     public TabPane tbpItemTabs;
 
     @Override
@@ -48,7 +48,7 @@ public class ItemMasterView implements Initializable {
         GenericStyler.loadSinglePaneWithoutController(anchSearch, "/Views/Items/ItemSearch.fxml");
         GenericStyler.loadSinglePaneWithoutController(anchManage, "/Views/Items/ItemHandling.fxml");
         GenericStyler.loadSinglePaneWithoutController(anchEdit, "/Views/Items/ItemEdit.fxml");
-        GenericStyler.loadSinglePaneWithoutController(anchAdd, "/Views/Items/ItemAddCopy.fxml");
+        GenericStyler.loadSinglePaneWithoutController(anchAddCopies, "/Views/Items/ItemAddCopy.fxml");
     }
 
 

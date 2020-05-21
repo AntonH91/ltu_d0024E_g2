@@ -20,7 +20,7 @@
                         minHeight="0.0" minWidth="0.0"/>
         </Tab>
         <Tab fx:id="tbAddItem" text="Add Item Copy">
-            <AnchorPane fx:id="anchAdd" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+            <AnchorPane fx:id="anchAddCopies" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                         minHeight="0.0" minWidth="0.0"/>
         </Tab>
     </TabPane>
