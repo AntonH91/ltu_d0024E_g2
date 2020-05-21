@@ -37,7 +37,6 @@
                         <TableView fx:id="tbItemFound" layoutY="171.0" onMouseClicked="#handleRemoveMouseClick" prefHeight="200.0" prefWidth="233.0">
                           <columns>
                             <TableColumn fx:id="tcItemName" prefWidth="89.0" text="Item name" />
-                            <TableColumn fx:id="txItemId" prefWidth="67.0" text="Item ID" />
                               <TableColumn fx:id="tcBarcode" prefWidth="79.0" text="Barcode" />
                           </columns>
                         </TableView>

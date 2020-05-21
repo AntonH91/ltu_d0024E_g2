@@ -91,7 +91,10 @@ public class ItemCopyController implements Initializable {
 
 
         //tcItemName.setCellValueFactory(new PropertyValueFactory<InventoryCopy, String>("item"));
+        //txItemId.setCellValueFactory(new PropertyValueFactory<Book, Integer>("invId"));
         //txItemId.setCellValueFactory(new PropertyValueFactory<InventoryCopy, Integer>("invId"));
+
+        clItemId.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("invId"));
         tcBarcode.setCellValueFactory(new PropertyValueFactory<Book, String>("barcode"));
 
 
