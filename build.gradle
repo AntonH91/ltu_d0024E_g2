@@ -1,8 +1,6 @@
 buildscript {
     dependencies {
         classpath files('$buildDir/classes/java/test/')
-        println files('$buildDir/classes/java/test/')
-        println '$buildDir/classes/java/test/'
     }
 }
 
