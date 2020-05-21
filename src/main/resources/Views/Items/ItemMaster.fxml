@@ -4,12 +4,9 @@
 <?import javafx.scene.layout.*?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="anchRootPane" xmlns="http://javafx.com/javafx/10.0.2-internal"
             fx:controller="dbbg2.view.controllers.item.ItemMasterView">
-    <TabPane layoutX="35.0" layoutY="55.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
-             AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <Tab fx:id="tbAddItem" text="Add Item">
-            <AnchorPane fx:id="anchAdd" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                        minHeight="0.0" minWidth="0.0"/>
-        </Tab>
+    <TabPane fx:id="tbpItemTabs" layoutX="35.0" layoutY="55.0" tabClosingPolicy="UNAVAILABLE"
+             AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+             AnchorPane.topAnchor="0.0">
         <Tab fx:id="tbEditItem" text="Edit Item">
             <AnchorPane fx:id="anchEdit" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                         minHeight="0.0" minWidth="0.0"/>
@@ -20,6 +17,10 @@
         </Tab>
         <Tab fx:id="tbSearchItem" text="Search Item">
             <AnchorPane fx:id="anchSearch" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                        minHeight="0.0" minWidth="0.0"/>
+        </Tab>
+        <Tab fx:id="tbAddItem" text="Add Item Copy">
+            <AnchorPane fx:id="anchAddCopies" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                         minHeight="0.0" minWidth="0.0"/>
         </Tab>
     </TabPane>
