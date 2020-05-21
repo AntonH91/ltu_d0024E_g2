@@ -5,7 +5,7 @@ import dbbg2.utils.persistence.JpaPersistence;
 
 import javax.persistence.EntityManager;
 
-public class BookController extends Book {
+public class BookController {
     private Book changeBook;
 
     public Book getTheBook(){

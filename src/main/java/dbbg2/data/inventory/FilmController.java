@@ -1,6 +1,6 @@
 package dbbg2.data.inventory;
 
-public class FilmController extends Film {
+public class FilmController {
     private Film changeFilm;
 
     public void setFilm(Film film){
