@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static dbbg2.data.inventory.itemCategory.ItemCategoryType.FILM;
-import static dbbg2.data.inventory.itemCategory.ItemCategoryType.OTHER_BOOKS;
+import static dbbg2.data.inventory.itemCategory.ItemCategoryType.*;
+import static dbbg2.data.inventory.itemCategory.ItemCategoryType.REFERENCE_LITERATURE;
 
 
 public class ItemManageController implements Initializable {
@@ -30,8 +30,6 @@ public class ItemManageController implements Initializable {
     public TextField txtAbbBookTitle;
     public TextField txtBookIsbn;
     public TextField txtBookAuthor;
-
-    public ChoiceBox ddBookCategory;
 
 
     //Remove book
@@ -48,6 +46,8 @@ public class ItemManageController implements Initializable {
     public Button btnRemove;
     public TextField txtPkId;
     public TableColumn tcInvId;
+
+    public ComboBox<ItemCategory> cbCategoryTest;
 
     //Film info
     public TextField txtFilmIdRemove;
@@ -67,15 +67,16 @@ public class ItemManageController implements Initializable {
     public ComboBox<Integer> cbAgeLimits;
 
 
+
     public void handleAddBook(javafx.event.ActionEvent actionEvent) {
 
         List<Book> books = new ArrayList<>();
 
 
         //TODO add two text fields for first and last name
-        books.add(new Book(txtAbbBookTitle.getText(), (ItemCategory) ddBookCategory.getSelectionModel().getSelectedItem(), true, txtBookIsbn.getText(), txtBookAuthor.getText()));
+        books.add(new Book(txtAbbBookTitle.getText(), (ItemCategory) cbCategoryTest.getSelectionModel().getSelectedItem(), true, txtBookIsbn.getText(), txtBookAuthor.getText()));
 
-        if(txtAbbBookTitle.getText().isEmpty() || ddBookCategory.getSelectionModel().isEmpty()){
+        if(txtAbbBookTitle.getText().isEmpty() || cbCategoryTest.getSelectionModel().isEmpty()){
 
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
@@ -104,7 +105,7 @@ public class ItemManageController implements Initializable {
             alert.showAndWait();
 
             txtAbbBookTitle.clear();
-            ddBookCategory.valueProperty().set(null);
+            cbCategoryTest.valueProperty().set(null);
             txtBookIsbn.clear();
             txtBookAuthor.clear();
 
@@ -162,7 +163,7 @@ public class ItemManageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
-        /*ddBookCategory.setCellFactory(new Callback<ListView<ItemCategory>, ListCell<ItemCategory>>() {
+        cbCategoryTest.setCellFactory(new Callback<ListView<ItemCategory>, ListCell<ItemCategory>>() {
             @Override
             public ListCell<ItemCategory> call(ListView<ItemCategory> param) {
                 return new ListCell<ItemCategory>() {
@@ -177,9 +178,17 @@ public class ItemManageController implements Initializable {
                     }
                 };
             }
-        });*/
+        });
 
-        ddBookCategory.getItems().addAll(ItemCategory.getDefaultItemCategory(OTHER_BOOKS));
+        cbCategoryTest.setButtonCell(cbCategoryTest.getCellFactory().call(null));
+
+        ArrayList<ItemCategory> catArray = new ArrayList<>();
+        catArray.add(ItemCategory.getDefaultItemCategory(OTHER_BOOKS));
+        catArray.add(ItemCategory.getDefaultItemCategory(JOURNAL));
+        catArray.add(ItemCategory.getDefaultItemCategory(REFERENCE_LITERATURE));
+
+        cbCategoryTest.setItems(FXCollections.observableList(catArray));
+
 
         //Set choices for age limits when adding film
         cbAgeLimits.getItems().addAll(17, 18, 20);
@@ -314,4 +323,17 @@ public class ItemManageController implements Initializable {
 
 
     }
+
+    private void selectCategory(ItemCategory targetCategory) {
+        if (targetCategory != null) {
+            for (ItemCategory ic : cbCategoryTest.getItems()) {
+                if (targetCategory.equals(ic)) {
+                    cbCategoryTest.setValue(ic);
+                    break;
+                }
+            }
+        }
+
+    }
+
 }
