@@ -5,7 +5,6 @@ import dbbg2.controllers.loans.Exceptions.ItemNotOnLoanException;
 import dbbg2.data.genericexceptions.LibraryEntityNotFoundException;
 import dbbg2.data.inventory.InventoryCopy;
 import dbbg2.data.inventory.InventoryItem;
-import dbbg2.data.loans.Loan;
 import dbbg2.data.loans.LoanCopy;
 import dbbg2.data.loans.LoanManager;
 import dbbg2.data.users.Visitor;
@@ -127,8 +126,7 @@ public class LoanReturnController {
      * @throws LibraryEntityNotFoundException Thrown when the item is not currently on loan
      */
     public LoanCopy getLoanForBarcode(String barcode) throws LibraryEntityNotFoundException {
-        Loan loan = LoanManager.getActiveLoanFromBarcode(barcode);
-        return loan.getCopyFromBarcode(barcode);
+        return LoanManager.getActiveLoanFromBarcode(barcode);
     }
 
     /**

@@ -71,15 +71,16 @@ public class LoanManager {
      * @return The Loan object
      * @throws LibraryEntityNotFoundException Thrown if no active loan can be found for the barcode
      */
-    public static Loan getActiveLoanFromBarcode(String barcode) throws LibraryEntityNotFoundException {
+    public static LoanCopy getActiveLoanFromBarcode(String barcode) throws LibraryEntityNotFoundException {
         EntityManager em = JpaPersistence.getEntityManager();
-        TypedQuery<Loan> lq = em.createQuery("SELECT l FROM Loan l " +
-                "INNER JOIN LoanCopies lc ON l.Loan_id = lc.loan_id " +
-                "INNER JOIN inventorycopy ic ON ic.cid = lc.copy_cid " +
-                "WHERE ic.barcode =:barcode AND NOT lc.returned ", Loan.class);
+        TypedQuery<LoanCopy> lq = em.createQuery("SELECT lc FROM LoanCopy lc " +
+                "INNER JOIN InventoryCopy ic ON lc.copy = ic " +
+                "WHERE ic.barcode =:barcode AND lc.returned = false", LoanCopy.class);
 
 
         try {
+            List<LoanCopy> lc = lq.setParameter("barcode", barcode).getResultList();
+            System.out.println("Found: " + lc.size());
             return lq.setParameter("barcode", barcode).getSingleResult();
         } catch (NoResultException e) {
             throw new LibraryEntityNotFoundException("No loan found for this barcode.");

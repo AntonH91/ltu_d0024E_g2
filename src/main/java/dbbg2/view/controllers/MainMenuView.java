@@ -124,7 +124,7 @@ public class MainMenuView implements Initializable, ParentController {
 
         // Visitor access
         if (AuthenticationManager.getAuthManager().userCanLoanBooks()) {
-            tbpTabPane.getTabs().add(tbLoans);
+
         }
 
         // Anonymous access
@@ -136,6 +136,7 @@ public class MainMenuView implements Initializable, ParentController {
 
         // General access
         tbpTabPane.getTabs().add(tbInventory);
+        tbpTabPane.getTabs().add(tbLoans);
 
 
     }
@@ -151,7 +152,7 @@ public class MainMenuView implements Initializable, ParentController {
         ccUserController.setParentController(this);
 
         GenericStyler.loadSinglePaneWithoutController(achInventoryPane, "/Views/Items/ItemMaster.fxml");
-        GenericStyler.loadSinglePaneWithoutController(achLoanPane, "/Views/Loans/AddItemToLoanView.fxml");
+        GenericStyler.loadSinglePaneWithoutController(achLoanPane, "/Views/Loans/LoanMaster.fxml");
 
 
     }
