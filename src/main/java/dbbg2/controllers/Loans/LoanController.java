@@ -206,7 +206,7 @@ public class LoanController {
      */
     private InventoryCopy getLendableItemCopy(String barcode) throws ItemNotLendableException, LibraryEntityNotFoundException {
         InventoryCopy copy = InventoryManager.getInventoryCopy(barcode);
-        if (copy.getLendable() && !copy.getOnLoan() && !copy.getItem().getCategory().isLendable()) {
+        if (copy.getLendable() && !copy.getOnLoan() && copy.getItem().getCategory().isLendable()) {
             return copy;
         } else {
             throw new ItemNotLendableException("Item is not lendable");

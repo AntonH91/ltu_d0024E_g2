@@ -2,18 +2,9 @@ package dbbg2.data.inventory;
 
 import dbbg2.data.inventory.itemCategory.ItemCategory;
 import dbbg2.data.inventory.itemCategory.ItemCategoryType;
-import dbbg2.data.inventory.Keyword;
-import dbbg2.data.users.User;
-import org.eclipse.persistence.annotations.Index;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity(name = "Inventory")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -33,15 +24,13 @@ public abstract class InventoryItem {
     @Basic(optional = false)
     private String title = "";
 
-    // TODO Make this attribute a ManyToMany
-    @SuppressWarnings("JpaAttributeTypeInspection")
     @ManyToMany(mappedBy = "items", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     //@Basic(optional = false)
-    private List<Keyword> keywords = new ArrayList<>();
+    private final List<Keyword> keywords = new ArrayList<>();
 
     // Tried to fix the many to many table being created
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "item")
-    private Set<InventoryCopy> copies = new HashSet<>();
+    private final Set<InventoryCopy> copies = new HashSet<>();
 
     //Tried fixing keyword relation
     //@OneToOne(optional = false, cascade = CascadeType.ALL)
@@ -131,12 +120,23 @@ public abstract class InventoryItem {
     @PrePersist
     private String generateInventoryId() {
 
-        String newInventoryId = "I" + Integer.toString(nextInventoryId);
+        String newInventoryId = "I" + nextInventoryId;
         nextInventoryId++;
         return newInventoryId;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        InventoryItem that = (InventoryItem) o;
+        return invId == that.invId &&
+                isAvailable == that.isAvailable &&
+                title.equals(that.title);
+    }
 
-
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(invId, title, isAvailable);
+    }
 }

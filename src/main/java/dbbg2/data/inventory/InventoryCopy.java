@@ -1,8 +1,7 @@
 package dbbg2.data.inventory;
 
-import org.eclipse.persistence.annotations.Index;
-
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity(name = "InventoryCopy")
 public class InventoryCopy {
@@ -77,4 +76,21 @@ public class InventoryCopy {
         return cid;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        InventoryCopy that = (InventoryCopy) o;
+        return cid == that.cid &&
+                onLoan == that.onLoan &&
+                lendable == that.lendable &&
+                barcode.equals(that.barcode) &&
+                Objects.equals(location, that.location) &&
+                item.equals(that.item);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cid, barcode, location, onLoan, lendable, item);
+    }
 }

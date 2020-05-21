@@ -31,8 +31,8 @@ public class Loan {
         // This needs to be on the Loan Controller
         //client.increaseLoanedItems(1);
 
-        loanedCopies.add(copy);
         copy.setParentLoan(this);
+        loanedCopies.add(copy);
     }
 
     public void addCopy(InventoryCopy invCopy) {
@@ -72,5 +72,19 @@ public class Loan {
 
     public long getLoanId() {
         return loan_id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Loan loan = (Loan) o;
+        return loan_id == loan.loan_id &&
+                Objects.equals(client, loan.client);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(loan_id, client);
     }
 }
