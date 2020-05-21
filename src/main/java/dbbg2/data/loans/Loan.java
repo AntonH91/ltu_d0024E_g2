@@ -20,7 +20,7 @@ public class Loan {
 
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "parentLoan")
     @JoinColumn(name = "loan_id")
-    private final Set<LoanCopy> loanedCopies = new HashSet<>();
+    private final Map<String, LoanCopy> loanedCopies = new HashMap<>();
 
     /**
      * Adds an already created loancopy to this loan
@@ -32,7 +32,7 @@ public class Loan {
         //client.increaseLoanedItems(1);
 
         copy.setParentLoan(this);
-        loanedCopies.add(copy);
+        loanedCopies.put(copy.getCopy().getBarcode(), copy);
     }
 
     public void addCopy(InventoryCopy invCopy) {
@@ -57,7 +57,9 @@ public class Loan {
     }
 
     public List<LoanCopy> getCopies() {
-        List<LoanCopy> copyList = Arrays.asList(this.loanedCopies.toArray(new LoanCopy[loanedCopies.size()]));
+        List<LoanCopy> copyList = new ArrayList<>(loanedCopies.size());
+        this.loanedCopies.forEach((s, loanCopy) -> copyList.add(loanCopy));
+
         return Collections.unmodifiableList(copyList);
     }
 
