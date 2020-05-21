@@ -3,6 +3,7 @@ package dbbg2.view.controllers.loans;
 import dbbg2.controllers.Loans.Exceptions.ItemNotLendableException;
 import dbbg2.controllers.Loans.Exceptions.TooManyItemsOnLoanException;
 import dbbg2.controllers.Loans.LoanController;
+import dbbg2.data.genericexceptions.LibraryEntityNotFoundException;
 import dbbg2.data.loans.LoanCopy;
 import dbbg2.data.users.User;
 import dbbg2.data.users.Visitor;
@@ -132,6 +133,8 @@ public class LoanAddView implements Initializable {
             showErrorMessage("This item is not lendable and cannot be added to the loan.");
         } catch (TooManyItemsOnLoanException e) {
             showErrorMessage("You have exceeded the amount of items you are allowed to loan.");
+        } catch (LibraryEntityNotFoundException e) {
+            showErrorMessage("This is not a valid barcode.");
         }
 
         updateControlStates();
