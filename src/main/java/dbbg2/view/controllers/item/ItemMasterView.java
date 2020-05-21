@@ -1,8 +1,10 @@
 package dbbg2.view.controllers.item;
 
+import dbbg2.utils.AuthenticationManager;
 import dbbg2.view.utils.GenericStyler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -22,6 +24,7 @@ public class ItemMasterView implements Initializable {
     public AnchorPane anchManage;
     public AnchorPane anchEdit;
     public AnchorPane anchAdd;
+    public TabPane tbpItemTabs;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -30,6 +33,10 @@ public class ItemMasterView implements Initializable {
         } catch (IOException e) {
             Logger.getLogger("").log(Level.SEVERE, "IOException when loading submenus for ItemMaster view", e);
         }
+        handleAccessRights();
+
+        AuthenticationManager.getAuthManager().addListener(event -> handleAccessRights());
+
     }
 
     /**
@@ -42,6 +49,22 @@ public class ItemMasterView implements Initializable {
         GenericStyler.loadSinglePaneWithoutController(anchManage, "/Views/Items/ItemHandling.fxml");
         GenericStyler.loadSinglePaneWithoutController(anchEdit, "/Views/Items/ItemEdit.fxml");
         GenericStyler.loadSinglePaneWithoutController(anchAdd, "/Views/Items/ItemAddCopy.fxml");
+    }
+
+
+    public void handleAccessRights() {
+        tbpItemTabs.getTabs().clear();
+
+        tbpItemTabs.getTabs().add(tbSearchItem);
+
+        if (AuthenticationManager.getAuthManager().userHasEmployeeAccess()) {
+            Tab[] managerTabs = {tbAddItem, tbEditItem, tbManageItem};
+            for (Tab t : managerTabs) {
+                tbpItemTabs.getTabs().add(t);
+            }
+        }
+
+
     }
 
 }
