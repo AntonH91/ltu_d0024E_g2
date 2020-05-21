@@ -27,7 +27,6 @@ public class EditItemController implements Initializable {
     public TextField txtSearchTitle;
     public TextField txtNewBookTitle;
     public ComboBox<ItemCategory> cbNewItemCategory;
-    public ChoiceBox cbNewIsAvailable;
     public TextField txtNewIsbn;
     public Button btnFindBook;
     public Button btnUpdateBook;
@@ -35,8 +34,6 @@ public class EditItemController implements Initializable {
     public TableColumn clBookTitle;
     public TableColumn clBookId;
     public TextField txtBookId;
-    public TextField newAuthorLastName;
-    public TextField txtNewAuthorFirstName;
     public TableColumn clAuthorLastName;
     
     
@@ -51,6 +48,7 @@ public class EditItemController implements Initializable {
     public TextField txtNewDirector;
     public TextField txtNewOriginCountry;
     public TextField txtFilmId;
+    public TextArea atAuthors;
 
 
     protected BookController bookController;
@@ -77,16 +75,8 @@ public void initialize(URL location, ResourceBundle resources) {
         //related to books
         clBookTitle.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("title"));
         clBookId.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("invId"));
+        clAuthorLastName.setCellValueFactory(new PropertyValueFactory<Book, String>("authors"));
 
-
-
-        clAuthorLastName.setCellValueFactory(new PropertyValueFactory<Book, String>("lastName"));
-        clAuthorLastName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
-            @Override
-            public ObservableValue call(TableColumn.CellDataFeatures param) {
-                return null;
-            }
-        });
 
         cbNewItemCategory.setButtonCell(cbNewItemCategory.getCellFactory().call(null));
 
@@ -102,6 +92,7 @@ public void initialize(URL location, ResourceBundle resources) {
 
         //Related to films
         tcFilmTitle.setCellValueFactory(new PropertyValueFactory<Film, String>("title"));
+        tcFilmId.setCellValueFactory(new PropertyValueFactory<Film, Integer>("invId"));
 
         cbNewAgeLimit.getItems().addAll(17, 18, 20);
 
@@ -121,6 +112,17 @@ public void initialize(URL location, ResourceBundle resources) {
 
         //updateBook(txtNewBookTitle.getText(), txtNewIsbn.getText());
 
+        if(txtNewBookTitle.getText().isEmpty() || txtNewIsbn.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Cannot modify a book without the title and ISBN");
+            alert.showAndWait();
+            return;
+
+        }
+
+        else {
+
         EntityManager em = JpaPersistence.getEntityManager();
 
         EntityTransaction entityTransaction = null;
@@ -132,7 +134,7 @@ public void initialize(URL location, ResourceBundle resources) {
             Book book = em.find(Book.class, Integer.parseInt(txtNewIsbn.getText()));
             BookController bc = new BookController();
             bc.setBook(book);
-            bc.amendInformationBook(txtNewBookTitle.getText(), txtNewIsbn.getText(), newAuthorLastName.getText(), cbNewItemCategory.getValue());
+            bc.amendInformationBook(txtNewBookTitle.getText(), txtNewIsbn.getText(), atAuthors.getText(), cbNewItemCategory.getValue());
 
             entityTransaction.commit();
 
@@ -151,6 +153,7 @@ public void initialize(URL location, ResourceBundle resources) {
             throw e;
         }
 
+        }
     }
 
 
@@ -168,7 +171,6 @@ public void initialize(URL location, ResourceBundle resources) {
     @FXML
     public void handleMouseClicked(MouseEvent mouseEvent) {
 
-        //List<String> authors = new ArrayList<>(Arrays.asList(txtNewAuthorFirstName.getText().split("\n")));
 
         if (tblBooksFound.getSelectionModel().getSelectedItem() != null) {
             Book selectedBook = (Book) tblBooksFound.getSelectionModel().getSelectedItem();
@@ -183,8 +185,9 @@ public void initialize(URL location, ResourceBundle resources) {
 
 
             //cbNewItemCategory.setValue(selectedBook.getCategory());
-            //txtNewAuthorFirstName.setText(selectedBook.getAuthors());
-            newAuthorLastName.setText(selectedBook.getAuthors());
+
+
+            atAuthors.setText(selectedBook.getAuthors());
 
 
 
@@ -238,6 +241,18 @@ public void initialize(URL location, ResourceBundle resources) {
     }
 
     public void handleUpdateFilm(ActionEvent actionEvent) {
+
+        if(txtNewFilmTitle.getText().isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Cannot modify a film without the title ");
+            alert.showAndWait();
+            return;
+
+        }
+
+        else {
+
         EntityManager em = JpaPersistence.getEntityManager();
 
         EntityTransaction entityTransaction = null;
@@ -268,6 +283,7 @@ public void initialize(URL location, ResourceBundle resources) {
                 entityTransaction.rollback();
             throw e;
         }
+        }
 
     }
 
@@ -288,8 +304,7 @@ public void initialize(URL location, ResourceBundle resources) {
 
 
             //cbNewItemCategory.setValue(selectedFilm.getCategory());
-            //txtNewAuthorFirstName.setText(selectedFilm.getAuthors());
-            //newAuthorLastName.setText(selectedFilm.getAuthors());
+
 
         }
 

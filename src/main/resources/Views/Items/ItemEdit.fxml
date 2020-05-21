@@ -16,7 +16,7 @@
                           <columns>
                             <TableColumn fx:id="clBookTitle" prefWidth="75.0" text="Book title" />
                             <TableColumn fx:id="clBookId" prefWidth="75.0" text="Book ID" />
-                              <TableColumn fx:id="clAuthorLastName" prefWidth="106.0" text="Author last name" />
+                              <TableColumn fx:id="clAuthorLastName" prefWidth="106.0" text="Authors" />
                           </columns>
                         </TableView>
                         <TextField fx:id="txtSearchTitle" layoutX="14.0" layoutY="14.0" promptText="Book title" />
@@ -24,13 +24,10 @@
                         <TextField fx:id="txtNewBookTitle" layoutX="328.0" layoutY="84.0" promptText="Book title" />
                         <ComboBox fx:id="cbNewItemCategory" layoutX="328.0" layoutY="131.0" prefWidth="150.0" />
                         <Text layoutX="328.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Item category" />
-                        <ChoiceBox fx:id="cbNewIsAvailable" layoutX="327.0" layoutY="178.0" prefWidth="150.0" />
-                        <Text layoutX="328.0" layoutY="174.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Available" />
-                        <TextField fx:id="txtNewIsbn" layoutX="327.0" layoutY="218.0" promptText="ISBN" />
-                        <TextField fx:id="txtNewAuthorFirstName" layoutX="328.0" layoutY="257.0" promptText="Author first name" />
+                        <TextField fx:id="txtNewIsbn" layoutX="327.0" layoutY="168.0" promptText="ISBN" />
                         <Button fx:id="btnUpdateBook" layoutX="322.0" layoutY="326.0" mnemonicParsing="false" onAction="#handleMakeChanges" text="Update book" />
                         <Button fx:id="btnFindBook" layoutX="179.0" layoutY="51.0" mnemonicParsing="false" onAction="#handleFindBook" text="Find book" />
-                        <TextField fx:id="newAuthorLastName" layoutX="327.0" layoutY="289.0" promptText="Author last name" />
+                        <TextArea fx:id="atAuthors" layoutX="327.0" layoutY="202.0" prefHeight="60.0" prefWidth="149.0" promptText="Authors" />
                      </children></AnchorPane>
             </content>
           </Tab>

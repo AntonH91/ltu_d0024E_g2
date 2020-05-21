@@ -1,8 +1,10 @@
 package launchers;
 
 import dbbg2.data.inventory.Book;
+import dbbg2.data.inventory.Film;
 import dbbg2.data.inventory.InventoryItem;
 import dbbg2.data.inventory.itemCategory.ItemCategory;
+import dbbg2.data.inventory.itemCategory.ItemCategoryType;
 import dbbg2.data.users.Employee;
 import dbbg2.data.users.UserManager;
 import dbbg2.data.users.Visitor;
@@ -104,6 +106,7 @@ public class TestDataCreator {
 
     private static void createInventory(EntityManager em) {
         List<Book> books = new ArrayList<>();
+        List<Film> films = new ArrayList<>();
         List<ItemCategory> categories = em.createQuery("SELECT ic FROM ItemCategory ic", ItemCategory.class).getResultList();
 
         String[] keywords = {"Action", "Adventure", "Studying", "Science", "Weird", "Story", "Fantasy", "Egg", "Thriller"};
@@ -113,12 +116,21 @@ public class TestDataCreator {
         books.add(new Book("Emil", categories.get(1), true, "123", ("Astrid Lindgren")));
         books.add(new Book("Dexter", categories.get(3), true, "123", ("Jeff Lindsay")));
 
+        films.add(new Film("The Irishman", ItemCategoryType.FILM, true, "Martin Scorsese", 17, "USA"));
+
+
         int index = 0;
 
         for (Book b : books) {
             b.addCopy(String.valueOf(index), "A Shelf");
             index++;
             em.merge(b);
+        }
+
+        for (Film f : films) {
+            f.addCopy(String.valueOf(index), "Bottom shelf");
+            index++;
+            em.merge(f);
         }
 
     }
