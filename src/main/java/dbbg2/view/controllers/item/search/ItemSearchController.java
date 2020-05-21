@@ -3,7 +3,6 @@ package dbbg2.view.controllers.item.search;
 import dbbg2.data.inventory.Book;
 import dbbg2.data.inventory.InventoryItem;
 import dbbg2.data.inventory.InventoryManager;
-import dbbg2.data.inventory.Keyword;
 import dbbg2.data.inventory.itemCategory.ItemCategory;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -14,8 +13,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -84,7 +81,7 @@ public class ItemSearchController implements Initializable {
             public ObservableValue call(TableColumn.CellDataFeatures param) {
                 return null;
             }
-        })
+        });
 
         tcCategory.setCellValueFactory(new Callback<ListView<ItemCategory>, ListCell<ItemCategory>>(){
             @Override
