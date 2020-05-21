@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-
-<AnchorPane prefHeight="184.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dbbg2.controllers.Loans.LoanController">
-   <children>
-      <TableView layoutX="308.0" prefHeight="179.0" prefWidth="291.0">
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="184.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/10.0.2-internal" fx:controller="dbbg2.controllers.loans.LoanController">
+    <TableView layoutX="308.0" prefHeight="179.0" prefWidth="291.0">
         <columns>
-          <TableColumn prefWidth="292.0" text="Items to be returned" />
+            <TableColumn prefWidth="292.0" text="Items to be returned"/>
         </columns>
-      </TableView>
-      <TextArea layoutX="9.0" layoutY="36.0" prefHeight="2.0" prefWidth="291.0" text="Scan barcode to return item">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </TextArea>
-      <TextField layoutX="14.0" layoutY="104.0" prefHeight="25.0" prefWidth="155.0" promptText="Barcode" />
-      <Button layoutX="14.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="50.0" text="Add" />
-      <Button layoutX="70.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Finalize" />
-   </children>
+    </TableView>
+    <TextArea layoutX="9.0" layoutY="36.0" prefHeight="2.0" prefWidth="291.0" text="Scan barcode to return item">
+        <font>
+            <Font size="18.0"/>
+        </font>
+    </TextArea>
+    <TextField layoutX="14.0" layoutY="104.0" prefHeight="25.0" prefWidth="155.0" promptText="Barcode"/>
+    <Button layoutX="14.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="50.0" text="Add"/>
+    <Button layoutX="70.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Finalize"/>
 </AnchorPane>

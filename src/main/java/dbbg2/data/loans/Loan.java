@@ -63,6 +63,15 @@ public class Loan {
         return Collections.unmodifiableList(copyList);
     }
 
+    /**
+     * Gets a LoanCopy from the loan with the given barcode
+     *
+     * @param barcode The barcode to search for
+     * @return The LoanCopy or null if not found
+     */
+    public LoanCopy getCopyFromBarcode(String barcode) {
+        return loanedCopies.get(barcode);
+    }
 
     public Visitor getClient() {
         return client;

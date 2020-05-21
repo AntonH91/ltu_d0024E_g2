@@ -2,16 +2,16 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane prefHeight="376.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dbbg2.controllers.Loans.LoanController">
-    <children>
-        <TableView fx:id="tblUserList" prefHeight="196.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <columns>
-                <TableColumn fx:id="tcFirstName" prefWidth="75.0" text="First Name" />
-                <TableColumn fx:id="tcLastName" prefWidth="75.0" text="Last Name" />
-                <TableColumn fx:id="tcEmail" prefWidth="75.0" text="E-mail" />
-                <TableColumn fx:id="tcUserId" prefWidth="75.0" text="User ID" />
-            </columns>
-        </TableView>
-    </children>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="376.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/10.0.2-internal" fx:controller="dbbg2.controllers.loans.LoanController">
 
+    <TableView fx:id="tblUserList" prefHeight="196.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0"
+               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columns>
+            <TableColumn fx:id="tcFirstName" prefWidth="75.0" text="First Name"/>
+            <TableColumn fx:id="tcLastName" prefWidth="75.0" text="Last Name"/>
+            <TableColumn fx:id="tcEmail" prefWidth="75.0" text="E-mail"/>
+            <TableColumn fx:id="tcUserId" prefWidth="75.0" text="User ID"/>
+        </columns>
+    </TableView>
 </AnchorPane>

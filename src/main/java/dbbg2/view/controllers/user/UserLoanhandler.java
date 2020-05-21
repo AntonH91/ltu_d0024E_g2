@@ -1,6 +1,6 @@
 package dbbg2.view.controllers.user;
 
-import dbbg2.controllers.Loans.LoanController;
+import dbbg2.controllers.loans.LoanController;
 import dbbg2.data.users.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;

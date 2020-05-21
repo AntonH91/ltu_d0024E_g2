@@ -1,4 +1,4 @@
-package dbbg2.controllers.Loans.Exceptions;
+package dbbg2.controllers.loans.Exceptions;
 
 public class LoanException extends Exception {
     public LoanException(String message) {

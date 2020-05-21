@@ -1,8 +1,8 @@
-package dbbg2.controllers.Loans;
+package dbbg2.controllers.loans;
 
-import dbbg2.controllers.Loans.Exceptions.EmptyLoanException;
-import dbbg2.controllers.Loans.Exceptions.ItemNotLendableException;
-import dbbg2.controllers.Loans.Exceptions.TooManyItemsOnLoanException;
+import dbbg2.controllers.loans.Exceptions.EmptyLoanException;
+import dbbg2.controllers.loans.Exceptions.ItemNotLendableException;
+import dbbg2.controllers.loans.Exceptions.TooManyItemsOnLoanException;
 import dbbg2.data.genericexceptions.LibraryEntityNotFoundException;
 import dbbg2.data.inventory.InventoryCopy;
 import dbbg2.data.inventory.InventoryManager;
