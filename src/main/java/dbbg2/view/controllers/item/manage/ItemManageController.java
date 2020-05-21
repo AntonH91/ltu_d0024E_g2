@@ -191,7 +191,7 @@ public class ItemManageController implements Initializable {
 
 
         //Set choices for age limits when adding film
-        cbAgeLimits.getItems().addAll(17, 18, 20);
+        cbAgeLimits.getItems().addAll(0, 17, 18, 20);
 
         tcBookTitle.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("title"));
         tcInventoryId.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("authors"));
