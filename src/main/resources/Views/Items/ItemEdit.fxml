@@ -20,7 +20,7 @@
                           </columns>
                         </TableView>
                         <TextField fx:id="txtSearchTitle" layoutX="14.0" layoutY="14.0" promptText="Book title" />
-                        <TextField fx:id="txtBookId" layoutX="14.0" layoutY="51.0" />
+                        <TextField fx:id="txtAuthorsSearch" layoutX="14.0" layoutY="51.0" promptText="Author"/>
                         <TextField fx:id="txtNewBookTitle" layoutX="328.0" layoutY="84.0" promptText="Book title" />
                         <ComboBox fx:id="cbNewItemCategory" layoutX="328.0" layoutY="131.0" prefWidth="150.0" />
                         <Text layoutX="328.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Item category" />

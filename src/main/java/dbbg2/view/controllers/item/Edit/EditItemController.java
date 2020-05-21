@@ -2,9 +2,7 @@ package dbbg2.view.controllers.item.Edit;
 
 import dbbg2.data.inventory.*;
 import dbbg2.data.inventory.itemCategory.ItemCategory;
-import dbbg2.data.users.visitorcategory.VisitorCategory;
 import dbbg2.utils.persistence.JpaPersistence;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,7 +15,6 @@ import javafx.util.Callback;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.net.URL;
-import java.sql.PreparedStatement;
 import java.util.*;
 
 import static dbbg2.data.inventory.itemCategory.ItemCategoryType.*;
@@ -33,7 +30,7 @@ public class EditItemController implements Initializable {
     public TableView tblBooksFound;
     public TableColumn clBookTitle;
     public TableColumn clBookId;
-    public TextField txtBookId;
+    public TextField txtAuthorsSearch;
     public TableColumn clAuthorLastName;
     
     
@@ -165,7 +162,7 @@ public void initialize(URL location, ResourceBundle resources) {
 
 
     public void handleFindBook(ActionEvent actionEvent) {
-        tblBooksFound.setItems(FXCollections.observableArrayList(InventoryManager.getBooks(txtSearchTitle.getText(), txtBookId.getText())));
+        tblBooksFound.setItems(FXCollections.observableArrayList(InventoryManager.getBooks(txtSearchTitle.getText(), txtAuthorsSearch.getText())));
     }
 
     @FXML
