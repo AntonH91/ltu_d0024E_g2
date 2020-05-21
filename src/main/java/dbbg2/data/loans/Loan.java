@@ -18,28 +18,36 @@ public class Loan {
     private Visitor client;
 
 
-    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "parentLoan")
     @JoinColumn(name = "loan_id")
-    private final List<LoanCopies> loanedCopies = new ArrayList<>();
+    private final Map<String, LoanCopy> loanedCopies = new HashMap<>();
 
-    public void addCopy(LoanCopies copy) {
+    /**
+     * Adds an already created loancopy to this loan
+     *
+     * @param copy The loan copy to add
+     */
+    public void addCopy(LoanCopy copy) {
         // This needs to be on the Loan Controller
         //client.increaseLoanedItems(1);
-        loanedCopies.add(copy);
 
+        copy.setParentLoan(this);
+        loanedCopies.put(copy.getCopy().getBarcode(), copy);
     }
 
-    public void addCopy(InventoryCopy invCopy){
-        LoanCopies lc = new LoanCopies();
+    public void addCopy(InventoryCopy invCopy) {
+        LoanCopy lc = new LoanCopy();
         lc.setCopy(invCopy);
 
 
         // Calculate return date for item
         int lendingDays = invCopy.getItem().getCategory().getLendingDays();
+
         Date returnDate = new Date();
         Calendar c = Calendar.getInstance();
         c.setTime(returnDate);
         c.add(Calendar.DATE, lendingDays);
+
         returnDate = c.getTime();
 
 
@@ -48,8 +56,11 @@ public class Loan {
         this.addCopy(lc);
     }
 
-    public List<LoanCopies> getCopies(){
-        return Collections.unmodifiableList(this.loanedCopies);
+    public List<LoanCopy> getCopies() {
+        List<LoanCopy> copyList = new ArrayList<>(loanedCopies.size());
+        this.loanedCopies.forEach((s, loanCopy) -> copyList.add(loanCopy));
+
+        return Collections.unmodifiableList(copyList);
     }
 
 
@@ -61,10 +72,21 @@ public class Loan {
         this.client = client;
     }
 
-    public long getLoan_id() {
+    public long getLoanId() {
         return loan_id;
     }
-//Vart ska denna inventory copy någonstans?
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Loan loan = (Loan) o;
+        return loan_id == loan.loan_id &&
+                Objects.equals(client, loan.client);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(loan_id, client);
+    }
 }

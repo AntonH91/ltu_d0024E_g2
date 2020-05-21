@@ -4,9 +4,10 @@ import dbbg2.data.inventory.InventoryCopy;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
-public class LoanCopies {
+public class LoanCopy {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,6 +18,17 @@ public class LoanCopies {
 
     @Temporal(TemporalType.DATE)
     private Date returnDate;
+
+    @ManyToOne(targetEntity = dbbg2.data.loans.Loan.class)
+    private Loan parentLoan;
+
+    public Loan getParentLoan() {
+        return parentLoan;
+    }
+
+    public void setParentLoan(Loan parentLoan) {
+        this.parentLoan = parentLoan;
+    }
 
     private boolean returned = false;
     private boolean fined = false;
@@ -51,6 +63,23 @@ public class LoanCopies {
 
     public void setFined(boolean fined) {
         this.fined = fined;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LoanCopy loanCopy = (LoanCopy) o;
+        return loan_copy_id == loanCopy.loan_copy_id &&
+                returned == loanCopy.returned &&
+                fined == loanCopy.fined &&
+                Objects.equals(copy, loanCopy.copy) &&
+                Objects.equals(parentLoan, loanCopy.parentLoan);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(loan_copy_id, copy, parentLoan, returned, fined);
     }
 }
 

@@ -15,7 +15,7 @@
         <class>dbbg2.data.inventory.Film</class>
         <class>dbbg2.data.inventory.Book</class>
         <class>dbbg2.data.inventory.itemCategory.ItemCategory</class>
-        <class>dbbg2.data.loans.LoanCopies</class>
+        <class>dbbg2.data.loans.LoanCopy</class>
         <class>dbbg2.data.loans.Loan</class>
         <class>dbbg2.data.inventory.Keyword</class>
 

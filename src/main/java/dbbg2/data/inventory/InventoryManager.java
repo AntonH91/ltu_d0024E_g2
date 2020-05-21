@@ -1,6 +1,6 @@
 package dbbg2.data.inventory;
 
-import dbbg2.data.users.User;
+import dbbg2.data.genericexceptions.LibraryEntityNotFoundException;
 import dbbg2.utils.persistence.JpaPersistence;
 
 import javax.persistence.EntityManager;
@@ -18,11 +18,22 @@ public class InventoryManager {
         return invCopy;
     }
 
-    public static InventoryCopy getInventoryCopy(String barCode) throws NoResultException {
+    /**
+     * Fetches an inventorycopy with the given barcode.
+     *
+     * @param barCode The barcode to search for
+     * @return The found inventorycopy
+     * @throws LibraryEntityNotFoundException Thrown if there is no matching InventoryCopy
+     */
+    public static InventoryCopy getInventoryCopy(String barCode) throws LibraryEntityNotFoundException {
         EntityManager em = JpaPersistence.getEntityManager();
         TypedQuery<InventoryCopy> q = em.createQuery("SELECT ic FROM InventoryCopy ic WHERE ic.barcode =:barcode", InventoryCopy.class);
 
-        return q.setParameter("barcode", barCode).getSingleResult();
+        try {
+            return q.setParameter("barcode", barCode).getSingleResult();
+        } catch (NoResultException e) {
+            throw new LibraryEntityNotFoundException(String.format("Could not find Inventory Copy with barcode: %s", barCode));
+        }
 
 
     }

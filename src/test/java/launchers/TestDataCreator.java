@@ -74,7 +74,7 @@ public class TestDataCreator {
         e.setLastName("Geofferson");
         e.setPersonNr("123");
         e.setEmail("a@b.c");
-        e.setPassword("password1");
+        e.setPassword("pwd");
         UserManager.persistUser(e, em);
 
         Visitor v = new Visitor(categories.get(0));
@@ -82,7 +82,7 @@ public class TestDataCreator {
         v.setLastName("Lincoln");
         v.setPersonNr("321");
         v.setEmail("abe@example.com");
-        v.setPassword("password2");
+        v.setPassword("pwd");
         UserManager.persistUser(v, em);
 
         v = new Visitor(categories.get(1));
@@ -90,7 +90,7 @@ public class TestDataCreator {
         v.setLastName("Einstein");
         v.setPersonNr("321");
         v.setEmail("aeinstein@example.com");
-        v.setPassword("password3");
+        v.setPassword("pwd");
         UserManager.persistUser(v, em);
 
 
@@ -99,7 +99,7 @@ public class TestDataCreator {
         v.setLastName("Springsteen");
         v.setPersonNr("321");
         v.setEmail("ssteen@example.com");
-        v.setPassword("password4");
+        v.setPassword("pwd");
         UserManager.persistUser(v, em);
     }
 
@@ -112,8 +112,8 @@ public class TestDataCreator {
         String[] keywords = {"Action", "Adventure", "Studying", "Science", "Weird", "Story", "Fantasy", "Egg", "Thriller"};
 
         books.add(new Book("The Hobbit", categories.get(1), true, "123", ("JRR Tolkien")));
-        books.add(new Book("Harry Potter", categories.get(1), true, "123", ("JK Rowling")));
-        books.add(new Book("Emil", categories.get(1), true, "123", ("Astrid Lindgren")));
+        books.add(new Book("Harry Potter", categories.get(2), true, "123", ("JK Rowling")));
+        books.add(new Book("Emil", categories.get(2), true, "123", ("Astrid Lindgren")));
         books.add(new Book("Dexter", categories.get(3), true, "123", ("Jeff Lindsay")));
 
         films.add(new Film("The Irishman", ItemCategoryType.FILM, true, "Martin Scorsese", 17, "USA"));
@@ -161,7 +161,7 @@ public class TestDataCreator {
     private static void clearDatabase(EntityManager em) {
 
         String[] queries = {
-                "DELETE FROM LOANCOPIES;",
+                "DELETE FROM LOANCOPY;",
                 "DELETE FROM LOAN;",
                 "DELETE FROM Inventory_keyword;",
                 "DELETE FROM INVENTORYCOPY;",

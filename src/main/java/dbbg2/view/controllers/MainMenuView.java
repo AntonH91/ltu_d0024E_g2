@@ -151,7 +151,7 @@ public class MainMenuView implements Initializable, ParentController {
         ccUserController.setParentController(this);
 
         GenericStyler.loadSinglePaneWithoutController(achInventoryPane, "/Views/Items/ItemMaster.fxml");
-        GenericStyler.loadSinglePaneWithoutController(achLoanPane, "/Views/Overviewloansview.fxml");
+        GenericStyler.loadSinglePaneWithoutController(achLoanPane, "/Views/Loans/AddItemToLoanView.fxml");
 
 
     }
