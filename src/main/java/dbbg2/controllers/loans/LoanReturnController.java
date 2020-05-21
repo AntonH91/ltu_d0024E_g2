@@ -4,6 +4,7 @@ import dbbg2.controllers.loans.Exceptions.EmptyLoanException;
 import dbbg2.controllers.loans.Exceptions.ItemNotOnLoanException;
 import dbbg2.data.genericexceptions.LibraryEntityNotFoundException;
 import dbbg2.data.inventory.InventoryCopy;
+import dbbg2.data.inventory.InventoryItem;
 import dbbg2.data.loans.Loan;
 import dbbg2.data.loans.LoanCopy;
 import dbbg2.data.loans.LoanManager;
@@ -19,7 +20,33 @@ public class LoanReturnController {
     private final Set<LoanCopy> loanCopies = new HashSet<>();
     private boolean loanReturnFinalized = false;
 
-    public LoanReturnController() {
+
+    /**
+     * Print the receipt for the return
+     *
+     * @return The string representing the receipt of all returned items
+     */
+    public String getReturnReceipt() {
+        if (!loanReturnFinalized) {
+            throw new IllegalStateException("Cannot print receipt before return finalized.");
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(String.format("RETURN RECEIPT - %s\n", new Date().toString()));
+
+        for (LoanCopy loanCopy : loanCopies) {
+            Visitor v = loanCopy.getParentLoan().getClient();
+            InventoryItem i = loanCopy.getCopy().getItem();
+
+            sb.append(String.format("%-60s %-60s %-60s",
+                    v.getFirstName() + ' ' + v.getLastName(),
+                    i.getTitle(),
+                    loanCopy.getCopy().getBarcode()));
+
+        }
+
+        return sb.toString();
 
     }
 
@@ -80,7 +107,6 @@ public class LoanReturnController {
         }
         em.getTransaction().commit();
         loanReturnFinalized = true;
-        // TODO Print receipt
 
     }
 
@@ -103,9 +129,9 @@ public class LoanReturnController {
      * @return The list of loanCopies
      */
     public List<LoanCopy> getPendingLoanReturns() {
-        List<LoanCopy> results = new ArrayList<LoanCopy>(loanCopies.size());
+        List<LoanCopy> results = new ArrayList<>(loanCopies.size());
 
-        loanCopies.forEach(loanCopy -> results.add(loanCopy));
+        results.addAll(loanCopies);
 
         return Collections.unmodifiableList(results);
 
