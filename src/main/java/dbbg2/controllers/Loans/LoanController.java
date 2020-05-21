@@ -21,9 +21,33 @@ public class LoanController {
 
 
     // Accessors
+
+    /**
+     * Gets the current list of LoanCopies registered on the loan
+     *
+     * @return Null if there is no Loan on the object, otherwise an unmodifiable list of LoanCopies
+     */
     public List<LoanCopies> getLoanCopies() {
-        return Collections.unmodifiableList(loan.getCopies());
+        List<LoanCopies> result = null;
+        if (loan != null) {
+            result = Collections.unmodifiableList(loan.getCopies());
+        }
+        return result;
     }
+
+    /**
+     * Gets a count of the number of loaned items
+     *
+     * @return The amount of items currently registered on the loan.
+     */
+    public int getLoanCopyCount() {
+        int result = 0;
+        if (loan != null) {
+            result = loan.getCopies().size();
+        }
+        return result;
+    }
+
 
     /**
      * Checks if there is currently a loan started
@@ -33,6 +57,7 @@ public class LoanController {
     public boolean hasLoan() {
         return this.loan != null;
     }
+
 
     /**
      * Returns the client on the loan controller
