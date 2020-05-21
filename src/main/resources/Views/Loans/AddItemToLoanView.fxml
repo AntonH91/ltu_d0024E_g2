@@ -16,7 +16,7 @@
    <AnchorPane prefHeight="169.0" prefWidth="367.0">
       <TextField fx:id="txtBarcode" layoutX="24.0" layoutY="85.0" prefHeight="25.0" prefWidth="175.0"
                  promptText="Barcode"/>
-      <Button fx:id="addBarcode" layoutX="24.0" layoutY="113.0" mnemonicParsing="false" onAction="#handleAddClick"
+      <Button fx:id="btnAddBarcode" layoutX="24.0" layoutY="113.0" mnemonicParsing="false" onAction="#handleAddClick"
               prefHeight="25.0" prefWidth="47.0" text="Add"/>
       <Button fx:id="btnFinalize" layoutX="73.0" layoutY="113.0" mnemonicParsing="false"
               onAction="#handleFinalizeClick" prefHeight="25.0" prefWidth="126.0" text="Finalize"/>
