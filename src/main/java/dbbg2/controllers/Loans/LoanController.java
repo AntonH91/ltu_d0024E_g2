@@ -2,72 +2,37 @@ package dbbg2.controllers.Loans;
 
 import dbbg2.controllers.Loans.Exceptions.ItemNotLendableException;
 import dbbg2.controllers.Loans.Exceptions.TooManyItemsOnLoanException;
-import dbbg2.data.genericexceptions.LibraryEntityNotFoundException;
 import dbbg2.data.inventory.InventoryCopy;
 import dbbg2.data.inventory.InventoryManager;
 import dbbg2.data.loans.Loan;
 import dbbg2.data.loans.LoanCopies;
-import dbbg2.data.users.User;
-import dbbg2.data.users.UserManager;
 import dbbg2.data.users.Visitor;
 import dbbg2.utils.persistence.JpaPersistence;
-import javafx.event.ActionEvent;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 
-public class LoanController implements Initializable {
-    public static User user;
-    public static LoanController lc;
-    public Button btnFinalize;
-    public TextField txtBarcode;
-    public Button addBarcode;
+public class LoanController {
     private Visitor client;
     private Loan loan;
 
 
-    /*
-        1. Get user
-        2. Start new loan
-        3. Add user to loan
-        4. Get item
-        5. Add item to loan
-        6. Goto 4 if not done
-        7. Finalize loan
+    /**
+     * Adds a visitor to the active loan
+     *
+     * @param visitor The visitor to be added to the loan
+     * @throws IllegalStateException Thrown if an attempt is made to add a visitor before a loan is started, or if a visitor is attempted to be set when one already exists.
      */
-
-    public static void main(String[] args) {
-        lc = new LoanController();
-     /*  lc.startLoan();
-
-       try {
-            lc.getUser("aein3799", "pass");
-            user = AuthenticationManager.getCurrentlyLoggedInUser();
-        } catch (LibraryEntityNotFoundException e) {
-            e.printStackTrace();
+    public void setUser(Visitor visitor) throws IllegalStateException {
+        if (this.loan == null) {
+            throw new IllegalStateException("Loan is not yet initialized");
+        }
+        if (this.loan.getClient() != null) {
+            throw new IllegalStateException("A visitor is already added to the loan on this controller.");
         }
 
-
-        try {
-            lc.addItemToLoan("0");
-            lc.addItemToLoan("1");
-        } catch (ItemNotLendableException | TooManyItemsOnLoanException e) {
-            e.printStackTrace();
-        }
-
-        lc.finalizeLoan();
-
-*/
-    }
-
-    public void getUser(String userName, String pw) throws LibraryEntityNotFoundException, ClassCastException {
-        client = (Visitor) UserManager.getAuthenticatedUser(userName, pw);
+        client = visitor;
         loan.setClient(client);
 
 
@@ -88,24 +53,23 @@ public class LoanController implements Initializable {
     }
 
     /**
-     * Checks ifs book is available
+     * Aborts the currently on-going loan and removes the visitor from the controller
      *
-     * @param barcode The barcode of the potentially available book
-     * @return Returns lenable inventorycopy
-     * @throws ItemNotLendableException throws exception if item is not lendable
-     * @throws NoResultException        throws if item cannot be found
+     * @throws IllegalStateException
      */
-
-    public InventoryCopy getBookWithRightBarCode(String barcode) throws ItemNotLendableException, NoResultException {
-        InventoryCopy copy = InventoryManager.getInventoryCopy(barcode);
-        if (copy.getLendable() && !copy.getOnLoan()) {
-            return copy;
-        } else {
-            throw new ItemNotLendableException("Item is not lendable");
+    public void abortLoan() throws IllegalStateException {
+        if (this.loan == null) {
+            throw new IllegalStateException("A loan has not been started in this controller.");
         }
-
-
+        this.loan = null;
+        this.client = null;
     }
+
+    public void startLoan(Visitor v) throws IllegalStateException {
+        startLoan();
+        setUser(v);
+    }
+
 
     public void addItemToLoan(String barcode) throws ItemNotLendableException, TooManyItemsOnLoanException {
         if (client.getLoanedItems() + loan.getCopies().size() >= client.getCategory().getMaxLoanedAmount()) {
@@ -142,13 +106,13 @@ public class LoanController implements Initializable {
             throw e;
         }
     }
+
     //TODO
     //TODO 1. Find Loan
     //TODO 2. Find Loanedcopy
     //TODO 3. VisitorLoanedItems reduce by 1
     //TODO 4. Loanedcopy return as true
     //TODO 5. InvCopy is on loan = false
-
     public void returnItem(String barcode) {
         EntityManager em = JpaPersistence.getEntityManager();
 
@@ -158,34 +122,24 @@ public class LoanController implements Initializable {
         return loan.getCopies();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        // 1. Authenticate currently logged in user
-        // 2. Gives permission to use gui for user
+    /**
+     * Checks if book is available
+     *
+     * @param barcode The barcode of the potentially available book
+     * @return Returns lenable inventorycopy
+     * @throws ItemNotLendableException throws exception if item is not lendable
+     * @throws NoResultException        throws if item cannot be found
+     */
+    private InventoryCopy getBookWithRightBarCode(String barcode) throws ItemNotLendableException, NoResultException {
+        InventoryCopy copy = InventoryManager.getInventoryCopy(barcode);
+        if (copy.getLendable() && !copy.getOnLoan()) {
+            return copy;
+        } else {
+            throw new ItemNotLendableException("Item is not lendable");
+        }
 
-        // Subscribe to AuthenticationManager events
 
     }
 
-    // Java instanceof, Java casting,
-    public void handleAddClick(ActionEvent actionEvent) throws ItemNotLendableException {
 
-        /* 1. If loan not started, start one.
-           2. Checks user for permission to loan
-           2.1 Add user to loan
-           3.  Checks if book is available for user
-           4. If not, show error message
-           5 . if available, add book to info gui
-
-         */
-    }
-
-
-    public void handleFinalizeClick(ActionEvent actionEvent) {
-        /* 1. Takes all books/barcodes on tableview in GUI and adds them to the currently logged in user
-           2.
-           3. Update database of new loans made.
-           4. Print receipt
-        */
-    }
 }
