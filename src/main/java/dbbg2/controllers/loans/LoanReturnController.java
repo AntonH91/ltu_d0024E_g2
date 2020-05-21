@@ -46,7 +46,7 @@ public class LoanReturnController {
             Visitor v = loanCopy.getParentLoan().getClient();
             InventoryItem i = loanCopy.getCopy().getItem();
 
-            sb.append(String.format("%-60s %-60s %-60s",
+            sb.append(String.format("%-60s %-60s %-60s\n",
                     v.getFirstName() + ' ' + v.getLastName(),
                     i.getTitle(),
                     loanCopy.getCopy().getBarcode()));
@@ -92,6 +92,8 @@ public class LoanReturnController {
 
 
         try {
+            //Visitors to
+
             // Iterate loanCopies
             for (LoanCopy loanCopy : loanCopies) {
                 Visitor v = loanCopy.getParentLoan().getClient();
@@ -103,6 +105,7 @@ public class LoanReturnController {
                 loanCopy.setReturned(true);
                 em.merge(loanCopy);
 
+                v = em.find(Visitor.class, v.getUid());
                 v.setLoanedItems(v.getLoanedItems() - 1);
                 em.merge(v);
 

@@ -17,6 +17,7 @@ public abstract class User {
     @Index(unique = true)
     private String userId = "";
 
+
     @Basic(optional = false)
     private String personNr = "";
     @Basic(optional = false)
@@ -45,6 +46,10 @@ public abstract class User {
     public User(String userNameOverride) {
         super();
         this.userId = userNameOverride;
+    }
+
+    public long getUid() {
+        return uid;
     }
 
     /* ---------------------------

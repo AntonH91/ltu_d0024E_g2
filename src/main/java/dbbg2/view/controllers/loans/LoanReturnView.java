@@ -136,7 +136,7 @@ public class LoanReturnView implements Initializable {
             controller.finalizeReturn();
             ReceiptDialog rd = new ReceiptDialog(controller.getReturnReceipt());
             rd.setTitle("Return receipt");
-
+            updateControlState();
             rd.showAndWait();
 
         } catch (EmptyLoanException e) {

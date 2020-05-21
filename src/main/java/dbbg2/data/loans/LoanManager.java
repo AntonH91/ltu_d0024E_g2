@@ -79,8 +79,6 @@ public class LoanManager {
 
 
         try {
-            List<LoanCopy> lc = lq.setParameter("barcode", barcode).getResultList();
-            System.out.println("Found: " + lc.size());
             return lq.setParameter("barcode", barcode).getSingleResult();
         } catch (NoResultException e) {
             throw new LibraryEntityNotFoundException("No loan found for this barcode.");
