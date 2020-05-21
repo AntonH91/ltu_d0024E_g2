@@ -69,7 +69,6 @@ public void initialize(URL location, ResourceBundle resources) {
             }
         });
 
-        //related to books
         clBookTitle.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("title"));
         clBookId.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("invId"));
         clAuthorLastName.setCellValueFactory(new PropertyValueFactory<Book, String>("authors"));
@@ -85,9 +84,7 @@ public void initialize(URL location, ResourceBundle resources) {
 
 
         cbNewItemCategory.setItems(FXCollections.observableList(catArray));
-        //cbNewItemCategory.getItems().addAll(ItemCategory.getDefaultItemCategory(OTHER_BOOKS), ItemCategory.getDefaultItemCategory(FILM), ItemCategory.getDefaultItemCategory(REFERENCE_LITERATURE));
 
-        //Related to films
         tcFilmTitle.setCellValueFactory(new PropertyValueFactory<Film, String>("title"));
         tcFilmId.setCellValueFactory(new PropertyValueFactory<Film, Integer>("invId"));
 
@@ -103,11 +100,6 @@ public void initialize(URL location, ResourceBundle resources) {
 
     public void handleMakeChanges (ActionEvent actionEvent) {
 
-        //bookController.ammendInformationBook(txtNewBookTitle.getText(), txtNewIsbn.getText());
-
-        //saveBook();
-
-        //updateBook(txtNewBookTitle.getText(), txtNewIsbn.getText());
 
         if(txtNewBookTitle.getText().isEmpty() || txtNewIsbn.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -156,8 +148,6 @@ public void initialize(URL location, ResourceBundle resources) {
 
 
 
-        //updateBook(txtNewBookTitle.getText(), txtNewIsbn.getText());
-
 
 
 
@@ -178,10 +168,7 @@ public void initialize(URL location, ResourceBundle resources) {
 
             txtNewBookTitle.setText(selectedBook.getTitle());
             txtNewIsbn.setText(String.valueOf(selectedBook.getInvId()));
-            //Selectedbookg getCategory as parameter
 
-
-            //cbNewItemCategory.setValue(selectedBook.getCategory());
 
 
             atAuthors.setText(selectedBook.getAuthors());
@@ -192,32 +179,6 @@ public void initialize(URL location, ResourceBundle resources) {
 
     }
 
-    public void saveBook(){
-        //TODO fix author split
-        //List<String> authors = new ArrayList<>(Arrays.asList(txtAreaAuthor.getText().split("\n")));
-
-        //bookController.amendInformationBook(txtNewBookTitle.getText(), txtNewIsbn.getText());
-
-        //updateBook();
-
-        /*Set<Book> book = new HashSet<>();
-
-        bookController.ammendInformationBook(txtNewBookTitle.getText(),
-                //(ItemCategory) cbNewItemCategory.getSelectionModel().getSelectedItem(),
-                txtNewIsbn.getText());
-
-        bookController.saveChangesBook();*/
-    }
-
-
-    /*public void updateBook(String title, String isbn){
-
-        //bookController.amendInformationBook(title, isbn);
-        bookController.saveChanges();
-
-
-
-    }*/
 
     private void selectCategory(ItemCategory targetCategory) {
         if (targetCategory != null) {
@@ -297,10 +258,6 @@ public void initialize(URL location, ResourceBundle resources) {
             txtNewOriginCountry.setText(selectedFilm.getOriginCountry());
 
 
-            //Selectedbookg getCategory as parameter
-
-
-            //cbNewItemCategory.setValue(selectedFilm.getCategory());
 
 
         }
