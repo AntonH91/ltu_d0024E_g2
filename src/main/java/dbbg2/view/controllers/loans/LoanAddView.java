@@ -7,6 +7,10 @@ import dbbg2.data.loans.LoanCopies;
 import dbbg2.data.users.User;
 import dbbg2.data.users.Visitor;
 import dbbg2.utils.AuthenticationManager;
+import javafx.beans.InvalidationListener;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableStringValue;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -19,6 +23,8 @@ public class LoanAddView implements Initializable {
     public TextField txtBarcode;
     public Button btnAddBarcode;
     public TableView<LoanCopies> tblLoanItems;
+    public TableColumn<LoanCopies, String> tcItemTitle;
+    public TableColumn<LoanCopies, String> tcReturnDate;
 
 
     LoanController controller;
@@ -28,12 +34,85 @@ public class LoanAddView implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         controller = new LoanController();
-        AuthenticationManager.getAuthManager().addListener(event -> handleAuthenticationChanges());
-        // 1. Authenticate currently logged in user
-        // 2. Gives permission to use gui for user
 
         // Subscribe to AuthenticationManager events
+        AuthenticationManager.getAuthManager().addListener(event -> handleAuthenticationChanges());
+        handleAuthenticationChanges();
 
+        tcReturnDate.setCellValueFactory(param -> new ObservableStringValue() {
+            @Override
+            public String get() {
+                String result = null;
+                try {
+                    result = param.getValue().getReturnDate().toString();
+                } catch (NullPointerException ignored) {
+                }
+                return result;
+            }
+
+            @Override
+            public void addListener(ChangeListener<? super String> listener) {
+
+            }
+
+            @Override
+            public void removeListener(ChangeListener<? super String> listener) {
+
+            }
+
+            @Override
+            public String getValue() {
+                return get();
+            }
+
+            @Override
+            public void addListener(InvalidationListener listener) {
+
+            }
+
+            @Override
+            public void removeListener(InvalidationListener listener) {
+
+            }
+        });
+
+        tcItemTitle.setCellValueFactory(param -> new ObservableStringValue() {
+            @Override
+            public String get() {
+                String result = null;
+                try {
+                    result = param.getValue().getCopy().getItem().getTitle();
+                } catch (NullPointerException ignored) {
+
+                }
+                return result;
+            }
+
+            @Override
+            public void addListener(ChangeListener<? super String> listener) {
+
+            }
+
+            @Override
+            public void removeListener(ChangeListener<? super String> listener) {
+
+            }
+
+            @Override
+            public String getValue() {
+                return get();
+            }
+
+            @Override
+            public void addListener(InvalidationListener listener) {
+
+            }
+
+            @Override
+            public void removeListener(InvalidationListener listener) {
+
+            }
+        });
     }
 
     // Java instanceof, Java casting,
@@ -82,6 +161,9 @@ public class LoanAddView implements Initializable {
     public void updateControlStates() {
         btnFinalize.setDisable(!userCanLoanBooks && controller.getLoanCopyCount() > 0);
         btnAddBarcode.setDisable(!userCanLoanBooks);
+
+        tblLoanItems.setItems(FXCollections.observableList(controller.getLoanCopies()));
+
     }
 
     /**
@@ -95,6 +177,7 @@ public class LoanAddView implements Initializable {
         updateControlStates();
 
     }
+
 
     /**
      * Initializes a loan based on what's currently in the AuthenticationManager
