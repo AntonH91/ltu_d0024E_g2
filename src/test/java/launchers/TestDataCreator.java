@@ -72,7 +72,7 @@ public class TestDataCreator {
         e.setLastName("Geofferson");
         e.setPersonNr("123");
         e.setEmail("a@b.c");
-        e.setPassword("password1");
+        e.setPassword("pwd");
         UserManager.persistUser(e, em);
 
         Visitor v = new Visitor(categories.get(0));
@@ -80,7 +80,7 @@ public class TestDataCreator {
         v.setLastName("Lincoln");
         v.setPersonNr("321");
         v.setEmail("abe@example.com");
-        v.setPassword("password2");
+        v.setPassword("pwd");
         UserManager.persistUser(v, em);
 
         v = new Visitor(categories.get(1));
@@ -88,7 +88,7 @@ public class TestDataCreator {
         v.setLastName("Einstein");
         v.setPersonNr("321");
         v.setEmail("aeinstein@example.com");
-        v.setPassword("password3");
+        v.setPassword("pwd");
         UserManager.persistUser(v, em);
 
 
@@ -97,7 +97,7 @@ public class TestDataCreator {
         v.setLastName("Springsteen");
         v.setPersonNr("321");
         v.setEmail("ssteen@example.com");
-        v.setPassword("password4");
+        v.setPassword("pwd");
         UserManager.persistUser(v, em);
     }
 
