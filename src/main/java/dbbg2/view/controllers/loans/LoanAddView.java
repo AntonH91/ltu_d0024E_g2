@@ -1,5 +1,6 @@
 package dbbg2.view.controllers.loans;
 
+import dbbg2.controllers.Loans.Exceptions.EmptyLoanException;
 import dbbg2.controllers.Loans.Exceptions.ItemNotLendableException;
 import dbbg2.controllers.Loans.Exceptions.TooManyItemsOnLoanException;
 import dbbg2.controllers.Loans.LoanController;
@@ -147,14 +148,23 @@ public class LoanAddView implements Initializable {
            3. Update database of new loans made.
            4. Print receipt
         */
+        try {
+            controller.finalizeLoan();
+            // TODO Display receipt on-screen.
+            updateControlStates();
+        } catch (EmptyLoanException e) {
+            showErrorMessage("Cannot finalize loan without any items!");
+        }
+
+
     }
 
     /**
      * Updates the control states on the form based on the logged in user and properties of the loan
      */
     public void updateControlStates() {
-        btnFinalize.setDisable(!userCanLoanBooks || controller.getLoanCopyCount() == 0);
-        btnAddBarcode.setDisable(!userCanLoanBooks);
+        btnFinalize.setDisable(!userCanLoanBooks || controller.getLoanCopyCount() == 0 || controller.isLoanFinalized());
+        btnAddBarcode.setDisable(!userCanLoanBooks || controller.isLoanFinalized());
 
         tblLoanItems.setItems(FXCollections.observableList(controller.getLoanCopies()));
 
