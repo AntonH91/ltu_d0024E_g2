@@ -88,7 +88,7 @@ public void initialize(URL location, ResourceBundle resources) {
         tcFilmTitle.setCellValueFactory(new PropertyValueFactory<Film, String>("title"));
         tcFilmId.setCellValueFactory(new PropertyValueFactory<Film, Integer>("invId"));
 
-        cbNewAgeLimit.getItems().addAll(17, 18, 20);
+        cbNewAgeLimit.getItems().addAll(0, 17, 18, 20);
 
 
     }

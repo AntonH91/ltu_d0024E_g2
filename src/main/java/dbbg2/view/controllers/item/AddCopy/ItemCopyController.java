@@ -33,7 +33,6 @@ public class ItemCopyController implements Initializable {
     public Button btnFindItem;
 
     public TextField txtRmItemTitle;
-    public TextField txtRmItemId;
     public TextField txtCfCid;
     public TextField txtCfItemId;
     public TextField txtBarcodeFound;
@@ -61,7 +60,7 @@ public class ItemCopyController implements Initializable {
         else {
 
         List<InventoryCopy> copy = new ArrayList<>();
-        InventoryItem ii = InventoryManager.getItemCopy(txtItemNameSearch.getText(), Integer.parseInt(txtItemIdFound.getText()));
+        InventoryItem ii = InventoryManager.getItemCopy(Integer.parseInt(txtItemIdFound.getText()));
 
         copy.add(new InventoryCopy(txtBarcode.getText(), txtCopyLocation.getText(), true, ii));
 
@@ -84,13 +83,8 @@ public class ItemCopyController implements Initializable {
             alert.setContentText("A copy has been created");
             alert.showAndWait();
 
-            txtBarcode.clear();
-            txtCopyLocation.clear();
-            txtItemNameSearch.clear();
-            txtItemIdFound.clear();
-            txtItemNameFound.clear();
 
-            tblItemView.setItems(FXCollections.observableArrayList(InventoryManager.getBooks(txtItemNameSearch.getText(), txtItemIdSearch.getText())));
+            //tblItemView.setItems(FXCollections.observableArrayList(InventoryManager.test2GetItemTitleCopies(txtItemNameSearch.getText())));
 
             return;
 
@@ -99,7 +93,9 @@ public class ItemCopyController implements Initializable {
     }
 
     public void handleFindItem(ActionEvent actionEvent) {
-        tblItemView.setItems(FXCollections.observableArrayList(InventoryManager.getBooks(txtItemNameSearch.getText(), txtItemIdSearch.getText())));
+        tblItemView.setItems(FXCollections.observableArrayList(InventoryManager.getInventoryItems(txtItemNameSearch.getText())));
+
+        //tbItemFound.setItems(FXCollections.observableArrayList(InventoryManager.test2GetItemTitleCopies(txtRmItemTitle.getText())));
     }
 
 
@@ -130,9 +126,9 @@ public class ItemCopyController implements Initializable {
 
     public void handleTableViewMouseClickedAction(MouseEvent mouseEvent) {
         if(tblItemView.getSelectionModel().getSelectedItem() !=null){
-            Book selectedBook = (Book) tblItemView.getSelectionModel().getSelectedItem();
-            txtItemNameFound.setText(selectedBook.getTitle());
-            txtItemIdFound.setText(String.valueOf(selectedBook.getInvId()));
+            InventoryItem selectedItem = (InventoryItem) tblItemView.getSelectionModel().getSelectedItem();
+            txtItemNameFound.setText(selectedItem.getTitle());
+            txtItemIdFound.setText(String.valueOf(selectedItem.getInvId()));
         }
 
     }
@@ -140,7 +136,7 @@ public class ItemCopyController implements Initializable {
 
     public void handleFindCopy(ActionEvent actionEvent) {
 
-        tbItemFound.setItems(FXCollections.observableArrayList(InventoryManager.test2GetItemTitleCopies(txtRmItemId.getText(), txtRmItemTitle.getText())));
+        tbItemFound.setItems(FXCollections.observableArrayList(InventoryManager.test2GetItemTitleCopies(txtRmItemTitle.getText())));
 
 
     }
@@ -165,11 +161,10 @@ public class ItemCopyController implements Initializable {
             alert.setContentText("The Copy has been removed");
             alert.showAndWait();
 
-            txtRmItemId.clear();
             txtRmItemTitle.clear();
             txtCfCid.clear();
             txtBarcodeFound.clear();
-            tbItemFound.setItems(FXCollections.observableArrayList(InventoryManager.test2GetItemTitleCopies(txtRmItemId.getText(), txtRmItemTitle.getText())));
+            tbItemFound.setItems(FXCollections.observableArrayList(InventoryManager.test2GetItemTitleCopies(txtRmItemTitle.getText())));
 
             return;
 
