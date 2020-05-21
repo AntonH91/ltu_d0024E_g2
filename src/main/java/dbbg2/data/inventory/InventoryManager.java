@@ -38,32 +38,16 @@ public class InventoryManager {
 
     }
 
-    public static List<InventoryItem> getInventoryItems(String title, String inventoryId) {
+    public static List<InventoryItem> getInventoryItems(String title) {
         EntityManager em = JpaPersistence.getEntityManager();
-        TypedQuery<InventoryItem> q = em.createQuery("select i from Inventory i where (i.title = :title or :title = '') " +
-                "and (i.inventoryId = :inventoryId or :inventoryId = '') ", InventoryItem.class);
+        TypedQuery<InventoryItem> q = em.createQuery("select i from Inventory i " +
+                "WHERE (i.title = :title or :title = '') "
+                , InventoryItem.class);
 
         q.setParameter("title", title);
-        q.setParameter("inventoryId", inventoryId);
         return q.getResultList();
     }
 
-    public static List<InventoryItem> getInventoryItems(String inventoryId, String title, String category) {
-        EntityManager em = JpaPersistence.getEntityManager();
-        TypedQuery<InventoryItem> q = em.createQuery("SELECT i FROM Inventory i " +
-                "WHERE (i.inventoryId = :inventoryId or :inventoryId = '') " +
-                "AND (i.title = :title or :title = '') " +
-                //"AND (i.keyword = :keyword or :keyword = '') " +
-                "AND (i.category = :category or :category = '') ", InventoryItem.class);
-
-
-        q.setParameter("inventoryId", inventoryId);
-        q.setParameter("title", title);
-        //q.setParameter("keyword", keyword);
-        q.setParameter("category", category);
-
-        return q.getResultList();
-    }
 
     public static List<Book> getBooks(String title, String authors) {
         EntityManager em = JpaPersistence.getEntityManager();
@@ -98,7 +82,7 @@ public class InventoryManager {
     public static List<Film> getFilms(String title, String originCountry, String director) {
         EntityManager em = JpaPersistence.getEntityManager();
         TypedQuery<Film> q = em.createQuery("select f from Film f " +
-                        "WHERE (f.title = LIKE :title or :title = '') " +
+                        "WHERE (f.title = :title or :title = '') " +
                         "AND (f.originCountry = :originCountry or :originCountry = '') " +
                         "AND (f.director = :director or :director = '') "
 
@@ -116,15 +100,15 @@ public class InventoryManager {
     }
 
 
-    public static InventoryItem getItemCopy(String title, int invId) {
+    public static InventoryItem getItemCopy(int invId) {
         EntityManager em = JpaPersistence.getEntityManager();
         TypedQuery<InventoryItem> q = em.createQuery("select ii from Inventory ii " +
-                        "WHERE (ii.title = :title or :title = '') " +
-                        "AND (ii.invId = :invId) "
+                        "WHERE (ii.invId = :invId) "
+                        //"AND (ii.invId = :invId) "
                 //"AND (b.category = :category or :category = '')"
                 , InventoryItem.class);
 
-        q.setParameter("title", title);
+        //q.setParameter("title", title);
         q.setParameter("invId", invId);
         //q.setParameter("inventoryId", inventoryId);
         //q.setParameter("category", ItemCategory.getDefaultItemCategory(category).getItemCategoryTitle());
@@ -152,11 +136,11 @@ public class InventoryManager {
     }
 
 
-    public static List<InventoryCopy> test2GetItemTitleCopies(String barcode, String title) {
+    public static List<InventoryCopy> test2GetItemTitleCopies(String title) {
         EntityManager em = JpaPersistence.getEntityManager();
         TypedQuery<InventoryCopy> q = em.createQuery("SELECT ic FROM InventoryCopy ic LEFT JOIN ic.item ii " +
-                        "WHERE (ic.barcode = :barcode or :barcode = '') " +
-                        "AND (ii.title = :title or :title = '') "
+                        "WHERE (ii.title = :title or :title = '') "
+
 
                 //" WHERE  ic.Inventory_ID = :invId"
                 //"AND (ii.title = :title or :title = '') "
@@ -164,7 +148,7 @@ public class InventoryManager {
                 //"AND (b.category = :category or :category = '')"
                 , InventoryCopy.class);
 
-        q.setParameter("barcode", barcode);
+        //q.setParameter("barcode", barcode);
         q.setParameter("title", title);
         //q.setParameter("Inventory_ID", invId);
         //q.setParameter("inventoryId", inventoryId);

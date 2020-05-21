@@ -117,6 +117,7 @@ public class TestDataCreator {
         books.add(new Book("Dexter", categories.get(3), true, "123", ("Jeff Lindsay")));
 
         films.add(new Film("The Irishman", ItemCategoryType.FILM, true, "Martin Scorsese", 17, "USA"));
+        films.add(new Film("Snabba Cash", ItemCategoryType.FILM, true, "Daniel Espinosa", 17, "Sverige"));
 
 
         int index = 0;
