@@ -6,16 +6,16 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="169.0" prefWidth="605.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dbbg2.controllers.Loans.LoanController">
    <children>
-      <TableView layoutX="368.0" prefHeight="169.0" prefWidth="238.0">
+      <TableView fx:id="btnItemToRegisterToLoan" layoutX="368.0" prefHeight="169.0" prefWidth="238.0">
         <columns>
           <TableColumn prefWidth="244.0" text="Items to register loan" />
         </columns>
       </TableView>
       <AnchorPane prefHeight="169.0" prefWidth="367.0">
          <children>
-            <TextField fx:id="txtBarcode" layoutX="24.0" layoutY="85.0"  prefHeight="25.0" prefWidth="175.0" promptText="Barcode" />
+            <TextField fx:id="txtBarcode" layoutX="24.0" layoutY="85.0" prefHeight="25.0" prefWidth="175.0" promptText="Barcode" />
             <Button fx:id="addBarcode" layoutX="24.0" layoutY="113.0" mnemonicParsing="false" onAction="#handleAddClick" prefHeight="25.0" prefWidth="47.0" text="Add" />
-            <Button layoutX="73.0" layoutY="113.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="126.0" text="Finalize" />
+            <Button fx:id="btnFinalize" layoutX="73.0" layoutY="113.0" mnemonicParsing="false" onAction="#handleFinalizeClick" prefHeight="25.0" prefWidth="126.0" text="Finalize" />
             <Text layoutX="24.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add barcode for item" wrappingWidth="175.00000503659248">
                <font>
                   <Font size="18.0" />

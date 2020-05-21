@@ -30,10 +30,13 @@ import javafx.scene.control.TextField;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class LoanController   {
+public class LoanController implements Initializable {
+    public Button btnFinalize;
     private Visitor client;
     private Loan loan;
     public static User user;
@@ -41,41 +44,6 @@ public class LoanController   {
 
     public TextField txtBarcode;
     public Button addBarcode;
-
-
-
-    public void handleAddClick(ActionEvent actionEvent) {
-        lc.startLoan();
-
-        if (client.isAuthenticated() == false) {
-            return;
-        }
-        //loan.setClient(user);
-
-        try {
-        InventoryCopy item = getBookWithRightBarCode(txtBarcode.getText());
-        }
-        catch (ItemNotLendableException e) {
-            e.printStackTrace();
-        }
-        try {
-            addItemToLoan(txtBarcode.getText());
-        } catch (ItemNotLendableException e) {
-            e.printStackTrace();
-        } catch (TooManyItemsOnLoanException e) {
-            e.printStackTrace();
-        }
-        try {
-            finalizeLoan();
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-
-
-
 
 
     /*
@@ -88,7 +56,7 @@ public class LoanController   {
         7. Finalize loan
      */
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         lc = new LoanController();
      /*  lc.startLoan();
 
@@ -199,6 +167,7 @@ public class LoanController   {
         EntityManager em = JpaPersistence.getEntityManager();
 
 
+
     }
 
     public LoanCopies getLoan(String barcode) {
@@ -212,5 +181,74 @@ public class LoanController   {
 
     public List<LoanCopies> getLoans() {
         return loan.getCopies();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        AuthenticationManager.getAuthManager().addListener();
+         // 1. Authenticate currently logged in user
+        // 2. Gives permission to use gui for user
+    }
+     // Java instanceof, Java casting,
+    public void handleAddClick(ActionEvent actionEvent) throws ItemNotLendableException {
+        startLoan();
+        AuthenticationManager.getAuthManager().userCanLoanBooks();
+        getUser();
+        getBookWithRightBarCode(txtBarcode.getText());
+
+
+
+
+
+        /* 1. If loan not started, start one.
+           2. Checks user for permission to loan
+           2.1 Add user to loan
+           3.  Checks if book is available for user
+           4. If not, show error message
+           5 . if available, add book to info gui
+
+         */
+
+        if {
+            AuthenticationManager.getAuthManager().userCanLoanBooks() = true
+
+
+
+
+
+    }/*
+      lc.startLoan();
+
+        if (client.isAuthenticated() == false) {
+            return;
+        }
+        //loan.setClient(user);
+
+        try {
+    /       InventoryCopy item = getBookWithRightBarCode(txtBarcode.getText());
+        } catch (ItemNotLendableException e) {
+            e.printStackTrace();
+        }
+        try {
+            addItemToLoan(txtBarcode.getText());
+        } catch (ItemNotLendableException e) {
+            e.printStackTrace();
+        } catch (TooManyItemsOnLoanException e) {
+            e.printStackTrace();
+        }
+        try {
+            finalizeLoan();
+        } catch (Exception e) {
+            e.printStackTrace();
+      */  }
+    }
+
+
+    public void handleFinalizeClick(ActionEvent actionEvent) {
+        /* 1. Takes all books/barcodes on tableview in GUI and adds them to the currently logged in user
+           2.
+           3. Update database of new loans made.
+           4. Print receipt
+        */
     }
 }
