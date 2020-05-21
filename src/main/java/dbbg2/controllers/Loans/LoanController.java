@@ -21,7 +21,14 @@ public class LoanController {
     private Loan loan;
 
 
+    private boolean loanFinalized = false;
+
     // Accessors
+
+
+    public boolean isLoanFinalized() {
+        return loanFinalized;
+    }
 
     /**
      * Gets the current list of LoanCopy registered on the loan
@@ -118,6 +125,7 @@ public class LoanController {
         }
         this.loan = null;
         this.client = null;
+        loanFinalized = false;
     }
 
     public void startLoan(Visitor v) throws IllegalStateException {
@@ -166,17 +174,24 @@ public class LoanController {
         //TODO mark item "isAvailable"
 
         try {
+            // Mark all loaned items as "On Loan"
             for (LoanCopy ic : loan.getCopies()) {
                 ic.getCopy().setOnLoan(true);
                 em.merge(ic.getCopy());
             }
 
+            // Update the count of loaned items on the client
             client.setLoanedItems(client.getLoanedItems() + loan.getCopies().size());
-
             client = em.merge(client);
+
+            // Save the loan into the database
             em.persist(loan);
 
+            // Commit everything
             em.getTransaction().commit();
+
+            // Lock this controller for further loans
+            loanFinalized = true;
         } catch (Exception e) {
             e.printStackTrace();
             em.getTransaction().rollback();
@@ -223,6 +238,11 @@ public class LoanController {
         if (this.client == null) {
             throw new IllegalStateException("LoanController does not currently have a client.");
         }
+
+        if (loanFinalized) {
+            throw new IllegalStateException("LoanController has already finalized this loan.");
+        }
+
     }
 
 }
