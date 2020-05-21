@@ -5,6 +5,7 @@ import dbbg2.data.inventory.InventoryItem;
 import dbbg2.data.inventory.InventoryManager;
 import dbbg2.data.inventory.Keyword;
 import dbbg2.data.inventory.itemCategory.ItemCategory;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -39,11 +40,21 @@ public class ItemSearchController implements Initializable {
     public TableColumn tcInventoryId;
     //public TableColumn tcDirector;
 
+    //Film search info
     public Button btnSearchBook;
+    public Button btnClearFilmText;
+    public Button btnSearchFilm;
+    public TextField txFilmTitle;
+    public TableColumn tcFilmDirector;
+    public TableColumn tcFilmTitle;
+    public TableColumn tcFilmId;
+    public TableView tbFilmList;
+    public TextField txtOriginCountry;
+    public TableColumn tcCountryFilm;
 
 
     public void handleSearchBookClick(ActionEvent actionEvent) {
-        tblBookList.setItems(FXCollections.observableArrayList(InventoryManager.getBooks(txtItemTitle.getText(), txtItemId.getText())));
+        tblBookList.setItems(FXCollections.observableArrayList(InventoryManager.getBooks(txtItemTitle.getText(), txtAuthor.getText())));
     }
 
     //ItemCategory.getDefaultItemCategory(OTHER_BOOKS).getItemCategoryTitle()
@@ -52,14 +63,30 @@ public class ItemSearchController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
 
+        //Column values for books
         tcTitle.setCellValueFactory(new PropertyValueFactory <InventoryItem, String>("title"));
         tcCategory.setCellValueFactory(new PropertyValueFactory<ItemCategory, String>("category"));
-        tcKeyword.setCellValueFactory(new PropertyValueFactory<Keyword, String>("keyword"));
-        tcInventoryId.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("inventoryId"));
-        tcAuthor.setCellValueFactory(new PropertyValueFactory<Book, String>("author"));
+        //tcKeyword.setCellValueFactory(new PropertyValueFactory<Keyword, String>("keyword"));
+        tcInventoryId.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("invId"));
+        tcAuthor.setCellValueFactory(new PropertyValueFactory<Book, String>("authors"));
 
 
-        /*tcCategory.setCellValueFactory(new Callback<ListView<ItemCategory>, ListCell<ItemCategory>>(){
+        //Column values for films
+        tcFilmDirector.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("director"));
+        tcFilmTitle.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("title"));
+        tcFilmId.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("invId"));
+        tcCountryFilm.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("originCountry"));
+
+
+
+        tcCategory.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
+            @Override
+            public ObservableValue call(TableColumn.CellDataFeatures param) {
+                return null;
+            }
+        })
+
+        tcCategory.setCellValueFactory(new Callback<ListView<ItemCategory>, ListCell<ItemCategory>>(){
             @Override
             public ListCell<ItemCategory> call(ListView<ItemCategory> param) {
                 return new ListCell<ItemCategory>(){
@@ -74,17 +101,27 @@ public class ItemSearchController implements Initializable {
                     }
                 };
             }
-        });*/
+        });
     }
 
     public void handleClearText(ActionEvent actionEvent) {
-        txtItemId.clear();
         txtItemTitle.clear();
         txtAuthor.clear();
-        txtCategory.clear();
-        txtKeyword.clear();
-        txtDirector.clear();
     }
 
+    public void handleSearchFilmClick(ActionEvent actionEvent) {
+        //tbFilmList.setItems(FXCollections.observableArrayList(InventoryManager.getFilms(txFilmTitle.getText())));
+
+        tbFilmList.setItems(FXCollections.observableArrayList(InventoryManager.getFilms(txFilmTitle.getText(), txtOriginCountry.getText(), txtDirector.getText())));
+
+        //String title, String originCountry, Integer invId, Integer ageLimit
+
+    }
+
+    public void handleClearTextFilm(ActionEvent actionEvent) {
+        txFilmTitle.clear();
+        txtOriginCountry.clear();
+        txtDirector.clear();
+    }
 
 }

@@ -54,16 +54,18 @@ public class InventoryManager {
         return q.getResultList();
     }
 
-    public static List<Book> getBooks(String title, String inventoryId) {
+    public static List<Book> getBooks(String title, String authors) {
         EntityManager em = JpaPersistence.getEntityManager();
         TypedQuery<Book> q = em.createQuery("select b from Book b " +
                         "WHERE (b.title = :title or :title = '') " +
-                        "AND (b.inventoryId = :inventoryId or :inventoryId = '') "
+                        "AND (b.authors = :authors or :authors = '') "
                 //"AND (b.category = :category or :category = '')"
                 , Book.class);
 
+        //c.place like %:place%")
+
         q.setParameter("title", title);
-        q.setParameter("inventoryId", inventoryId);
+        q.setParameter("authors", authors);
         //q.setParameter("category", ItemCategory.getDefaultItemCategory(category).getItemCategoryTitle());
 
         return q.getResultList();
@@ -77,6 +79,24 @@ public class InventoryManager {
                 , Film.class);
 
         q.setParameter("title", title);
+        //q.setParameter("category", ItemCategory.getDefaultItemCategory(category).getItemCategoryTitle());
+
+        return q.getResultList();
+    }
+
+    public static List<Film> getFilms(String title, String originCountry, String director) {
+        EntityManager em = JpaPersistence.getEntityManager();
+        TypedQuery<Film> q = em.createQuery("select f from Film f " +
+                        "WHERE (f.title = :title or :title = '') " +
+                        "AND (f.originCountry = :originCountry or :originCountry = '') " +
+                        "AND (f.director = :director or :director = '') "
+
+                //"AND (b.category = :category or :category = '')"
+                , Film.class);
+
+        q.setParameter("title", title);
+        q.setParameter("originCountry", originCountry);
+        q.setParameter("director", director);
         //q.setParameter("category", ItemCategory.getDefaultItemCategory(category).getItemCategoryTitle());
 
         return q.getResultList();
