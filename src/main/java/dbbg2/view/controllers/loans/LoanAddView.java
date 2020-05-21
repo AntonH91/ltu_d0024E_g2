@@ -153,9 +153,8 @@ public class LoanAddView implements Initializable {
      * Updates the control states on the form based on the logged in user and properties of the loan
      */
     public void updateControlStates() {
-        btnFinalize.setDisable(!userCanLoanBooks && controller.getLoanCopyCount() > 0);
+        btnFinalize.setDisable(!userCanLoanBooks || controller.getLoanCopyCount() == 0);
         btnAddBarcode.setDisable(!userCanLoanBooks);
-
 
         tblLoanItems.setItems(FXCollections.observableList(controller.getLoanCopies()));
 
