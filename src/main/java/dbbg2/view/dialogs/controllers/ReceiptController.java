@@ -12,7 +12,6 @@ public class ReceiptController implements Initializable {
     public TextArea txtReceipt;
 
     public void initialize(URL location, ResourceBundle resources) {
-        txtReceipt.getScene().getWindow().setOnCloseRequest(event -> txtReceipt.getScene().getWindow().hide());
     }
 
 }

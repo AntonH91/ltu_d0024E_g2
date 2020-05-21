@@ -79,19 +79,19 @@ public class LoanController {
     }
 
     public String generateReceipt() {
-        /*
-        if(!this.loanFinalized) {
+
+        if (!this.loanFinalized) {
             throw new IllegalStateException("Cannot generate receipt before loan is finalized.");
         }
-        */
 
-        String header = String.format("User: %60s, Date:%30s\n\n", client.getFirstName() + ' ' + client.getLastName(), new Date().toString());
+
+        String header = String.format("User: %-60s, Date: %-30s\n\n", client.getFirstName() + ' ' + client.getLastName(), new Date().toString());
 
         StringBuilder receiptBuilder = new StringBuilder();
 
         receiptBuilder.append(header);
         for (LoanCopy lc : loan.getCopies()) {
-            receiptBuilder.append(String.format("Title: %60s, Return: %30s\n", lc.getCopy().getItem().getTitle(), lc.getReturnDate()));
+            receiptBuilder.append(String.format("Title: %-60s Return: %-30s\n", lc.getCopy().getItem().getTitle(), lc.getReturnDate()));
         }
 
         return receiptBuilder.toString();
