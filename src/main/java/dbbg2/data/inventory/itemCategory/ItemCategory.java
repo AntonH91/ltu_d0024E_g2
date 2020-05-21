@@ -3,9 +3,11 @@ package dbbg2.data.inventory.itemCategory;
 
 import dbbg2.data.inventory.InventoryCopy;
 import dbbg2.data.inventory.InventoryItem;
+import dbbg2.data.users.visitorcategory.VisitorCategory;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -70,4 +72,18 @@ public class ItemCategory {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ItemCategory that = (ItemCategory) o;
+        return lendingDays == that.lendingDays &&
+                isLendable == that.isLendable &&
+                itemCategoryTitle.equals(that.itemCategoryTitle);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(itemCategoryTitle, lendingDays, isLendable);
+    }
 }
