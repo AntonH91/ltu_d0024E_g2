@@ -15,7 +15,7 @@ public class EditItemMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/Views/ItemEdit.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Views/Items/ItemEdit.fxml"));
 
         Scene scene = new Scene(root);
 

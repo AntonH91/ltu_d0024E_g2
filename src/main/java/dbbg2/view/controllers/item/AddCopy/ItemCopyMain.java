@@ -17,7 +17,7 @@ public class ItemCopyMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/Views/ItemAddCopy.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Views/Items/ItemAddCopy.fxml"));
 
         Scene scene = new Scene(root);
 
