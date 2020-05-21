@@ -58,7 +58,7 @@ public class InventoryManager {
         EntityManager em = JpaPersistence.getEntityManager();
         TypedQuery<Book> q = em.createQuery("select b from Book b " +
                         "WHERE (b.title = :title or :title = '') " +
-                        "AND (b.authors = :authors or :authors = '') "
+                        "AND (b.authors LIKE CONCAT ('%', :authors, '%') or :authors = '') "
                 //"AND (b.category = :category or :category = '')"
                 , Book.class);
 
@@ -87,9 +87,10 @@ public class InventoryManager {
     public static List<Film> getFilms(String title, String originCountry, String director) {
         EntityManager em = JpaPersistence.getEntityManager();
         TypedQuery<Film> q = em.createQuery("select f from Film f " +
-                        "WHERE (f.title = :title or :title = '') " +
+                        "WHERE (f.title = LIKE :title or :title = '') " +
                         "AND (f.originCountry = :originCountry or :originCountry = '') " +
                         "AND (f.director = :director or :director = '') "
+
 
                 //"AND (b.category = :category or :category = '')"
                 , Film.class);
@@ -97,6 +98,7 @@ public class InventoryManager {
         q.setParameter("title", title);
         q.setParameter("originCountry", originCountry);
         q.setParameter("director", director);
+
         //q.setParameter("category", ItemCategory.getDefaultItemCategory(category).getItemCategoryTitle());
 
         return q.getResultList();
