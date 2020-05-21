@@ -15,11 +15,6 @@ public abstract class InventoryItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int invId;
 
-    private static int nextInventoryId = 10001;
-
-
-    //@Index(unique = true)
-    private String inventoryId = "";
 
     @Basic(optional = false)
     private String title = "";
@@ -52,7 +47,6 @@ public abstract class InventoryItem {
     }
 
     public InventoryItem(String title, ItemCategory category, boolean isAvailable) {
-        this.inventoryId = generateInventoryId();
         this.title = title;
         this.category = category;
         this.isAvailable = isAvailable;
@@ -61,10 +55,6 @@ public abstract class InventoryItem {
 
     public void setAvailable(boolean isAvailable) {
         this.isAvailable = isAvailable;
-    }
-
-    public String getInventoryId() {
-        return inventoryId;
     }
 
     public int getInvId() {
@@ -117,13 +107,6 @@ public abstract class InventoryItem {
     }
 
 
-    @PrePersist
-    private String generateInventoryId() {
-
-        String newInventoryId = "I" + nextInventoryId;
-        nextInventoryId++;
-        return newInventoryId;
-    }
 
     @Override
     public boolean equals(Object o) {

@@ -181,7 +181,7 @@ public class InventoryManager {
             InventoryItem remItem = null;
             try {
                 remItem = em.getReference(InventoryItem.class, invId);
-                remItem.getInventoryId();
+                remItem.getInvId();
             } catch (EntityNotFoundException enfe) {
 
             }
