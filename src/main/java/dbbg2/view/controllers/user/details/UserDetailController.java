@@ -392,7 +392,8 @@ public class UserDetailController extends ChildController implements Initializab
                     && (!(userController.getUser() instanceof Employee) || AuthenticationManager.getAuthManager().userHasManagerAccess());
 
 
-            editAccessEnabled = userController.getUser().equals(AuthenticationManager.getAuthManager().getCurrentlyLoggedInUser())
+            editAccessEnabled = AuthenticationManager.getAuthManager().getCurrentlyLoggedInUser() == null
+                    || userController.getUser().equals(AuthenticationManager.getAuthManager().getCurrentlyLoggedInUser())
                     || userController.getUser() instanceof Employee && AuthenticationManager.getAuthManager().userHasManagerAccess()
                     || userController.getUser() instanceof Visitor && AuthenticationManager.getAuthManager().userHasEmployeeAccess();
 

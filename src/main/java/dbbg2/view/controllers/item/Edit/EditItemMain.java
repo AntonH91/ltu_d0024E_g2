@@ -1,5 +1,4 @@
-
-package dbbg2.view.controllers.item.search;
+package dbbg2.view.controllers.item.Edit;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -7,8 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+public class EditItemMain extends Application {
 
-public class ItemMain extends Application {
     public static void main(String[] args) {
         launch(args);
 
@@ -16,7 +15,7 @@ public class ItemMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/Views/Items/ItemSearch.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Views/Items/ItemEdit.fxml"));
 
         Scene scene = new Scene(root);
 
@@ -25,4 +24,6 @@ public class ItemMain extends Application {
 
         primaryStage.show();
     }
+
 }
+

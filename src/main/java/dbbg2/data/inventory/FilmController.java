@@ -1,0 +1,17 @@
+package dbbg2.data.inventory;
+
+public class FilmController extends Film {
+    private Film changeFilm;
+
+    public void setFilm(Film film){
+        changeFilm = film;
+    }
+
+    public void ammendInformationFilm(String title, int agelimit, String director, String originCountry){
+        changeFilm.setTitle(title);
+        changeFilm.setAgeLimit(agelimit);
+        changeFilm.setDirector(director);
+        changeFilm.setOriginCountry(originCountry);
+
+    }
+}
