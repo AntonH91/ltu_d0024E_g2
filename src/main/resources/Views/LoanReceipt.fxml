@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="312.0" prefWidth="514.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dbbg2.view.controllers.LoanReceiptController">
+   <children>
+      <Pane prefHeight="312.0" prefWidth="514.0">
+         <children>
+            <TextArea fx:id="txtLoanReceipt" editable="false" layoutX="18.0" layoutY="22.0" prefHeight="265.0" prefWidth="479.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

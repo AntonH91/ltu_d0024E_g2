@@ -250,11 +250,6 @@ public class ItemManageController implements Initializable {
         }
 
 
-        /*int selectedBook = Integer.parseInt(txtPkId.getText());
-
-        em.getTransaction().begin();
-        em.remove(selectedBook);
-        em.getTransaction().commit();*/
     }
 
     @FXML
@@ -304,11 +299,7 @@ public class ItemManageController implements Initializable {
         }
 
 
-        /*int selectedBook = Integer.parseInt(txtPkId.getText());
 
-        em.getTransaction().begin();
-        em.remove(selectedBook);
-        em.getTransaction().commit();*/
     }
 
 
