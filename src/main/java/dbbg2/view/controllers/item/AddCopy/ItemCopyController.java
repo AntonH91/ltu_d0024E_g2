@@ -36,7 +36,7 @@ public class ItemCopyController implements Initializable {
     public TextField txtRmItemId;
     public TextField txtCfCid;
     public TextField txtCfItemId;
-    public TextField txtCfItemTitle;
+    public TextField txtBarcodeFound;
 
     public TableColumn tcItemName;
     public TableColumn txItemId;
@@ -48,6 +48,18 @@ public class ItemCopyController implements Initializable {
 
 
     public void handleAddCopy(ActionEvent actionEvent) {
+
+        if(txtBarcode.getText().isEmpty() || txtCopyLocation.getText().isEmpty()){
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText(null);
+            alert.setContentText("Cannot create new copy without barcode or location");
+            alert.showAndWait();
+            return;
+        }
+
+        else {
+
         List<InventoryCopy> copy = new ArrayList<>();
         InventoryItem ii = InventoryManager.getItemCopy(txtItemNameSearch.getText(), Integer.parseInt(txtItemIdFound.getText()));
 
@@ -67,6 +79,23 @@ public class ItemCopyController implements Initializable {
 
         em.getTransaction().commit();
 
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("A copy has been created");
+            alert.showAndWait();
+
+            txtBarcode.clear();
+            txtCopyLocation.clear();
+            txtItemNameSearch.clear();
+            txtItemIdFound.clear();
+            txtItemNameFound.clear();
+
+            tblItemView.setItems(FXCollections.observableArrayList(InventoryManager.getBooks(txtItemNameSearch.getText(), txtItemIdSearch.getText())));
+
+            return;
+
+
+    }
     }
 
     public void handleFindItem(ActionEvent actionEvent) {
@@ -81,7 +110,7 @@ public class ItemCopyController implements Initializable {
 
         clItemName.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("title"));
 
-        tcItemName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<InventoryCopy, String>, ObservableValue<String>>() {
+                tcItemName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<InventoryCopy, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<InventoryCopy, String> param) {
 
@@ -139,6 +168,11 @@ public class ItemCopyController implements Initializable {
             alert.setContentText("The Copy has been removed");
             alert.showAndWait();
 
+            txtRmItemId.clear();
+            txtRmItemTitle.clear();
+            txtCfCid.clear();
+            txtBarcodeFound.clear();
+            tbItemFound.setItems(FXCollections.observableArrayList(InventoryManager.test2GetItemTitleCopies(txtRmItemId.getText(), txtRmItemTitle.getText())));
 
             return;
 
@@ -156,6 +190,7 @@ public class ItemCopyController implements Initializable {
             InventoryCopy selectedCopy = (InventoryCopy) tbItemFound.getSelectionModel().getSelectedItem();
             //txtItemNameFound.setText(selectedCopy.getTitle());
             txtCfCid.setText(String.valueOf(selectedCopy.getCid()));
+            txtBarcodeFound.setText(selectedCopy.getBarcode());
         }
     }
 
