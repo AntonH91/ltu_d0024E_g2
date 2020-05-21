@@ -21,6 +21,14 @@ public class LoanReturnController {
     private boolean loanReturnFinalized = false;
 
 
+    public boolean isLoanReturnFinalized() {
+        return loanReturnFinalized;
+    }
+
+    public int getPendingReturnCount() {
+        return loanCopies.size();
+    }
+
     /**
      * Print the receipt for the return
      *
