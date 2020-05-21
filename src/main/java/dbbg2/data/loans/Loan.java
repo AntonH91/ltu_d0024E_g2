@@ -20,7 +20,7 @@ public class Loan {
 
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "parentLoan")
     @JoinColumn(name = "loan_id")
-    private final List<LoanCopy> loanedCopies = new ArrayList<>();
+    private final Set<LoanCopy> loanedCopies = new HashSet<>();
 
     /**
      * Adds an already created loancopy to this loan
@@ -57,7 +57,8 @@ public class Loan {
     }
 
     public List<LoanCopy> getCopies() {
-        return Collections.unmodifiableList(this.loanedCopies);
+        List<LoanCopy> copyList = Arrays.asList(this.loanedCopies.toArray(new LoanCopy[loanedCopies.size()]));
+        return Collections.unmodifiableList(copyList);
     }
 
 
@@ -69,10 +70,7 @@ public class Loan {
         this.client = client;
     }
 
-    public long getLoan_id() {
+    public long getLoanId() {
         return loan_id;
     }
-//Vart ska denna inventory copy någonstans?
-
-
 }
