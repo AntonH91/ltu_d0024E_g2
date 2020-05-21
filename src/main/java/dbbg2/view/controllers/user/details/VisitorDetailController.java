@@ -14,6 +14,7 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableStringValue;
 import javafx.collections.FXCollections;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -43,6 +44,8 @@ public class VisitorDetailController extends UserChildController implements Init
     private VisitorController visitorController;
 
     private String validationErrors;
+
+    private FilteredList<LoanCopy> filteredLoans;
 
     @Override
     public String getValidationMessage() {
@@ -83,12 +86,25 @@ public class VisitorDetailController extends UserChildController implements Init
         selectCategory(v.getCategory());
 
         try {
-            tblLoanDisplay.setItems(FXCollections.observableList(LoanManager.getLoanCopiesFromUser(v.getUserId())));
+            filteredLoans = new FilteredList<>(FXCollections.observableList(LoanManager.getLoanCopiesFromUser(v.getUserId())));
+            tblLoanDisplay.setItems(filteredLoans);
         } catch (LibraryEntityNotFoundException e) {
+            filteredLoans = null;
             tblLoanDisplay.getItems().clear();
         }
-
+        refreshLoanFiltering();
     }
+
+    public void refreshLoanFiltering() {
+        if (filteredLoans != null) {
+            Date today = new Date();
+            filteredLoans.setPredicate(loanCopy -> chkShowReturned.isSelected() && loanCopy.isReturned()
+                    || chkShowActive.isSelected() && loanCopy.getReturnDate().after(today) && !loanCopy.isReturned()
+                    || chkShowLate.isSelected() && loanCopy.getReturnDate().before(today)
+            );
+        }
+    }
+
 
     /**
      * Helper method to set the value of the combobox to the target visitor category.
@@ -183,6 +199,10 @@ public class VisitorDetailController extends UserChildController implements Init
         tcReturned.setCellValueFactory(new PropertyValueFactory<>("returned"));
 
         loadVisitorCategories();
+
+
+        filteredLoans = null;
+
 
     }
 

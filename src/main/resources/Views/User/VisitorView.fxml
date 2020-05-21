@@ -31,9 +31,12 @@
                         <Insets right="20.0"/>
                     </padding>
                 </Label>
-                <CheckBox fx:id="chkShowReturned" mnemonicParsing="false" text="Returned"/>
-                <CheckBox fx:id="chkShowLate" mnemonicParsing="false" selected="true" text="Late"/>
-                <CheckBox fx:id="chkShowActive" mnemonicParsing="false" selected="true" text="Active"/>
+                <CheckBox fx:id="chkShowReturned" mnemonicParsing="false" onAction="#refreshLoanFiltering"
+                          text="Returned"/>
+                <CheckBox fx:id="chkShowLate" mnemonicParsing="false" onAction="#refreshLoanFiltering" selected="true"
+                          text="Late"/>
+                <CheckBox fx:id="chkShowActive" mnemonicParsing="false" onAction="#refreshLoanFiltering" selected="true"
+                          text="Active"/>
             </ToolBar>
             <TableView fx:id="tblLoanDisplay">
                 <columns>
