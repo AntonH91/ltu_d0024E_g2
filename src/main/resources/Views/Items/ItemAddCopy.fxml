@@ -37,14 +37,14 @@
                         <TableView fx:id="tbItemFound" layoutY="171.0" onMouseClicked="#handleRemoveMouseClick" prefHeight="200.0" prefWidth="233.0">
                           <columns>
                             <TableColumn fx:id="tcItemName" prefWidth="89.0" text="Item name" />
+                            <TableColumn fx:id="txItemId" prefWidth="67.0" text="Item ID" />
                               <TableColumn fx:id="tcBarcode" prefWidth="79.0" text="Barcode" />
                           </columns>
                         </TableView>
                         <Button fx:id="btnFindCopy" layoutX="14.0" layoutY="134.0" mnemonicParsing="false" onAction="#handleFindCopy" text="Find copy" />
                         <Button layoutX="290.0" layoutY="284.0" mnemonicParsing="false" onAction="#handleRemoveCopy" text="Remove selected copy" />
-                        <TextField fx:id="txtCfItemTitle" layoutX="290.0" layoutY="171.0" promptText="Item title" />
-                        <TextField fx:id="txtCfItemId" layoutX="290.0" layoutY="208.0" promptText="Item ID" />
-                        <TextField fx:id="txtCfCid" layoutX="290.0" layoutY="246.0" promptText="Copy ID" />
+                        <TextField fx:id="txtBarcodeFound" layoutX="290.0" layoutY="171.0" promptText="Barcode" />
+                        <TextField fx:id="txtCfCid" layoutX="290.0" layoutY="211.0" promptText="Copy ID" />
                      </children></AnchorPane>
             </content>
           </Tab>
