@@ -1,6 +1,9 @@
 package dbbg2.view.controllers.item.AddCopy;
 
-import dbbg2.data.inventory.*;
+import dbbg2.data.inventory.Book;
+import dbbg2.data.inventory.InventoryCopy;
+import dbbg2.data.inventory.InventoryItem;
+import dbbg2.data.inventory.InventoryManager;
 import dbbg2.utils.persistence.JpaPersistence;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -45,38 +48,35 @@ public class ItemCopyController implements Initializable {
     public Button btnFindCopy;
 
 
-
     public void handleAddCopy(ActionEvent actionEvent) {
 
-        if(txtBarcode.getText().isEmpty() || txtCopyLocation.getText().isEmpty()){
+        if (txtBarcode.getText().isEmpty() || txtCopyLocation.getText().isEmpty()) {
 
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setContentText("Cannot create new copy without barcode or location");
             alert.showAndWait();
             return;
-        }
+        } else {
 
-        else {
+            List<InventoryCopy> copy = new ArrayList<>();
+            InventoryItem ii = InventoryManager.getItemCopy(Integer.parseInt(txtItemIdFound.getText()));
 
-        List<InventoryCopy> copy = new ArrayList<>();
-        InventoryItem ii = InventoryManager.getItemCopy(Integer.parseInt(txtItemIdFound.getText()));
-
-        copy.add(new InventoryCopy(txtBarcode.getText(), txtCopyLocation.getText(), true, ii));
+            copy.add(new InventoryCopy(txtBarcode.getText(), txtCopyLocation.getText(), true, ii));
 
         /*(String barcode, String location, boolean lendable, InventoryItem item)
         film.add(new Film(txtAbbFilmTitle.getText(), FILM, true, txtFilmDirector.getText(), cbAgeLimit.getSelectionModel().getSelectedIndex(), txtOriginCountry.getText()));*/
 
-        int index = 0;
-        EntityManager em = JpaPersistence.getEntityManager();
+            int index = 0;
+            EntityManager em = JpaPersistence.getEntityManager();
 
-        em.getTransaction().begin();
-        for (InventoryCopy ic : copy) {
-            index++;
-            em.merge(ic);
-        }
+            em.getTransaction().begin();
+            for (InventoryCopy ic : copy) {
+                index++;
+                em.merge(ic);
+            }
 
-        em.getTransaction().commit();
+            em.getTransaction().commit();
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setHeaderText(null);
@@ -89,7 +89,7 @@ public class ItemCopyController implements Initializable {
             return;
 
 
-    }
+        }
     }
 
     public void handleFindItem(ActionEvent actionEvent) {
@@ -100,13 +100,12 @@ public class ItemCopyController implements Initializable {
 
 
     @Override
-    public void initialize(URL location, ResourceBundle resources){
-
+    public void initialize(URL location, ResourceBundle resources) {
 
 
         clItemName.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("title"));
 
-                tcItemName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<InventoryCopy, String>, ObservableValue<String>>() {
+        tcItemName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<InventoryCopy, String>, ObservableValue<String>>() {
             @Override
             public ObservableValue<String> call(TableColumn.CellDataFeatures<InventoryCopy, String> param) {
 
@@ -115,17 +114,14 @@ public class ItemCopyController implements Initializable {
         });
 
 
-
         clItemId.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("invId"));
         tcBarcode.setCellValueFactory(new PropertyValueFactory<Book, String>("barcode"));
-
-
 
 
     }
 
     public void handleTableViewMouseClickedAction(MouseEvent mouseEvent) {
-        if(tblItemView.getSelectionModel().getSelectedItem() !=null){
+        if (tblItemView.getSelectionModel().getSelectedItem() != null) {
             InventoryItem selectedItem = (InventoryItem) tblItemView.getSelectionModel().getSelectedItem();
             txtItemNameFound.setText(selectedItem.getTitle());
             txtItemIdFound.setText(String.valueOf(selectedItem.getInvId()));
@@ -170,7 +166,7 @@ public class ItemCopyController implements Initializable {
 
 
         } catch (RuntimeException e) {
-            if(entityTransaction.isActive())
+            if (entityTransaction.isActive())
                 entityTransaction.rollback();
             throw e;
         }
@@ -178,14 +174,13 @@ public class ItemCopyController implements Initializable {
     }
 
     public void handleRemoveMouseClick(MouseEvent mouseEvent) {
-        if(tbItemFound.getSelectionModel().getSelectedItem() !=null){
+        if (tbItemFound.getSelectionModel().getSelectedItem() != null) {
             InventoryCopy selectedCopy = (InventoryCopy) tbItemFound.getSelectionModel().getSelectedItem();
             //txtItemNameFound.setText(selectedCopy.getTitle());
             txtCfCid.setText(String.valueOf(selectedCopy.getCid()));
             txtBarcodeFound.setText(selectedCopy.getBarcode());
         }
     }
-
 
 
 }

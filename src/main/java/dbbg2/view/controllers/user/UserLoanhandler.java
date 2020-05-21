@@ -22,7 +22,6 @@ public class UserLoanhandler implements Initializable {
         // tblUserList.setItems(FXCollections.observableArrayList(UserManager.getUsers(txtUserId.getText(), txtFirstName.getText(), txtLastName.getText(), txtEmail.getText())));
 
 
-
     }
 
     @Override

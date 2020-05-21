@@ -10,35 +10,27 @@ import java.util.Objects;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User {
 
+    @Transient
+    private final boolean authenticated = false;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long uid;
-
     @Index(unique = true)
     private String userId = "";
-
-
     @Basic(optional = false)
     private String personNr = "";
     @Basic(optional = false)
     private String firstName = "";
     @Basic(optional = false)
     private String lastName = "";
-
     private String streetAddress = "";
     private String postCode = "";
     private String postArea = "";
     private String phoneNr = "";
-
     @Basic(optional = false)
     private String email = "";
-
-
     @Basic(optional = false)
     private String password = "";
-
-    @Transient
-    private final boolean authenticated = false;
 
     public User() {
     }
@@ -205,6 +197,7 @@ public abstract class User {
 
     /**
      * Triggers the creation of a new User ID, if necessary
+     *
      * @return True if a new User ID was created
      */
     public boolean triggerUserIdCreation() {

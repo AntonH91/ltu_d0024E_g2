@@ -39,32 +39,34 @@ public class UserManager {
 
     /**
      * Retrieves a generic user from the table
+     *
      * @param userId The userId to retrieve
      * @return The requested user
      * @throws NoResultException Thrown when the user cannot be found
      */
     public static User getUser(String userId) throws NoResultException {
         EntityManager em = JpaPersistence.getEntityManager();
-        TypedQuery<User> q = em.createQuery("SELECT u FROM Users u WHERE u.userId=:userId",  User.class);
-        return q.setParameter("userId",userId).getSingleResult();
+        TypedQuery<User> q = em.createQuery("SELECT u FROM Users u WHERE u.userId=:userId", User.class);
+        return q.setParameter("userId", userId).getSingleResult();
     }
 
     /**
      * Retrieves an employee from the database
+     *
      * @param userId The userid of the employee to retrieve
      * @return The found employee
      * @throws NoResultException When the employee with the given userId cannot be found
      */
     public static Employee getEmployee(String userId) throws NoResultException {
         EntityManager em = JpaPersistence.getEntityManager();
-        TypedQuery<Employee> q = em.createQuery("SELECT e FROM Employees e WHERE e.userId=:userId",  Employee.class);
-        return q.setParameter("userId",userId).getSingleResult();
+        TypedQuery<Employee> q = em.createQuery("SELECT e FROM Employees e WHERE e.userId=:userId", Employee.class);
+        return q.setParameter("userId", userId).getSingleResult();
     }
 
     public static Visitor getVisitor(String userId) {
         EntityManager em = JpaPersistence.getEntityManager();
-        TypedQuery<Visitor> q = em.createQuery("SELECT v FROM Visitor v WHERE v.userId=:userId",  Visitor.class);
-        return q.setParameter("userId",userId).getSingleResult();
+        TypedQuery<Visitor> q = em.createQuery("SELECT v FROM Visitor v WHERE v.userId=:userId", Visitor.class);
+        return q.setParameter("userId", userId).getSingleResult();
     }
 
     public static List<User> getUsers() {
@@ -74,7 +76,7 @@ public class UserManager {
         return q.getResultList();
     }
 
-    public static List<User> getUsers(String userID, String firstName, String lastName, String email){
+    public static List<User> getUsers(String userID, String firstName, String lastName, String email) {
         EntityManager em = JpaPersistence.getEntityManager();
         TypedQuery<User> q = em.createQuery("SELECT u FROM Users u " +
                 "WHERE (u.userId = :userId or :userId = '') " +
@@ -92,6 +94,7 @@ public class UserManager {
 
     /**
      * Persist the provided user and return a reference to the managed object. The user will get a new userID if needed
+     *
      * @param theUser The user that is to be persisted
      * @return A reference to a user managed by the EntityManager
      */
@@ -99,7 +102,7 @@ public class UserManager {
         EntityManager em = JpaPersistence.getEntityManager();
         em.getTransaction().begin();
 
-        User u =  persistUser(theUser, em);
+        User u = persistUser(theUser, em);
         em.getTransaction().commit();
 
         return u;
@@ -109,7 +112,7 @@ public class UserManager {
         theUser = em.merge(theUser);
         em.flush();
         em.refresh(theUser);
-        if(theUser.triggerUserIdCreation()) {
+        if (theUser.triggerUserIdCreation()) {
             theUser = em.merge(theUser);
             em.flush();
         }

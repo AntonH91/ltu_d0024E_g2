@@ -1,7 +1,5 @@
 package dbbg2.data.inventory;
 
-import com.sun.javafx.beans.IDProperty;
-
 import javax.persistence.*;
 import java.util.Collections;
 import java.util.HashSet;
@@ -17,7 +15,7 @@ public class Keyword {
     @JoinTable(name = "Inventory_keyword",
             joinColumns = {@JoinColumn(name = "Keyword_name")},
             inverseJoinColumns = {@JoinColumn(name = "Inventory_Id")})
-    private Set<InventoryItem> items = new HashSet<>();
+    private final Set<InventoryItem> items = new HashSet<>();
 
     public Set<InventoryItem> getItems() {
         return Collections.unmodifiableSet(items);
@@ -31,7 +29,7 @@ public class Keyword {
         this.keyword = keyword.toLowerCase();
     }
 
-    public void addItem(InventoryItem item){
+    public void addItem(InventoryItem item) {
         items.add(item);
     }
 

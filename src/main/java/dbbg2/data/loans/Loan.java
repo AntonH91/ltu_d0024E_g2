@@ -9,18 +9,15 @@ import java.util.*;
 @Entity
 public class Loan {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long loan_id;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "lender")
-    private Visitor client;
-
-
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "parentLoan")
     @JoinColumn(name = "loan_id")
     private final Map<String, LoanCopy> loanedCopies = new HashMap<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long loan_id;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "lender")
+    private Visitor client;
 
     /**
      * Adds an already created loancopy to this loan

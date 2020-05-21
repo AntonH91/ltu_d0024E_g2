@@ -7,8 +7,8 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="312.0" prefWidth="514.0"
             xmlns="http://javafx.com/javafx/10.0.2-internal"
             fx:controller="dbbg2.view.dialogs.controllers.ReceiptController">
-   <Pane prefHeight="312.0" prefWidth="514.0">
-      <TextArea fx:id="txtReceipt" editable="false" layoutX="18.0" layoutY="22.0" prefHeight="265.0"
-                prefWidth="479.0"/>
-   </Pane>
+    <Pane prefHeight="312.0" prefWidth="514.0">
+        <TextArea fx:id="txtReceipt" editable="false" layoutX="18.0" layoutY="22.0" prefHeight="265.0"
+                  prefWidth="479.0"/>
+    </Pane>
 </AnchorPane>

@@ -5,9 +5,7 @@ import dbbg2.data.users.UserManager;
 import dbbg2.data.users.Visitor;
 import dbbg2.data.users.visitorcategory.VisitorCategory;
 
-import java.lang.instrument.IllegalClassFormatException;
-
-public class VisitorController extends UserController{
+public class VisitorController extends UserController {
     private Visitor subjectToChange;
 
     @Override

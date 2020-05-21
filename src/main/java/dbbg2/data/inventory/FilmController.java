@@ -3,7 +3,7 @@ package dbbg2.data.inventory;
 public class FilmController {
     private Film changeFilm;
 
-    public void setFilm(Film film){
+    public void setFilm(Film film) {
         changeFilm = film;
     }
 

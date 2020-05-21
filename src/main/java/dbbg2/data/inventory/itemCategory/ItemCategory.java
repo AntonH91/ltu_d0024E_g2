@@ -1,11 +1,12 @@
 package dbbg2.data.inventory.itemCategory;
 
 
-import dbbg2.data.inventory.InventoryCopy;
 import dbbg2.data.inventory.InventoryItem;
-import dbbg2.data.users.visitorcategory.VisitorCategory;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -20,9 +21,9 @@ public class ItemCategory {
 
 
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "category")
-    private Set<InventoryItem> invItem = new HashSet<>();
+    private final Set<InventoryItem> invItem = new HashSet<>();
 
-    public ItemCategory(){
+    public ItemCategory() {
 
     }
 
@@ -32,20 +33,7 @@ public class ItemCategory {
         this.isLendable = isLendable;
     }
 
-
-    public String getItemCategoryTitle() {
-        return itemCategoryTitle;
-    }
-
-    public int getLendingDays() {
-        return lendingDays;
-    }
-
-    public boolean isLendable() {
-        return isLendable;
-    }
-
-    public static ItemCategory getDefaultItemCategory(ItemCategoryType category){
+    public static ItemCategory getDefaultItemCategory(ItemCategoryType category) {
         ItemCategory ic;
         switch (category) {
             case FILM:
@@ -71,6 +59,17 @@ public class ItemCategory {
         return ic;
     }
 
+    public String getItemCategoryTitle() {
+        return itemCategoryTitle;
+    }
+
+    public int getLendingDays() {
+        return lendingDays;
+    }
+
+    public boolean isLendable() {
+        return isLendable;
+    }
 
     @Override
     public boolean equals(Object o) {

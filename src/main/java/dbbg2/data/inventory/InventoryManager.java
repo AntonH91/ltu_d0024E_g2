@@ -41,7 +41,7 @@ public class InventoryManager {
     public static List<InventoryItem> getInventoryItems(String title) {
         EntityManager em = JpaPersistence.getEntityManager();
         TypedQuery<InventoryItem> q = em.createQuery("select i from Inventory i " +
-                "WHERE (i.title = :title or :title = '') "
+                        "WHERE (i.title = :title or :title = '') "
                 , InventoryItem.class);
 
         q.setParameter("title", title);
@@ -106,7 +106,7 @@ public class InventoryManager {
         EntityManager em = JpaPersistence.getEntityManager();
         TypedQuery<InventoryItem> q = em.createQuery("select ii from Inventory ii " +
                         "WHERE (ii.invId = :invId) "
-                        //"AND (ii.invId = :invId) "
+                //"AND (ii.invId = :invId) "
                 //"AND (b.category = :category or :category = '')"
                 , InventoryItem.class);
 

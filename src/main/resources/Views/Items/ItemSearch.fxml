@@ -1,54 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<AnchorPane id="itemOverviewAnchor" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dbbg2.view.controllers.item.search.ItemSearchController">
-   <children>
-      <TabPane layoutX="-2.0" prefHeight="400.0" prefWidth="606.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab text="Book search">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TableView fx:id="tblBookList" layoutY="171.0" prefHeight="200.0" prefWidth="606.0">
-                          <columns>
-                              <TableColumn fx:id="tcInventoryId" prefWidth="75.0" text="Inventory ID" />
-                            <TableColumn fx:id="tcTitle" prefWidth="75.0" text="Title" />
-                            <TableColumn fx:id="tcAuthor" prefWidth="75.0" text="Author" />
-                              <TableColumn fx:id="tcCategory" prefWidth="75.0" text="Category" />
-                          </columns>
-                        </TableView>
-                        <TextField fx:id="txtItemTitle" layoutX="36.0" layoutY="25.0" promptText="Title" />
-                        <TextField fx:id="txtAuthor" layoutX="36.0" layoutY="59.0" promptText="Author" />
-                        <Button fx:id="btnSearchBook" layoutX="244.0" layoutY="124.0" mnemonicParsing="false" onAction="#handleSearchBookClick" text="Search" />
-                        <Button fx:id="btnClearText" layoutX="315.0" layoutY="124.0" mnemonicParsing="false" onAction="#handleClearText" text="Clear" />
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-            <Tab text="Film search">
-            <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                    <children>
-                        <TableView fx:id="tbFilmList" layoutY="171.0" prefHeight="200.0" prefWidth="606.0">
-                            <columns>
-                                <TableColumn fx:id="tcFilmId" prefWidth="75.0" text="Inventory ID" />
-                                <TableColumn fx:id="tcFilmTitle" prefWidth="75.0" text="Title" />
-                                <TableColumn fx:id="tcFilmDirector" prefWidth="75.0" text="Director" />
-                                <TableColumn fx:id="tcCountryFilm" prefWidth="75.0" text="Country" />
-                            </columns>
-                        </TableView>
-                        <TextField fx:id="txFilmTitle" layoutX="36.0" layoutY="27.0" promptText="Title" />
-                        <TextField fx:id="txtDirector" layoutX="36.0" layoutY="61.0" promptText="Director" />
-                        <Button fx:id="btnSearchFilm" layoutX="244.0" layoutY="124.0" mnemonicParsing="false" onAction="#handleSearchFilmClick" text="Search" />
-                        <Button fx:id="btnClearFilmText" layoutX="315.0" layoutY="124.0" mnemonicParsing="false" onAction="#handleClearTextFilm" text="Clear" />
-                        <TextField fx:id="txtOriginCountry" layoutX="36.0" layoutY="96.0" promptText="Country" />
-                    </children>
-                </AnchorPane>
-            </content>
-            </Tab>
-        </tabs>
-      </TabPane>
-   </children>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" id="itemOverviewAnchor" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
+            fx:controller="dbbg2.view.controllers.item.search.ItemSearchController">
+    <children>
+        <TabPane layoutX="-2.0" prefHeight="400.0" prefWidth="606.0" tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Book search">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TableView fx:id="tblBookList" layoutY="171.0" prefHeight="200.0" prefWidth="606.0">
+                                    <columns>
+                                        <TableColumn fx:id="tcInventoryId" prefWidth="75.0" text="Inventory ID"/>
+                                        <TableColumn fx:id="tcTitle" prefWidth="75.0" text="Title"/>
+                                        <TableColumn fx:id="tcAuthor" prefWidth="75.0" text="Author"/>
+                                        <TableColumn fx:id="tcCategory" prefWidth="75.0" text="Category"/>
+                                    </columns>
+                                </TableView>
+                                <TextField fx:id="txtItemTitle" layoutX="36.0" layoutY="25.0" promptText="Title"/>
+                                <TextField fx:id="txtAuthor" layoutX="36.0" layoutY="59.0" promptText="Author"/>
+                                <Button fx:id="btnSearchBook" layoutX="244.0" layoutY="124.0" mnemonicParsing="false"
+                                        onAction="#handleSearchBookClick" text="Search"/>
+                                <Button fx:id="btnClearText" layoutX="315.0" layoutY="124.0" mnemonicParsing="false"
+                                        onAction="#handleClearText" text="Clear"/>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Film search">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TableView fx:id="tbFilmList" layoutY="171.0" prefHeight="200.0" prefWidth="606.0">
+                                    <columns>
+                                        <TableColumn fx:id="tcFilmId" prefWidth="75.0" text="Inventory ID"/>
+                                        <TableColumn fx:id="tcFilmTitle" prefWidth="75.0" text="Title"/>
+                                        <TableColumn fx:id="tcFilmDirector" prefWidth="75.0" text="Director"/>
+                                        <TableColumn fx:id="tcCountryFilm" prefWidth="75.0" text="Country"/>
+                                    </columns>
+                                </TableView>
+                                <TextField fx:id="txFilmTitle" layoutX="36.0" layoutY="27.0" promptText="Title"/>
+                                <TextField fx:id="txtDirector" layoutX="36.0" layoutY="61.0" promptText="Director"/>
+                                <Button fx:id="btnSearchFilm" layoutX="244.0" layoutY="124.0" mnemonicParsing="false"
+                                        onAction="#handleSearchFilmClick" text="Search"/>
+                                <Button fx:id="btnClearFilmText" layoutX="315.0" layoutY="124.0" mnemonicParsing="false"
+                                        onAction="#handleClearTextFilm" text="Clear"/>
+                                <TextField fx:id="txtOriginCountry" layoutX="36.0" layoutY="96.0" promptText="Country"/>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </children>
 </AnchorPane>

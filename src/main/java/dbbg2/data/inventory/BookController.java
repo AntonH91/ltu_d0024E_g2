@@ -8,11 +8,11 @@ import javax.persistence.EntityManager;
 public class BookController {
     private Book changeBook;
 
-    public Book getTheBook(){
+    public Book getTheBook() {
         return changeBook;
     }
 
-    public void ammendAuthorInformation(String fName, String lName){
+    public void ammendAuthorInformation(String fName, String lName) {
 
     }
 
@@ -21,7 +21,7 @@ public class BookController {
     }
 
 
-    public void amendInformationBook(String title, String isbn, String authors, ItemCategory category){
+    public void amendInformationBook(String title, String isbn, String authors, ItemCategory category) {
         changeBook.setTitle(title);
         //subjectToChange.setCategory(category);
         changeBook.setIsbn(isbn);
@@ -31,7 +31,6 @@ public class BookController {
         //saveChangesBook();
 
     }
-
 
 
     public void saveChangesBook() {

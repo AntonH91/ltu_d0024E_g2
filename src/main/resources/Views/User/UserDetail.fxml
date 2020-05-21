@@ -26,7 +26,7 @@
                             onAction="#handleSaveButtonClick" text="Save"/>
                 </buttons>
                 <BorderPane.margin>
-                    <Insets right="10.0" />
+                    <Insets right="10.0"/>
                 </BorderPane.margin>
             </ButtonBar>
         </bottom>
@@ -48,55 +48,64 @@
             <HBox BorderPane.alignment="CENTER">
                 <GridPane>
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="365.0" minWidth="10.0" prefWidth="230.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="365.0" minWidth="10.0" prefWidth="230.0"/>
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="5.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="44.0" minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="5.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES"/>
+                        <RowConstraints maxHeight="44.0" minHeight="10.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
                     </padding>
                     <HBox.margin>
-                        <Insets left="10.0" />
+                        <Insets left="10.0"/>
                     </HBox.margin>
-                    <TextField fx:id="txtUserId" editable="false" prefHeight="26.0" prefWidth="202.0" promptText="User ID" GridPane.columnIndex="1" />
-                    <TextField fx:id="txtPersonNr" promptText="Person Nr" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                    <TextField fx:id="txtFirstName" promptText="First Name" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                    <TextField fx:id="txtLastName" promptText="Last Name" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                    <TextField fx:id="txtEmail" promptText="E-Mail" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                    <Label text="User ID" />
-                    <Label text="Person Nr" GridPane.rowIndex="1" />
-                    <Label text="First Name" GridPane.rowIndex="3" />
-                    <Label text="Last Name" GridPane.rowIndex="4" />
-                    <Label text="E-Mail" GridPane.rowIndex="5" />
-                    <Label text="Phone Nr" GridPane.rowIndex="6" />
-                    <TextField fx:id="txtPhoneNr" promptText="Phone Nr" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                    <Label text="Street Address" GridPane.rowIndex="8" />
-                    <TextField fx:id="txtStreetAddress" prefHeight="25.0" prefWidth="149.0" promptText="Street Address" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                    <TextField fx:id="txtPostCode" promptText="Post Code" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                    <TextField fx:id="txtPostArea" promptText="Post Area" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-                    <Label text="Post Code" GridPane.rowIndex="9" />
-                    <Label text="Post Area" GridPane.rowIndex="10" />
-                    <Label text="New Password" GridPane.rowIndex="12" />
-                    <Label text="Confirm Password" GridPane.rowIndex="13" />
-                    <PasswordField fx:id="pwdNewPassword" promptText="New Password" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-                    <PasswordField fx:id="pwdConfirmPassword" promptText="Confirm Password" GridPane.columnIndex="1" GridPane.rowIndex="13" />
+                    <TextField fx:id="txtUserId" editable="false" prefHeight="26.0" prefWidth="202.0"
+                               promptText="User ID" GridPane.columnIndex="1"/>
+                    <TextField fx:id="txtPersonNr" promptText="Person Nr" GridPane.columnIndex="1"
+                               GridPane.rowIndex="1"/>
+                    <TextField fx:id="txtFirstName" promptText="First Name" GridPane.columnIndex="1"
+                               GridPane.rowIndex="3"/>
+                    <TextField fx:id="txtLastName" promptText="Last Name" GridPane.columnIndex="1"
+                               GridPane.rowIndex="4"/>
+                    <TextField fx:id="txtEmail" promptText="E-Mail" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+                    <Label text="User ID"/>
+                    <Label text="Person Nr" GridPane.rowIndex="1"/>
+                    <Label text="First Name" GridPane.rowIndex="3"/>
+                    <Label text="Last Name" GridPane.rowIndex="4"/>
+                    <Label text="E-Mail" GridPane.rowIndex="5"/>
+                    <Label text="Phone Nr" GridPane.rowIndex="6"/>
+                    <TextField fx:id="txtPhoneNr" promptText="Phone Nr" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+                    <Label text="Street Address" GridPane.rowIndex="8"/>
+                    <TextField fx:id="txtStreetAddress" prefHeight="25.0" prefWidth="149.0" promptText="Street Address"
+                               GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+                    <TextField fx:id="txtPostCode" promptText="Post Code" GridPane.columnIndex="1"
+                               GridPane.rowIndex="9"/>
+                    <TextField fx:id="txtPostArea" promptText="Post Area" GridPane.columnIndex="1"
+                               GridPane.rowIndex="10"/>
+                    <Label text="Post Code" GridPane.rowIndex="9"/>
+                    <Label text="Post Area" GridPane.rowIndex="10"/>
+                    <Label text="New Password" GridPane.rowIndex="12"/>
+                    <Label text="Confirm Password" GridPane.rowIndex="13"/>
+                    <PasswordField fx:id="pwdNewPassword" promptText="New Password" GridPane.columnIndex="1"
+                                   GridPane.rowIndex="12"/>
+                    <PasswordField fx:id="pwdConfirmPassword" promptText="Confirm Password" GridPane.columnIndex="1"
+                                   GridPane.rowIndex="13"/>
                 </GridPane>
-                <AnchorPane fx:id="childPane" prefHeight="261.0" prefWidth="236.0" />
+                <AnchorPane fx:id="childPane" prefHeight="261.0" prefWidth="236.0"/>
             </HBox>
         </center>
     </BorderPane>

@@ -8,7 +8,7 @@ import org.junit.Test;
 public class BookTest {
 
     @Test
-    public void authorIsSetCorrectlyByConstructor(){
+    public void authorIsSetCorrectlyByConstructor() {
         final String AUTHOR_NAME = "Astrid Lindgren";
         Book book = new Book("Emil", ItemCategoryType.OTHER_BOOKS, true, "4489456", (""));
         Assert.assertEquals(AUTHOR_NAME, book.getAuthors());

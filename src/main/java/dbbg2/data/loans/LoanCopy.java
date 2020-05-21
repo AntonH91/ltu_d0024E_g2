@@ -21,6 +21,8 @@ public class LoanCopy {
 
     @ManyToOne(targetEntity = dbbg2.data.loans.Loan.class)
     private Loan parentLoan;
+    private boolean returned = false;
+    private boolean fined = false;
 
     public Loan getParentLoan() {
         return parentLoan;
@@ -29,9 +31,6 @@ public class LoanCopy {
     public void setParentLoan(Loan parentLoan) {
         this.parentLoan = parentLoan;
     }
-
-    private boolean returned = false;
-    private boolean fined = false;
 
     public InventoryCopy getCopy() {
         return copy;

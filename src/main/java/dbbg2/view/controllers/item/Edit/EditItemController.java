@@ -33,8 +33,8 @@ public class EditItemController implements Initializable {
     public TableColumn clBookId;
     public TextField txtAuthorsSearch;
     public TableColumn clAuthorLastName;
-    
-    
+
+
     //Edit films
     public TableView tvFilmsFound;
     public TableColumn tcFilmTitle;
@@ -52,7 +52,7 @@ public class EditItemController implements Initializable {
     protected BookController bookController;
 
     @Override
-public void initialize(URL location, ResourceBundle resources) {
+    public void initialize(URL location, ResourceBundle resources) {
         cbNewItemCategory.setCellFactory(new Callback<ListView<ItemCategory>, ListCell<ItemCategory>>() {
             @Override
             public ListCell<ItemCategory> call(ListView<ItemCategory> param) {
@@ -83,7 +83,6 @@ public void initialize(URL location, ResourceBundle resources) {
         catArray.add(ItemCategory.getDefaultItemCategory(REFERENCE_LITERATURE));
 
 
-
         cbNewItemCategory.setItems(FXCollections.observableList(catArray));
 
         tcFilmTitle.setCellValueFactory(new PropertyValueFactory<Film, String>("title"));
@@ -95,61 +94,50 @@ public void initialize(URL location, ResourceBundle resources) {
     }
 
 
+    public void handleMakeChanges(ActionEvent actionEvent) {
 
 
-
-
-    public void handleMakeChanges (ActionEvent actionEvent) {
-
-
-        if(txtNewBookTitle.getText().isEmpty() || txtNewIsbn.getText().isEmpty()) {
+        if (txtNewBookTitle.getText().isEmpty() || txtNewIsbn.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setContentText("Cannot modify a book without the title and ISBN");
             alert.showAndWait();
             return;
 
-        }
+        } else {
 
-        else {
+            EntityManager em = JpaPersistence.getEntityManager();
 
-        EntityManager em = JpaPersistence.getEntityManager();
+            EntityTransaction entityTransaction = null;
 
-        EntityTransaction entityTransaction = null;
+            try {
+                entityTransaction = em.getTransaction();
+                entityTransaction.begin();
 
-        try {
-            entityTransaction = em.getTransaction();
-            entityTransaction.begin();
+                Book book = em.find(Book.class, Integer.parseInt(txtNewIsbn.getText()));
+                BookController bc = new BookController();
+                bc.setBook(book);
+                bc.amendInformationBook(txtNewBookTitle.getText(), txtNewIsbn.getText(), atAuthors.getText(), cbNewItemCategory.getValue());
 
-            Book book = em.find(Book.class, Integer.parseInt(txtNewIsbn.getText()));
-            BookController bc = new BookController();
-            bc.setBook(book);
-            bc.amendInformationBook(txtNewBookTitle.getText(), txtNewIsbn.getText(), atAuthors.getText(), cbNewItemCategory.getValue());
+                entityTransaction.commit();
 
-            entityTransaction.commit();
-
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText(null);
-            alert.setContentText("The book has been updated");
-            alert.showAndWait();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText(null);
+                alert.setContentText("The book has been updated");
+                alert.showAndWait();
 
 
-            return;
+                return;
 
 
-        } catch (RuntimeException e) {
-            if(entityTransaction.isActive())
-                entityTransaction.rollback();
-            throw e;
-        }
+            } catch (RuntimeException e) {
+                if (entityTransaction.isActive())
+                    entityTransaction.rollback();
+                throw e;
+            }
 
         }
     }
-
-
-
-
-
 
 
     public void handleFindBook(ActionEvent actionEvent) {
@@ -164,16 +152,13 @@ public void initialize(URL location, ResourceBundle resources) {
             Book selectedBook = (Book) tblBooksFound.getSelectionModel().getSelectedItem();
 
 
-
             selectCategory(selectedBook.getCategory());
 
             txtNewBookTitle.setText(selectedBook.getTitle());
             txtNewIsbn.setText(String.valueOf(selectedBook.getInvId()));
 
 
-
             atAuthors.setText(selectedBook.getAuthors());
-
 
 
         }
@@ -201,47 +186,44 @@ public void initialize(URL location, ResourceBundle resources) {
 
     public void handleUpdateFilm(ActionEvent actionEvent) {
 
-        if(txtNewFilmTitle.getText().isEmpty()){
+        if (txtNewFilmTitle.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
             alert.setContentText("Cannot modify a film without the title ");
             alert.showAndWait();
             return;
 
-        }
+        } else {
 
-        else {
+            EntityManager em = JpaPersistence.getEntityManager();
 
-        EntityManager em = JpaPersistence.getEntityManager();
+            EntityTransaction entityTransaction = null;
 
-        EntityTransaction entityTransaction = null;
+            try {
+                entityTransaction = em.getTransaction();
+                entityTransaction.begin();
 
-        try {
-            entityTransaction = em.getTransaction();
-            entityTransaction.begin();
+                Film film = em.find(Film.class, Integer.parseInt(txtFilmId.getText()));
+                FilmController fc = new FilmController();
+                fc.setFilm(film);
+                fc.amendInformationFilm(txtNewFilmTitle.getText(), cbNewAgeLimit.getValue(), txtNewDirector.getText(), txtNewOriginCountry.getText());
 
-            Film film = em.find(Film.class, Integer.parseInt(txtFilmId.getText()));
-            FilmController fc = new FilmController();
-            fc.setFilm(film);
-            fc.amendInformationFilm(txtNewFilmTitle.getText(), cbNewAgeLimit.getValue(), txtNewDirector.getText(), txtNewOriginCountry.getText());
+                entityTransaction.commit();
 
-            entityTransaction.commit();
-
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setHeaderText(null);
-            alert.setContentText("The book has been updated");
-            alert.showAndWait();
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText(null);
+                alert.setContentText("The book has been updated");
+                alert.showAndWait();
 
 
+                return;
 
-            return;
 
-
-        } catch (RuntimeException e) {
-            if(entityTransaction.isActive())
-                entityTransaction.rollback();
-            throw e;
-        }
+            } catch (RuntimeException e) {
+                if (entityTransaction.isActive())
+                    entityTransaction.rollback();
+                throw e;
+            }
         }
 
     }
@@ -257,8 +239,6 @@ public void initialize(URL location, ResourceBundle resources) {
             txtFilmId.setText(String.valueOf(selectedFilm.getInvId()));
             txtNewDirector.setText(selectedFilm.getDirector());
             txtNewOriginCountry.setText(selectedFilm.getOriginCountry());
-
-
 
 
         }

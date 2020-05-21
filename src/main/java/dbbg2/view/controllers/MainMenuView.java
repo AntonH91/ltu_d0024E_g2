@@ -31,12 +31,10 @@ public class MainMenuView implements Initializable, ParentController {
     public Tab tbInventory;
     public Tab tbLoans;
     public TabPane tbpTabPane;
-    private ChildController ccUserController;
-
     public AnchorPane achInventoryPane;
     public AnchorPane achLoanPane;
-
     public AnchorPane achMainMenuRoot;
+    private ChildController ccUserController;
 
     public void handleLoginButtonClick(ActionEvent actionEvent) {
         // Altering behaviour of the login button depending on what the current login state is, so that the layout is kept consistent.

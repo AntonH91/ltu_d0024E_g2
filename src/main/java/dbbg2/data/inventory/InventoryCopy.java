@@ -21,7 +21,7 @@ public class InventoryCopy {
     private InventoryItem item;
 
 
-    public InventoryCopy(){
+    public InventoryCopy() {
 
     }
 
@@ -34,38 +34,38 @@ public class InventoryCopy {
     }
 // Setters
 
-    public void setBarcode(String barcode) {
-        this.barcode = barcode;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public void setOnLoan(boolean onLoan) {
-        this.onLoan = onLoan;
-    }
-
-    public void setLendable(boolean lendable) {
-        this.lendable = lendable;
-    }
-
-// Getters
-
     public String getBarcode() {
         return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
     }
 
     public String getLocation() {
         return location;
     }
 
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+// Getters
+
     public boolean getOnLoan() {
         return onLoan;
     }
 
+    public void setOnLoan(boolean onLoan) {
+        this.onLoan = onLoan;
+    }
+
     public boolean getLendable() {
         return lendable;
+    }
+
+    public void setLendable(boolean lendable) {
+        this.lendable = lendable;
     }
 
     public InventoryItem getItem() {

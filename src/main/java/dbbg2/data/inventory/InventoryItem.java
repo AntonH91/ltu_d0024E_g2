@@ -11,26 +11,21 @@ import java.util.*;
 public abstract class InventoryItem {
 
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int invId;
-
-
-    @Basic(optional = false)
-    private String title = "";
-
     @ManyToMany(mappedBy = "items", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     //@Basic(optional = false)
     private final List<Keyword> keywords = new ArrayList<>();
-
     // Tried to fix the many to many table being created
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "item")
     private final Set<InventoryCopy> copies = new HashSet<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int invId;
+    @Basic(optional = false)
+    private String title = "";
 
     //Tried fixing keyword relation
     //@OneToOne(optional = false, cascade = CascadeType.ALL)
     //private ItemCategory category;
-
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "Item_Category")
     private ItemCategory category;
@@ -52,11 +47,6 @@ public abstract class InventoryItem {
         this.isAvailable = isAvailable;
     }
 
-
-    public void setAvailable(boolean isAvailable) {
-        this.isAvailable = isAvailable;
-    }
-
     public int getInvId() {
         return invId;
     }
@@ -73,6 +63,10 @@ public abstract class InventoryItem {
         return category;
     }
 
+    public void setCategory(ItemCategory category) {
+        this.category = category;
+    }
+
     //Tried changing from list to see if it works
     public Set<InventoryCopy> getCopies() {
         return copies;
@@ -82,16 +76,13 @@ public abstract class InventoryItem {
         return isAvailable;
     }
 
-    public void setCategory(ItemCategory category) {
-        this.category = category;
+    public void setAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
     }
 
     public List<Keyword> getKeyword() {
         return keywords;
     }
-
-
-
 
 
     public void addCopy(String barcode, String location) {
@@ -103,9 +94,8 @@ public abstract class InventoryItem {
 
     public void removeCopy(String barcode) {
         this.copies.removeIf(inventoryCopy ->
-            inventoryCopy.getBarcode().equals(barcode));
+                inventoryCopy.getBarcode().equals(barcode));
     }
-
 
 
     @Override
