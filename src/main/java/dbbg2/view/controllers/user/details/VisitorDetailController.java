@@ -2,15 +2,21 @@ package dbbg2.view.controllers.user.details;
 
 import dbbg2.controllers.user.UserController;
 import dbbg2.controllers.user.VisitorController;
+import dbbg2.data.genericexceptions.LibraryEntityNotFoundException;
 import dbbg2.data.loans.LoanCopy;
+import dbbg2.data.loans.LoanManager;
 import dbbg2.data.users.User;
 import dbbg2.data.users.Visitor;
 import dbbg2.data.users.visitorcategory.VisitorCategory;
 import dbbg2.data.users.visitorcategory.VisitorCategoryManager;
 import dbbg2.view.utils.GenericStyler;
+import javafx.beans.InvalidationListener;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableStringValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 import javax.persistence.NoResultException;
@@ -24,9 +30,11 @@ import java.util.logging.Logger;
 public class VisitorDetailController extends UserChildController implements Initializable {
     public ComboBox<VisitorCategory> cbxVisitorCategory;
 
+    // TODO filtering in the table
     public CheckBox chkShowReturned;
     public CheckBox chkShowLate;
     public CheckBox chkShowActive;
+
     public TableView<LoanCopy> tblLoanDisplay;
     public TableColumn<LoanCopy, Boolean> tcReturned;
     public TableColumn<LoanCopy, String> tcTitle;
@@ -62,6 +70,8 @@ public class VisitorDetailController extends UserChildController implements Init
     @Override
     public void updateUserData() {
         visitorController.setVisitorCategory(cbxVisitorCategory.getValue());
+
+
     }
 
     /**
@@ -71,6 +81,13 @@ public class VisitorDetailController extends UserChildController implements Init
     public void refreshInterface() {
         Visitor v = (Visitor) visitorController.getUser();
         selectCategory(v.getCategory());
+
+        try {
+            tblLoanDisplay.setItems(FXCollections.observableList(LoanManager.getLoanCopiesFromUser(v.getUserId())));
+        } catch (LibraryEntityNotFoundException e) {
+            tblLoanDisplay.getItems().clear();
+        }
+
     }
 
     /**
@@ -125,6 +142,45 @@ public class VisitorDetailController extends UserChildController implements Init
         cbxVisitorCategory.setButtonCell(cbxVisitorCategory.getCellFactory().call(null));
 
         cbxVisitorCategory.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> this.triggerParentUpdate()));
+
+
+        tcReturnDate.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
+        tcTitle.setCellValueFactory(param -> new ObservableStringValue() {
+            @Override
+            public String get() {
+                try {
+                    return param.getValue().getCopy().getItem().getTitle();
+                } catch (Exception ignored) {
+                    return null;
+                }
+            }
+
+            @Override
+            public void addListener(ChangeListener<? super String> listener) {
+
+            }
+
+            @Override
+            public void removeListener(ChangeListener<? super String> listener) {
+
+            }
+
+            @Override
+            public String getValue() {
+                return get();
+            }
+
+            @Override
+            public void addListener(InvalidationListener listener) {
+
+            }
+
+            @Override
+            public void removeListener(InvalidationListener listener) {
+
+            }
+        });
+        tcReturned.setCellValueFactory(new PropertyValueFactory<>("returned"));
 
         loadVisitorCategories();
 
