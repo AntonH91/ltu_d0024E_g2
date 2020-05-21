@@ -7,7 +7,7 @@ public class FilmController {
         changeFilm = film;
     }
 
-    public void ammendInformationFilm(String title, int agelimit, String director, String originCountry){
+    public void amendInformationFilm(String title, int agelimit, String director, String originCountry) {
         changeFilm.setTitle(title);
         changeFilm.setAgeLimit(agelimit);
         changeFilm.setDirector(director);

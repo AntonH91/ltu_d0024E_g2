@@ -15,7 +15,8 @@ import javafx.util.Callback;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import static dbbg2.data.inventory.itemCategory.ItemCategoryType.*;
 
@@ -222,7 +223,7 @@ public void initialize(URL location, ResourceBundle resources) {
             Film film = em.find(Film.class, Integer.parseInt(txtFilmId.getText()));
             FilmController fc = new FilmController();
             fc.setFilm(film);
-            fc.ammendInformationFilm(txtNewFilmTitle.getText(), cbNewAgeLimit.getValue(), txtNewDirector.getText(), txtNewOriginCountry.getText());
+            fc.amendInformationFilm(txtNewFilmTitle.getText(), cbNewAgeLimit.getValue(), txtNewDirector.getText(), txtNewOriginCountry.getText());
 
             entityTransaction.commit();
 
