@@ -1,6 +1,5 @@
 package dbbg2.view.controllers.loans;
 
-import dbbg2.controllers.Loans.Exceptions.EmptyLoanException;
 import dbbg2.controllers.Loans.Exceptions.ItemNotLendableException;
 import dbbg2.controllers.Loans.Exceptions.TooManyItemsOnLoanException;
 import dbbg2.controllers.Loans.LoanController;
@@ -9,6 +8,7 @@ import dbbg2.data.loans.LoanCopy;
 import dbbg2.data.users.User;
 import dbbg2.data.users.Visitor;
 import dbbg2.utils.AuthenticationManager;
+import dbbg2.view.dialogs.ReceiptDialogue;
 import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableStringValue;
@@ -149,11 +149,18 @@ public class LoanAddView implements Initializable {
            4. Print receipt
         */
         try {
-            controller.finalizeLoan();
+            //controller.finalizeLoan();
             // TODO Display receipt on-screen.
             updateControlStates();
-        } catch (EmptyLoanException e) {
+
+            ReceiptDialogue rd = new ReceiptDialogue(controller.generateReceipt());
+
+            rd.setTitle("Loan receipt.");
+            rd.showAndWait();
+
+        } catch (Exception e) {
             showErrorMessage("Cannot finalize loan without any items!");
+            e.printStackTrace();
         }
 
 

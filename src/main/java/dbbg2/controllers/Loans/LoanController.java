@@ -14,6 +14,7 @@ import dbbg2.utils.persistence.JpaPersistence;
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 public class LoanController {
@@ -75,6 +76,25 @@ public class LoanController {
      */
     public Visitor getVisitor() {
         return client;
+    }
+
+    public String generateReceipt() {
+        /*
+        if(!this.loanFinalized) {
+            throw new IllegalStateException("Cannot generate receipt before loan is finalized.");
+        }
+        */
+
+        String header = String.format("User: %60s, Date:%30s\n\n", client.getFirstName() + ' ' + client.getLastName(), new Date().toString());
+
+        StringBuilder receiptBuilder = new StringBuilder();
+
+        receiptBuilder.append(header);
+        for (LoanCopy lc : loan.getCopies()) {
+            receiptBuilder.append(String.format("Title: %60s, Return: %30s\n", lc.getCopy().getItem().getTitle(), lc.getReturnDate()));
+        }
+
+        return receiptBuilder.toString();
     }
 
 

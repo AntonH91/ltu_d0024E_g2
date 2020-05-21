@@ -1,11 +1,9 @@
 package dbbg2.view.dialogs;
 
-import dbbg2.controllers.Loans.LoanController;
-import dbbg2.data.loans.Loan;
-import dbbg2.view.controllers.LoanReceiptController;
+import dbbg2.view.dialogs.controllers.ReceiptController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
@@ -13,14 +11,14 @@ public class ReceiptDialogue extends Dialog<Boolean> {
 
     public ReceiptDialogue(String dialog) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/LoanReceipt"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Views/LoanReceipt.fxml"));
 
-            DialogPane loadDialogPane = loader.load();
-
+            Pane loadDialogPane = loader.load();
             //Get associated controller
-            LoanReceiptController lc = loader.getController();
+            ReceiptController lc = loader.getController();
+            this.getDialogPane().setContent(loadDialogPane);
 
-            lc.txtLoanReceipt.setText(dialog);
+            lc.txtReceipt.setText(dialog);
 
 
         } catch (IOException e) {
