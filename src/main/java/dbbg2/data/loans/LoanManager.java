@@ -39,6 +39,31 @@ public class LoanManager {
 
     }
 
+
+    /**
+     * Gets a list of all loan copies from the user
+     *
+     * @param userId The user ID to get loan copies from
+     * @return A list of all Loan Copies borrowed by the user
+     * @throws LibraryEntityNotFoundException Thrown if the user has no loans
+     */
+    public static List<LoanCopy> getLoanCopiesFromUser(String userId) throws LibraryEntityNotFoundException {
+        EntityManager em = JpaPersistence.getEntityManager();
+
+        TypedQuery<LoanCopy> tq = em.createQuery("SELECT lc " +
+                "FROM LoanCopy lc " +
+                "INNER JOIN Loan l ON lc.parentLoan = l " +
+                "INNER JOIN Visitor v ON l.client = v " +
+                "WHERE v.userId = :userId", LoanCopy.class);
+
+
+        try {
+            return tq.setParameter("userId", userId).getResultList();
+        } catch (NoResultException e) {
+            throw new LibraryEntityNotFoundException("No loan copies found for this user.");
+        }
+    }
+
     /**
      * Finds a single loan entity based on the item barcode.
      *
@@ -62,7 +87,6 @@ public class LoanManager {
 
 
     }
-
 
 
 }
