@@ -5,6 +5,9 @@ import dbbg2.data.inventory.InventoryItem;
 import dbbg2.data.inventory.InventoryManager;
 import dbbg2.data.inventory.Keyword;
 import dbbg2.data.inventory.itemCategory.ItemCategory;
+import javafx.beans.InvalidationListener;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableStringValue;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -79,29 +82,44 @@ public class ItemSearchController implements Initializable {
 
 
 
-        tcCategory.setCellValueFactory(new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
+        tcCategory.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<InventoryItem, String>, ObservableValue<InventoryItem>>() {
             @Override
-            public ObservableValue call(TableColumn.CellDataFeatures param) {
-                return null;
-            }
-        })
-
-        tcCategory.setCellValueFactory(new Callback<ListView<ItemCategory>, ListCell<ItemCategory>>(){
-            @Override
-            public ListCell<ItemCategory> call(ListView<ItemCategory> param) {
-                return new ListCell<ItemCategory>(){
+            public ObservableValue call(TableColumn.CellDataFeatures<InventoryItem, String> param) {
+                return new ObservableStringValue() {
                     @Override
-                    protected void updateItem(ItemCategory item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (item == null) {
-                            this.setGraphic(null);
-                        } else {
-                            this.setText(item.getItemCategoryTitle());
-                        }
+                    public String get() {
+                        return param.getValue().getCategory().getItemCategoryTitle();
+                    }
+
+                    @Override
+                    public void addListener(ChangeListener<? super String> listener) {
+
+                    }
+
+                    @Override
+                    public void removeListener(ChangeListener<? super String> listener) {
+
+                    }
+
+                    @Override
+                    public String getValue() {
+                        return get();
+                    }
+
+                    @Override
+                    public void addListener(InvalidationListener listener) {
+
+                    }
+
+                    @Override
+                    public void removeListener(InvalidationListener listener) {
+
                     }
                 };
             }
         });
+
+
     }
 
     public void handleClearText(ActionEvent actionEvent) {
