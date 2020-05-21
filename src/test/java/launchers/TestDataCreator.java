@@ -161,7 +161,7 @@ public class TestDataCreator {
     private static void clearDatabase(EntityManager em) {
 
         String[] queries = {
-                "DELETE FROM LOANCOPIES;",
+                "DELETE FROM LOANCOPY;",
                 "DELETE FROM LOAN;",
                 "DELETE FROM Inventory_keyword;",
                 "DELETE FROM INVENTORYCOPY;",
