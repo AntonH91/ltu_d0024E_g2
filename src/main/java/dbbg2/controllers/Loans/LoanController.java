@@ -12,6 +12,7 @@ import dbbg2.utils.persistence.JpaPersistence;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,11 +29,12 @@ public class LoanController {
      * @return Null if there is no Loan on the object, otherwise an unmodifiable list of LoanCopies
      */
     public List<LoanCopies> getLoanCopies() {
-        List<LoanCopies> result = null;
+        List<LoanCopies> result = new ArrayList<>();
+
         if (loan != null) {
-            result = Collections.unmodifiableList(loan.getCopies());
+            result = loan.getCopies();
         }
-        return result;
+        return Collections.unmodifiableList(result);
     }
 
     /**

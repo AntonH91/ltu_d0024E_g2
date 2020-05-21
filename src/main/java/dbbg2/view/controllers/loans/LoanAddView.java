@@ -134,16 +134,7 @@ public class LoanAddView implements Initializable {
             showErrorMessage("You have exceeded the amount of items you are allowed to loan.");
         }
 
-
-
-        /* 1. If loan not started, start one.
-           2. Checks user for permission to loan
-           2.1 Add user to loan
-           3.  Checks if book is available for user
-           4. If not, show error message
-           5 . if available, add book to info gui
-
-         */
+        updateControlStates();
     }
 
 
@@ -161,6 +152,7 @@ public class LoanAddView implements Initializable {
     public void updateControlStates() {
         btnFinalize.setDisable(!userCanLoanBooks && controller.getLoanCopyCount() > 0);
         btnAddBarcode.setDisable(!userCanLoanBooks);
+
 
         tblLoanItems.setItems(FXCollections.observableList(controller.getLoanCopies()));
 
