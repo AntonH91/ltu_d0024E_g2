@@ -18,20 +18,21 @@ public class Loan {
     private Visitor client;
 
 
-    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "parentLoan")
     @JoinColumn(name = "loan_id")
     private final List<LoanCopy> loanedCopies = new ArrayList<>();
 
     /**
      * Adds an already created loancopy to this loan
      *
-     * @param copy
+     * @param copy The loan copy to add
      */
     public void addCopy(LoanCopy copy) {
         // This needs to be on the Loan Controller
         //client.increaseLoanedItems(1);
-        loanedCopies.add(copy);
 
+        loanedCopies.add(copy);
+        copy.setParentLoan(this);
     }
 
     public void addCopy(InventoryCopy invCopy) {
