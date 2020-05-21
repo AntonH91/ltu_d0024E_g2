@@ -9,6 +9,6 @@ import dbbg2.utils.persistence.JpaPersistence;
 public class LauncherMain {
     public static void main(String[] args) {
         JpaPersistence.startUp();
-        ApplicationMain.main(args);
+        ApplicationMain.launchUI(args);
     }
 }

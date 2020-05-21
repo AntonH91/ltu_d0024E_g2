@@ -11,9 +11,9 @@ import javafx.stage.Stage;
  * This class cannot start by itself. It must be called from a class that does not extend javafx.application.Application
  */
 public class ApplicationMain extends Application {
-    public static void main(String[] args) {
-        launch(args);
 
+    public static void launchUI(String[] args) {
+        launch(args);
     }
 
     @Override
