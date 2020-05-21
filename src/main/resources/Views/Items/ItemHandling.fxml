@@ -21,9 +21,9 @@
                               <TextField fx:id="txtAbbBookTitle" layoutX="22.0" layoutY="80.0" promptText="Book title" />
                               <TextField fx:id="txtBookIsbn" layoutX="22.0" layoutY="163.0" promptText="ISBN" />
                               <TextField fx:id="txtBookAuthor" layoutX="22.0" layoutY="197.0" promptText="Author" />
-                              <ChoiceBox fx:id="ddBookCategory" layoutX="22.0" layoutY="127.0" prefWidth="150.0" />
                               <Text layoutX="23.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Book category" />
                               <Button layoutX="183.0" layoutY="263.0" mnemonicParsing="false" onAction="#handleAddBook" text="Add" />
+                              <ComboBox fx:id="cbCategoryTest" layoutX="22.0" layoutY="127.0" prefWidth="150.0" />
                            </children>
                         </AnchorPane>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
@@ -37,14 +37,14 @@
                               <TableView fx:id="tblListBooks" layoutY="257.0" onMouseClicked="#handleTableViewMouseClickedAction" prefHeight="200.0" prefWidth="328.0">
                                 <columns>
                                   <TableColumn fx:id="tcBookTitle" prefWidth="75.0" text="Book title" />
-                                    <TableColumn fx:id="tcInventoryId" prefWidth="75.0" text="Inventory ID" />
+                                    <TableColumn fx:id="tcInventoryId" prefWidth="75.0" text="Authors" />
                                     <TableColumn fx:id="tcInvId" prefWidth="75.0" text="InvID" />
                                 </columns>
                               </TableView>
                               <TextField fx:id="txtRemoveInventoryId" layoutX="37.0" layoutY="153.0" promptText="Inventory ID" />
                               <Button fx:id="btnSearch" layoutX="37.0" layoutY="216.0" mnemonicParsing="false" onAction="#handleFindBook" text="Search" />
                               <Button fx:id="btnRemove" layoutX="155.0" layoutY="216.0" mnemonicParsing="false" onAction="#handleRemovebook" text="Remove" />
-                              <TextField fx:id="txtPkId" editable="false" layoutX="214.0" layoutY="80.0" prefHeight="25.0" prefWidth="28.0" promptText="ID" />
+                              <TextField fx:id="txtPkId" editable="false" layoutX="214.0" layoutY="80.0" prefHeight="25.0" prefWidth="74.0" promptText="Selected ID" />
                            </children>
                         </AnchorPane>
                     </items>
@@ -70,7 +70,6 @@
                                     <Button layoutX="183.0" layoutY="263.0" mnemonicParsing="false" onAction="#handleAddFilm" text="Add" />
                               <ComboBox fx:id="cbAgeLimits" layoutX="22.0" layoutY="157.0" prefWidth="150.0" />
                               <Text layoutX="22.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age limit" />
-                              <ChoiceBox fx:id="cbTestAgeLimit" layoutX="22.0" layoutY="229.0" prefWidth="150.0" />
                                 </children>
                             </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
@@ -80,7 +79,7 @@
                                             <Font size="18.0" />
                                         </font></Text>
                               <TextField fx:id="txtFilmTitleRemove" layoutX="37.0" layoutY="81.0" promptText="Film title" />
-                              <TextField fx:id="txtFilmIdRemove" layoutX="37.0" layoutY="121.0" promptText="Inventory ID" />
+                              <TextField fx:id="txtFilmIdRemove" layoutX="37.0" layoutY="121.0" promptText="Authors" />
                               <TableView fx:id="tblFilmsFound" layoutY="257.0" onMouseClicked="#handleClickedFilmRemove" prefHeight="200.0" prefWidth="331.0">
                                 <columns>
                                   <TableColumn fx:id="tcFilmTitle" prefWidth="75.0" text="Film title" />
@@ -91,7 +90,7 @@
                               </TableView>
                               <Button fx:id="btnSearchFilm" layoutX="37.0" layoutY="204.0" mnemonicParsing="false" onAction="#handleSearchFilm" text="Search" />
                               <Button fx:id="btnRemoveFilm" layoutX="134.0" layoutY="204.0" mnemonicParsing="false" onAction="#handleRemoveFilm" text="Remove selected" />
-                              <TextField fx:id="txtIdFoundRemoveFilm" layoutX="218.0" layoutY="81.0" prefHeight="25.0" prefWidth="29.0" promptText="ID" />
+                              <TextField fx:id="txtIdFoundRemoveFilm" layoutX="218.0" layoutY="81.0" prefHeight="25.0" prefWidth="84.0" promptText="Selected ID" />
                                 </children>
                             </AnchorPane>
                         </items>

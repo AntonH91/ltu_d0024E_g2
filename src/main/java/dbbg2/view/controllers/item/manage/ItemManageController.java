@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Callback;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -18,8 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static dbbg2.data.inventory.itemCategory.ItemCategoryType.FILM;
-import static dbbg2.data.inventory.itemCategory.ItemCategoryType.OTHER_BOOKS;
+import static dbbg2.data.inventory.itemCategory.ItemCategoryType.*;
+import static dbbg2.data.inventory.itemCategory.ItemCategoryType.REFERENCE_LITERATURE;
 
 
 public class ItemManageController implements Initializable {
@@ -29,8 +30,6 @@ public class ItemManageController implements Initializable {
     public TextField txtAbbBookTitle;
     public TextField txtBookIsbn;
     public TextField txtBookAuthor;
-
-    public ChoiceBox ddBookCategory;
 
 
     //Remove book
@@ -48,6 +47,8 @@ public class ItemManageController implements Initializable {
     public TextField txtPkId;
     public TableColumn tcInvId;
 
+    public ComboBox<ItemCategory> cbCategoryTest;
+
     //Film info
     public TextField txtFilmIdRemove;
     public TextField txtIdFoundRemoveFilm;
@@ -64,7 +65,7 @@ public class ItemManageController implements Initializable {
     public TextField txtFilmDirector;
 
     public ComboBox<Integer> cbAgeLimits;
-    public ChoiceBox cbTestAgeLimit;
+
 
 
     public void handleAddBook(javafx.event.ActionEvent actionEvent) {
@@ -73,9 +74,9 @@ public class ItemManageController implements Initializable {
 
 
         //TODO add two text fields for first and last name
-        books.add(new Book(txtAbbBookTitle.getText(), (ItemCategory) ddBookCategory.getSelectionModel().getSelectedItem(), true, txtBookIsbn.getText(), txtBookAuthor.getText()));
+        books.add(new Book(txtAbbBookTitle.getText(), (ItemCategory) cbCategoryTest.getSelectionModel().getSelectedItem(), true, txtBookIsbn.getText(), txtBookAuthor.getText()));
 
-        if(txtAbbBookTitle.getText().isEmpty() || ddBookCategory.getSelectionModel().isEmpty()){
+        if(txtAbbBookTitle.getText().isEmpty() || cbCategoryTest.getSelectionModel().isEmpty()){
 
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
@@ -104,7 +105,7 @@ public class ItemManageController implements Initializable {
             alert.showAndWait();
 
             txtAbbBookTitle.clear();
-            ddBookCategory.valueProperty().set(null);
+            cbCategoryTest.valueProperty().set(null);
             txtBookIsbn.clear();
             txtBookAuthor.clear();
 
@@ -162,18 +163,44 @@ public class ItemManageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
+        cbCategoryTest.setCellFactory(new Callback<ListView<ItemCategory>, ListCell<ItemCategory>>() {
+            @Override
+            public ListCell<ItemCategory> call(ListView<ItemCategory> param) {
+                return new ListCell<ItemCategory>() {
+                    @Override
+                    protected void updateItem(ItemCategory item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item == null) {
+                            this.setGraphic(null);
+                        } else {
+                            this.setText(item.getItemCategoryTitle());
+                        }
+                    }
+                };
+            }
+        });
 
-        ddBookCategory.getItems().addAll(ItemCategory.getDefaultItemCategory(OTHER_BOOKS));
+        cbCategoryTest.setButtonCell(cbCategoryTest.getCellFactory().call(null));
+
+        ArrayList<ItemCategory> catArray = new ArrayList<>();
+        catArray.add(ItemCategory.getDefaultItemCategory(OTHER_BOOKS));
+        catArray.add(ItemCategory.getDefaultItemCategory(JOURNAL));
+        catArray.add(ItemCategory.getDefaultItemCategory(REFERENCE_LITERATURE));
+
+        cbCategoryTest.setItems(FXCollections.observableList(catArray));
+
 
         //Set choices for age limits when adding film
         cbAgeLimits.getItems().addAll(17, 18, 20);
 
         tcBookTitle.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("title"));
-        tcInventoryId.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("inventoryId"));
+        tcInventoryId.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("authors"));
+        tcInvId.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("invId"));
 
         tcFilmTitle.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("title"));
         tcOriginCountry.setCellValueFactory(new PropertyValueFactory<InventoryItem, String>("originCountry"));
         tcAgeLimit.setCellValueFactory(new PropertyValueFactory<InventoryItem, Integer>("ageLimit"));
+        tcDirector.setCellValueFactory(new PropertyValueFactory<Film, String>("director"));
 
 
 
@@ -204,6 +231,18 @@ public class ItemManageController implements Initializable {
             em.remove(invItem);
 
             entityTransaction.commit();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("The book has been removed");
+            alert.showAndWait();
+
+            txtRemoveTitle.clear();
+            txtRemoveInventoryId.clear();
+            txtPkId.clear();
+
+            tblListBooks.setItems(FXCollections.observableArrayList(InventoryManager.getBooks(txtRemoveTitle.getText(), txtRemoveInventoryId.getText())));
+
         } catch (RuntimeException e) {
             if(entityTransaction.isActive())
                 entityTransaction.rollback();
@@ -223,24 +262,78 @@ public class ItemManageController implements Initializable {
         if(tblListBooks.getSelectionModel().getSelectedItem() !=null){
             Book selectedBook = (Book) tblListBooks.getSelectionModel().getSelectedItem();
             txtRemoveTitle.setText(selectedBook.getTitle());
-            txtRemoveInventoryId.setText(selectedBook.getInventoryId());
+            txtRemoveInventoryId.setText(selectedBook.getAuthors());
             txtPkId.setText(String.valueOf(selectedBook.getInvId()));
+            txtRemoveIsbn.setText(selectedBook.getIsbn());
 
         }
     }
 
     public void handleRemoveFilm(ActionEvent actionEvent) {
+        EntityManager em = JpaPersistence.getEntityManager();
+
+        EntityTransaction entityTransaction = null;
+
+        try {
+            entityTransaction = em.getTransaction();
+            entityTransaction.begin();
+
+            InventoryItem invItem = em.find(InventoryItem.class, Integer.parseInt(txtIdFoundRemoveFilm.getText()));
+            em.remove(invItem);
+
+            entityTransaction.commit();
+
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText(null);
+            alert.setContentText("The film has been removed");
+            alert.showAndWait();
+
+            txtIdFoundRemoveFilm.clear();
+            txtFilmTitleRemove.clear();
+
+            tblFilmsFound.setItems(FXCollections.observableArrayList(InventoryManager.getFilms(txtFilmTitleRemove.getText())));
+
+            return;
+
+
+        } catch (RuntimeException e) {
+            if(entityTransaction.isActive())
+                entityTransaction.rollback();
+            throw e;
+        }
+
+
+        /*int selectedBook = Integer.parseInt(txtPkId.getText());
+
+        em.getTransaction().begin();
+        em.remove(selectedBook);
+        em.getTransaction().commit();*/
     }
 
 
 
     public void handleClickedFilmRemove(MouseEvent mouseEvent) {
         if(tblFilmsFound.getSelectionModel().getSelectedItem() !=null){
-            Book selectedBook = (Book) tblFilmsFound.getSelectionModel().getSelectedItem();
-            txtFilmTitleRemove.setText(selectedBook.getTitle());
-            txtIdFoundRemoveFilm.setText(String.valueOf(selectedBook.getInvId()));
+            Film selectedFilm = (Film) tblFilmsFound.getSelectionModel().getSelectedItem();
+            txtFilmTitleRemove.setText(selectedFilm.getTitle());
+            txtIdFoundRemoveFilm.setText(String.valueOf(selectedFilm.getInvId()));
+
         }
 
 
     }
+
+    private void selectCategory(ItemCategory targetCategory) {
+        if (targetCategory != null) {
+            for (ItemCategory ic : cbCategoryTest.getItems()) {
+                if (targetCategory.equals(ic)) {
+                    cbCategoryTest.setValue(ic);
+                    break;
+                }
+            }
+        }
+
+    }
+
 }
