@@ -2,6 +2,7 @@ package dbbg2.view.controllers.user.details;
 
 import dbbg2.controllers.user.UserController;
 import dbbg2.controllers.user.VisitorController;
+import dbbg2.data.loans.LoanCopy;
 import dbbg2.data.users.User;
 import dbbg2.data.users.Visitor;
 import dbbg2.data.users.visitorcategory.VisitorCategory;
@@ -9,14 +10,12 @@ import dbbg2.data.users.visitorcategory.VisitorCategoryManager;
 import dbbg2.view.utils.GenericStyler;
 import javafx.collections.FXCollections;
 import javafx.fxml.Initializable;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.util.Callback;
 
 import javax.persistence.NoResultException;
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -28,6 +27,10 @@ public class VisitorDetailController extends UserChildController implements Init
     public CheckBox chkShowReturned;
     public CheckBox chkShowLate;
     public CheckBox chkShowActive;
+    public TableView<LoanCopy> tblLoanDisplay;
+    public TableColumn<LoanCopy, Boolean> tcReturned;
+    public TableColumn<LoanCopy, String> tcTitle;
+    public TableColumn<LoanCopy, Date> tcReturnDate;
 
     private VisitorController visitorController;
 
